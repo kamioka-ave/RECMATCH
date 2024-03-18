@@ -1,0 +1,30 @@
+<div class="projects thumb">
+  <div class="card">
+    <% if project.status == Project::S_EXECUTED %>
+      <div class="ribbon executed">
+        <div class="title">成 約</div>
+      </div>
+    <% elsif project.angel_type != Project::ANGEL_TYPE_NONE %>
+      <div class="ribbon angel">
+        <div class="title">エンジェル税制申請予定</div>
+      </div>
+    <% elsif project.shareholder_benefit %>
+      <div class="ribbon shareholder-benefit">
+        <div class="title">株主優待あり</div>
+      </div>
+    <% end %>
+    <% if project.case_studies.size > 0 %>
+      <div class="interview">
+        <div class="title">
+          <i class="fa fa-microphone pr-5"></i>インタビューあり
+        </div>
+      </div>
+    <% end %>
+    <%= link_to project do %>
+      <%= image_tag(project.image.thumb16by9.url, class: 'img-responsive', alt: project.name) %>
+    <% end %>
+    <div class="card-body card-padding-sm bgm-gray-lighter">
+      <%= render 'projects/details', project: project, title: true, succeeded: defined?(succeeded) && succeeded, xs_half: defined?(xs_half) && xs_half %>
+    </div>
+  </div>
+</div>

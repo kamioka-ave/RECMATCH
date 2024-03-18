@@ -1,0 +1,4 @@
+<% content_for(:page_classes) { 'mypage pages company' } %>
+<%= simple_form_for(@draft, url: mypage_company_project_draft_path(@draft) ) do |f| %>
+  <%= render 'form', {f: f} %>
+<% end %>

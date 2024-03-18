@@ -1,0 +1,55 @@
+<section class="content-header">
+  <h1>退会したユーザー</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Eメール</th>
+              <th>ロール</th>
+              <th><%= sort_link(@q, :deleted_at, '退会日') %></th>
+              <th>退会理由</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td>
+                  <%= '学生' if user.has_role?(:student) %>
+                  <%= '企業' if user.has_role?(:company) %>
+                </td>
+                <td><%= l(user.deleted_at) %></td>
+                <td>
+                  <% if user.quit.present? %>
+                    <% user.quit.quit_reasons.each do |r| %>
+                      <%= "<p>#{r.name}<p>".html_safe if r.id != 4 && r.id != 9 %>
+                    <% end %>
+                    <% if user.quit.note.present? %>
+                      <%= simple_format(user.quit.note) %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to '情報を抹消する', really_destroy_admin_user_path(user), method: :delete, data: {confirm: '抹消しますか？' }, class: 'btn btn-xs btn-danger' %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-footer">
+          <%= paginate @users, theme: 'admin' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

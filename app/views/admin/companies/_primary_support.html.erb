@@ -1,0 +1,9 @@
+<% if company.primary_sales_support_completed %>
+  <%= link_to incomplete_primary_sales_support_admin_company_path(company), method: :put, remote: true do %>
+    <i class="fa fa-check-square fa-lg"></i>
+  <% end %>
+<% else %>
+  <%= link_to complete_primary_sales_support_admin_company_path(company), method: :put, remote: true do %>
+    <i class="fa fa-square fa-lg"></i>
+  <% end %>
+<% end %>

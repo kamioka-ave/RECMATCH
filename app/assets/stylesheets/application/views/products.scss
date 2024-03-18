@@ -1,0 +1,17 @@
+#products {
+  .card-header {
+    background-repeat: no-repeat;
+    -moz-background-size: 100%;
+    background-size: 100%;
+  }
+  .card-body {
+    .btn {
+      &.closed {
+        padding-right: 10px;
+        padding-left: 10px;
+
+        font-size: 15px;
+      }
+    }
+  }
+}

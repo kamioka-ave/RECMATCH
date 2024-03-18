@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">顧客カードの編集</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@student, url: admin_student_note_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :antisocial_checked_at %>
+        <%= f.association :antisocial_checker, collection: Admin.with_any_role(:admin, :recmatch_business_department, :admin_without_mail) %>
+        <%= f.input :identified_at %>
+        <%= f.association :identifier, collection: Admin.with_any_role(:admin, :recmatch_business_department) %>
+        <%= f.input :approved_at %>
+        <%= f.association :approver, collection: Admin.with_any_role(:admin, :admin_without_mail) %>
+        <%= f.input :card_note, label: false, input_html: {rows: 10} %>
+        <%= f.button :submit, '更新', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+$("#pep").html("<%= escape_javascript(render('admin/students/peps/show', pep: @pep)) %>");
+$("#edit_pep_modal").modal("hide");
+notify('', '居住地国・外国PEPs・FATCA届出を更新しました', 'top', 'center', '', 'success', '', '');

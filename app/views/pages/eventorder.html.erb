@@ -1,0 +1,91 @@
+<div id="funding_view" class="card">
+  <div class="card-header">
+    <h1 class="text-center mt-30"><span style="border-bottom: solid 3px #000080;"><i class="fa fa-window-restore" aria-hidden="true"></i> イベントページ作成をご希望の方へ</span></h1>
+  </div>
+  <div class="card-body card-padding">
+
+    <div class="row mb-40">
+      <div class="col-md-10 col-md-offset-1">
+        RECMATCHは企業と学生を繋げるプラットフォームサービスです。
+        イベントページの作成をご希望の企業様は当社所定の審査を経た上で、採用募集ページの作成が可能になります。
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-center"><span class="order-head">お申込み後の流れ</span></h2>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main-timeline4">
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP1</span>
+                <div class="inner-content">
+                  <h3 class="title">イベント告知ページ作成の申込み</h3>
+                  <p class="description">
+                    <b>お申込みはこちら</b>からRECMATCH利用規約の内容をご確認いただき、内容に同意いただけましたら同意した旨チェックをし、
+                    次の画面に進みます。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP2</span>
+                <div class="inner-content">
+                  <h3 class="title">イベント告知ページの作成</h3>
+                  <p class="description">
+                    RECMATCH利用規約の内容に同意いただいた後、次画面でドラフトページを作成します。
+                    プレビュー表示からページを確認し、問題がなければ<b>審査を依頼する</b>ボタンを押下します。
+                    なおドラフトページが<b>編集中</b>となっている間は何度でも編集が可能です。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP3</span>
+                <div class="inner-content">
+                  <h3 class="title">内容精査・審査</h3>
+                  <p class="description">
+                    ご入力いただいたデータおよび資料などの内容精査・審査を行います。審査結果はメールにてご連絡いたします。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP4</span>
+                <div class="inner-content">
+                  <h3 class="title">イベントページ公開</h3>
+                  <p class="description">
+                    審査通過後、STEP2で作成した採用募集ページを公開します。
+                    なお採用募集ページは編集可能ですが、事前にご連絡いただく必要があります。
+                    公開期間は基本的に企業様が指定した期間になりますが、規約に違反した場合は告知なしに一次閉鎖させていただく可能性があります。
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-40">
+      <div class="col-md-4 col-md-offset-4">
+        <% if user_signed_in? && current_user.company.present? && current_user.company.status == Company::S_ACTIVE %>
+          <%= link_to 'お申込みはこちら', mypage_company_eventorder_agreement_path, class: 'btn btn-lg btn-block btn-info' %>
+        <% else %>
+          <%= link_to 'お申込みはこちら', 'javascript:;', class: 'btn btn-lg btn-block btn-info submit' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  a.disabled{
+    pointer-events: none;
+  }
+</style>
+
+
+<%= jquery_view('views.pages.FundingView', turbolinks: true) %>

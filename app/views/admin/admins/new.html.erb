@@ -1,0 +1,26 @@
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <h2 class="box-title">管理者の追加</h2>
+    </div>
+    <div class="box-body">
+      <%= simple_form_for([:admin, @admin]) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :name, label: '管理者名', autofocus: true %>
+            <%= f.input :email %>
+            <%= f.input :password, required: true, hint: ("#{@minimum_password_length}文字以上" if @minimum_password_length) %>
+            <%= f.input :password_confirmation, required: true %>
+          </div>
+          <div class="col-md-6">
+            <%= f.association :roles, as: :radio_buttons, include_blank: false, label_method: lambda {|role| AdminRole.names.key(role.id) } %>
+          </div>
+        </div>
+
+        <%= f.button :submit, '登録', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</section>

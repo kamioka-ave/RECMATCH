@@ -1,0 +1,78 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="ja"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="ja"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja"> <!--<![endif]-->
+<%= render 'layouts/head' %>
+<body class="<%= yield(:page_classes) %>">
+<div id="sb-site">
+  <%= render 'layouts/header' %>
+  <div class="content-wrapper">
+      <div class="menu-wrapper">
+        <div class="container text-center">
+          <ul class="tab-nav">
+            <li class="<%= 'active' if controller.controller_path == 'mypage/pages' %>">
+              <%= link_to 'ホーム', mypage_student_path %>
+            </li>
+            <li class="<%= 'active' if controller.controller_path == 'mypage/bookings' %>">
+              <%= link_to '予定', mypage_booking_path %>
+            </li>
+            <li class="<%= 'active' if controller.controller_path == 'mypage/offers' %>">
+              <%= link_to mypage_offers_path do %>
+                オファー
+                <% if Offer.where('student_id = ? AND status = ? AND closing_date > ?',current_user.student.id, Offer::S_NEW, Time.zone.now).size > 0 %>
+                  <span class="badge" style="background-color:red;"><%= Offer.where('student_id = ? AND status = ?',current_user.student.id, Offer::S_NEW).size %></span>
+                <% end %>
+              <% end %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/students/chat_messages' %>">
+              <%= link_to mypage_student_chat_messages_path do %>
+                チャット
+                <% if ChatMessage.where('student_id = ? AND direct = ? AND kidoku = ?', current_user.student.id, false, false).size > 0 %>
+                  <span class="badge" style="background-color:red;"><%= ChatMessage.where('student_id = ? AND direct = ? AND kidoku = ?', current_user.student.id, false, false).size %></span>
+                <% end %>
+              <% end %>
+            </li>
+            <li class="<%= 'active' if controller.controller_path == 'mypage/reports' %>">
+              <%= link_to mypage_reports_path do %>
+                エントリーシート
+                <% if Report.where(user_id: current_user.id).empty? %>
+                  <span class="badge" style="background-color:red;">!</span>
+                <% end %>
+              <% end %>
+            </li>
+            <% if false %>
+            <% if Student::Applicant.find_by(student_id: current_user.student.id).blank? || Student::Applicant.find_by(student_id: current_user.student.id).status != Student::Applicant::S_FINISHED %>
+            <li class="<%= 'active' if controller.controller_path == 'mypage/students/applicants' %>">
+              <%= link_to mypage_student_applicants_path do %>
+                電話面談予約
+                <% if Student::Applicant.find_by(student_id: current_user.student.id).blank? %>
+                  <span class="badge" style="background-color:red;">!</span>
+                <% end %>
+              <% end %>
+            </li>
+            <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% unless Rails.env.production? %>
+      <%= yield :extra_content %>
+    <% end %>
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'mypage/profiles/thumb' %>
+          </div>
+          <div class="col-md-9">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'layouts/footer' %>
+</div>
+</body>
+</html>

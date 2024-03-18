@@ -1,0 +1,123 @@
+<div class="introduction mb-25">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h1>学生検索</h1>
+          <p>学生の検索条件を選択できます。<i class="fa fa-angle-double-down" aria-hidden="true"></i>から検索フォームを表示できます。</p>
+        </div>
+        <div class="card-body card-padding">
+          <div class="text-center" style="margin: -20px;">
+          <button type="button" class="btn" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+          </button>
+          </div>
+          <%= simple_form_for(SearchStudent.new, url: mypage_company_search_students_path, method: 'get' ) do |f| %>
+            <%= f.error_notification %>
+            <div class="collapse" id="collapseExample">
+              <div class="border p-3">
+                <h3>学生の自己PR</h3>
+                  <div class="row">
+                  <div class="col-md-4">
+                    <%= f.input :mypr, collection: Report.names_with_type, label: '自己PR項目', hint: '学生に記入いただいた自己PRのテーマを選択できます。' %>
+                  </div>
+                </div>
+                <h3>学生のポテンシャル項目</h3>
+                <p style="padding-bottom: 20px;">
+                  下記項目はRECMATCH所定の<a href="#">テスト・面談</a>に基づき算出された5段階評価における3.5以上の得点を持つ学生を抽出します。<br>
+                  必要な項目のチェックボックスに「はい」を選択してください。必要でない項目は「いいえ」または何もチェックをつけずに検索してください。
+                </p>
+                <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= f.input :communication, as: :radio_buttons, label: 'コミュニケーション力', hint: '(伝える力、聞く力)' %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= f.input :chalenge, as: :radio_buttons, label: 'チャレンジ精神', hint: '(変革する力、バイタリティ)' %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= f.input :commit, as: :radio_buttons, label: 'コミット力', hint: '(目標決定、やり切る力)' %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= f.input :teamwork, as: :radio_buttons, label: 'チームワーク力', hint: '(協調性、チーム志向)' %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= f.input :leader, as: :radio_buttons, label: 'リーダーシップ力', hint: '(周囲を巻き込む力、主導力)' %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= f.input :logical, as: :radio_buttons, label: '論理的思考力', hint: '(思考力、一貫性ある考え方)' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <canvas id="canvasChart" width="300px" height="300px">
+                  </canvas>
+                </div>
+              </div>
+                <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                    <%= f.button :submit, '検索する', class: 'btn-lg btn-block btn-info' %>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1>学生一覧</h1>
+      </div>
+      <div class="card-body card-padding">
+        <table class="table">
+        <thead>
+          <tr>
+          <th>Img</th>
+          <th>ユーザ名</th>
+          <th>性別</th>
+          <th>大学</th>
+          <th>志望業界</th>
+          <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @students.each.with_index(1) do |d, i| %>
+          <tr>
+            <td width="10%">
+              <%= profile_image(d.profile, width: '100%', alt: d.profile.name) %>
+            </td>
+            <td><%= d.nickname %></td>
+            <td><%= Student.names_with_gender.key(d.gender) %></td>
+            <td><%= University.names_with_univ.key(d.university) %></td>
+            <td>
+              1.<%= Student.names_with_industry.key(d.industry_1) %>/<%= Student.names_with_occupation.key(d.occupation_1) %>
+              <% if !d.industry_2.nil? %>
+                <br>2.<%= Student.names_with_industry.key(d.industry_2) %>/<%= Student.names_with_occupation.key(d.occupation_2) %>
+              <% end %>
+              <% if !d.industry_3.nil? %>
+                <br>3.<%= Student.names_with_industry.key(d.industry_3) %>/<%= Student.names_with_occupation.key(d.occupation_3) %>
+              <% end %>
+            </td>
+            <td><%= link_to '詳細', mypage_company_search_student_path(d), class: 'btn btn-xs btn-info-o open' %></td>
+          </tr>
+          <% end %>
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= jquery_view('views.mypage.companies.chart.SearchChartView', turbolinks: true) %>

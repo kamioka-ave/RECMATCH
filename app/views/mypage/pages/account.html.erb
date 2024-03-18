@@ -1,0 +1,75 @@
+<% content_for(:page_classes) { 'mypage pages account' } %>
+
+<ul class="nav nav-pills nav-stacked">
+  <li>
+    <%= link_to edit_mypage_profile_path do %>
+      <div class="row">
+        <div class="col-md-4 title">
+          <i class="fa fa-arrow-circle-right"></i> ユーザー情報編集
+        </div>
+        <div class="col-md-8">
+          ニックネーム、プロフィール写真、自己紹介などを編集できます。
+        </div>
+      </div>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to edit_user_registration_path do %>
+      <div class="row">
+        <div class="col-md-4 title">
+          <i class="fa fa-arrow-circle-right"></i> パスワードの変更
+        </div>
+        <div class="col-md-8">
+          ログイン時のパスワードを変更できます。
+        </div>
+      </div>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to edit_mypage_email_path do %>
+      <div class="row">
+        <div class="col-md-4 title">
+          <i class="fa fa-arrow-circle-right"></i> メールアドレスの変更
+        </div>
+        <div class="col-md-8">
+          ご登録中のメールアドレスを変更できます。
+        </div>
+      </div>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to mypage_user_connections_path do %>
+      <div class="row">
+        <div class="col-md-4 title">
+          <i class="fa fa-arrow-circle-right"></i> 外部サービス連携
+        </div>
+        <div class="col-md-8">
+          FacebookやTwitterでログインできるようになります。
+        </div>
+      </div>
+    <% end %>
+  </li>
+  <li>
+    <% if (current_user.student.present? && (!current_user.orders.empty? || !current_user.wait_orders.empty?)) || (current_user.company.present? && !current_user.company.project.blank?) %>
+      <div class="row no-link">
+        <div class="col-md-4 title">
+          <i class="fa fa-arrow-circle-right"></i> 退会
+        </div>
+        <div class="col-md-8">
+          現時点での退会はできません。ご不明な点は、お手数ですが<%= link_to 'こちら', contact_path, class: 'text-info' %>よりお問合せください。
+        </div>
+      </div>
+    <% else %>
+      <%= link_to mypage_quit_path do %>
+        <div class="row">
+          <div class="col-md-4 title">
+            <i class="fa fa-arrow-circle-right"></i> 退会
+          </div>
+          <div class="col-md-8">
+            注意事項を必ずお読みください
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </li>
+</ul>

@@ -1,0 +1,188 @@
+<div id="form_view">
+  <%= simple_form_for(@identification, url: admin_user_identification_path(@user)) do |f| %>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="box">
+          <div class="box-body">
+            <%= f.error_notification %>
+            <%= f.hidden_field :user_id %>
+
+            <%= f.input :identification_type, collection: Identification.names_with_identification_type, as: 'radio_buttons' %>
+
+            <div class="mb-20">
+              <div id="driver_license" style="display: none">
+                <%= content_for(:driver_license1) do %>
+                  <% if @identification.driver_license1.cached? %>
+                    <%= @identification.driver_license1.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :driver_license1, hint: content_for(:driver_license1) %>
+                <%= f.hidden_field :driver_license1_cache if @identification.driver_license1.cached? %>
+                <span id="preview_driver_license1" class="preview" style="display: none"></span>
+
+                <%= content_for(:driver_license2) do %>
+                  <% if @identification.driver_license2.cached? %>
+                    <%= @identification.driver_license2.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :driver_license2, hint: content_for(:driver_license2) %>
+                <%= f.hidden_field :driver_license2_cache if @identification.driver_license2.cached? %>
+                <span id="preview_driver_license2" class="preview" style="display: none"></span>
+              </div>
+
+              <div id="passport" style="display: none">
+                <%= content_for(:passport1) do %>
+                  <% if @identification.passport1.cached? %>
+                    <%= @identification.passport1.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :passport1, hint: content_for(:passport1) %>
+                <%= f.hidden_field :passport1_cache if @identification.passport1.cached? %>
+                <span id="preview_passport1" class="preview" style="display: none"></span>
+
+                <%= content_for(:passport2) do %>
+                  <% if @identification.passport2.cached? %>
+                    <%= @identification.passport2.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :passport2, hint: content_for(:passport2) %>
+                <%= f.hidden_field :passport2_cache if @identification.passport2.cached? %>
+                <span id="preview_passport2" class="preview" style="display: none"></span>
+              </div>
+
+              <div id="resident_register" style="display: none">
+                <%= content_for(:resident_register) do %>
+                  <% if @identification.resident_register.cached? %>
+                    <%= @identification.resident_register.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :resident_register, hint: content_for(:resident_register) %>
+                <%= f.hidden_field :resident_register_cache if @identification.resident_register.cached? %>
+                <span id="preview_resident_register" class="preview" style="display: none"></span>
+
+                <%= content_for(:resident_register_back) do %>
+                  <% if @identification.resident_register_back.cached? %>
+                    <%= @identification.resident_register_back.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :resident_register_back, hint: content_for(:resident_register_back) %>
+                <%= f.hidden_field :resident_register_back_cache if @identification.resident_register_back.cached? %>
+                <span id="preview_resident_register_back" class="preview" style="display: none"></span>
+              </div>
+
+              <div id="mypage_number" style="display: none">
+                <%= content_for(:mypage_number1) do %>
+                  <% if @identification.mypage_number1.cached? %>
+                    <%= @identification.mypage_number1.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :mypage_number1, hint: content_for(:mypage_number1) %>
+                <%= f.hidden_field :mypage_number1_cache if @identification.mypage_number1.cached? %>
+                <span id="preview_mypage_number1" class="preview" style="display: none"></span>
+              </div>
+
+              <div id="public_receipt1" class="mb-20">
+                <%= content_for(:public_receipt1) do %>
+                  <% if @identification.public_receipt1.cached? %>
+                    <%= @identification.public_receipt1.filename %><br>
+                  <% end %>
+                <% end %>
+                <%= f.input :public_receipt1, hint: content_for(:public_receipt1) %>
+                <%= f.hidden_field :public_receipt1_cache if @identification.public_receipt1.cached? %>
+                <span id="preview_public_receipt1" class="preview" style="display: none"></span>
+                <% if @identification.public_receipt1.present? || @identification.public_receipt1.cached? %>
+                  <div class="checkbox">
+                    <label>
+                      <%= f.check_box :remove_public_receipt1 %> 削除する
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+
+              <div id="public_receipt2" class="mb-20">
+                <%= content_for(:public_receipt2) do %>
+                  <% if @identification.public_receipt2.cached? %>
+                    <%= @identification.public_receipt2.filename %><br>
+                  <% end %>
+                  本人確認資料の住所と現住所（登録の住所）が異なる場合に必要です
+                <% end %>
+                <%= f.input :public_receipt2, label: false, hint: content_for(:public_receipt2) %>
+                <%= f.hidden_field :public_receipt2_cache if @identification.public_receipt2.cached? %>
+                <span id="preview_public_receipt2" class="preview" style="display: none"></span>
+                <% if @identification.public_receipt2.present? || @identification.public_receipt2.cached? %>
+                  <div class="checkbox">
+                    <label>
+                      <%= f.check_box :remove_public_receipt2 %> 削除する
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+
+              <div id="others" style="display: none">
+                <%= content_for(:others1) do %>
+                  <% if @identification.others1.cached? %>
+                    <%= @identification.others1.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :others1, hint: content_for(:others1) %>
+                <%= f.hidden_field :others1_cache if @identification.others1.cached? %>
+                <span id="preview_others1" class="preview" style="display: none"></span>
+
+                <%= content_for(:others1_back) do %>
+                  <% if @identification.others1_back.cached? %>
+                    <%= @identification.others1_back.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :others1_back, hint: content_for(:others1_back) %>
+                <%= f.hidden_field :others1_back_cache if @identification.others1_back.cached? %>
+                <span id="preview_others1_back" class="preview" style="display: none"></span>
+
+                <%= content_for(:others2) do %>
+                  <% if @identification.others2.cached? %>
+                    <%= @identification.others2.filename %>
+                  <% end %>
+                <% end %>
+                <%= f.input :others2, hint: content_for(:others2) %>
+                <%= f.hidden_field :others2_cache if @identification.others2.cached? %>
+                <span id="preview_others2" class="preview" style="display: none"></span>
+              </div>
+            </div>
+
+            <%= f.input :note %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">メニュー</h2>
+          </div>
+          <div class="box-body">
+            <%= f.input :save_history, as: :boolean, label: '履歴を残す' %>
+          </div>
+          <div class="box-footer">
+            <%= f.button :submit, class: 'btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%=
+  jquery_view(
+    'views.admin.users.identifications.FormView',
+    driverLicense1: @identification.driver_license1.present? ? @identification.driver_license1.url : '',
+    driverLicense2: @identification.driver_license2.present? ? @identification.driver_license2.url : '',
+    passport1: @identification.passport1.present? ? @identification.passport1.url : '',
+    passport2: @identification.passport2.present? ? @identification.passport2.url : '',
+    residentRegister: @identification.resident_register.present? ? @identification.resident_register.url : '',
+    residentRegisterBack: @identification.resident_register_back.present? ? @identification.resident_register_back.url : '',
+    myNumber1: @identification.mypage_number1.present? ? @identification.mypage_number1.url : '',
+    publicReceipt1: @identification.public_receipt1.present? ? @identification.public_receipt1.url : '',
+    publicReceipt2: @identification.public_receipt2.present? ? @identification.public_receipt2.url : '',
+    others1: @identification.others1.present? ? @identification.others1.url : '',
+    others1Back: @identification.others1_back.present? ? @identification.others1_back.url : '',
+    others2: @identification.others2.present? ? @identification.others2.url : ''
+  )
+%>

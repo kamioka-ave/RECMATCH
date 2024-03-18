@@ -1,0 +1,84 @@
+<style>
+  .md3-text {
+    font-size: 18px;
+    border-left: solid;
+  }
+  h1.recruit-head {
+    color: #2196F3;
+  }
+  h3.box-title{
+    color: #5E5E5E;
+  }
+</style>
+<% if @events.size > 0 %>
+  <div id="index_view" class="card" style="border: none;">
+    <div class="card-header">
+      <h1 class="recruit-head">その他の会社説明会・イベント</h1>
+      <br>
+      <% @events.each do |e| %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= image_tag(@company.image.url, width: '100%', alt: @company.name) %>
+          </div>
+          <div class="col-md-9">
+            <h2><%= e.title %></h2>
+            <br>
+            <div class="row">
+              <div class="col-md-4 col-xs-6">
+                イベントタイプ：
+              </div>
+              <div class="col-md-8 col-xs-6">
+                <%= Event.names_with_event_type.key(e.event_type) %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-xs-4">
+                開催日時：
+              </div>
+              <div class="col-md-8 col-xs-8">
+                <%= l(e.start) %><br>〜<br><%= l(e.end)%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-xs-6">
+                開催場所：
+              </div>
+              <div class="col-md-8 col-xs-6">
+                <%= e.address %>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <%= link_to 'イベントページ', event_path(e), class: 'btn btn-lg btn-block btn-info-o' %>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-4">
+                <% if !user_signed_in? %>
+                  <%= link_to new_user_registration_path, class:"btn btn-lg btn-block btn-success-o" do %>
+                      会員登録して応募する
+                    <% end %>
+                  <% elsif user_signed_in? && current_user.has_role?(:company) %>
+                    <%= link_to '応募できません', '#', class: 'btn btn-lg btn-block btn-gray', disabled:true %>
+                  <% elsif user_signed_in? && current_user.has_role?(:student) && EventApplicant.find_by(student_id: current_user.student.id).present? %>
+                    <%= link_to '応募済み', '#', class: 'btn btn-lg btn-block btn-gray', disabled:true %>
+                  <% else %>
+                    <%= link_to '応募する', submit_event_applicant_path(e), class: 'btn btn-lg btn-block btn-success-o', method: "post" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <br>
+    </div>
+  </div>
+<% else %>
+<div id="index_view" class="card">
+  <div class="card-header">
+    <h1 class="recruit-head">説明会・イベント情報</h1>
+    <br>
+    説明会・イベントの予定はありません。
+  </div>
+</div>
+<% end %>

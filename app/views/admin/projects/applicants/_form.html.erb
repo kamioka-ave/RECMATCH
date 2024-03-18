@@ -1,0 +1,26 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">出資希望しますか？</h4>
+    </div>
+    <%= simple_form_for(@applicant, url: project_applicants_path(@project), remote: true) do |f| %>
+      <div class="modal-body">
+        <%= f.error_notification %>
+        <%= f.hidden_field :project_id, value: @project.id %>
+        <%= f.hidden_field :student_id, value: @student.id %>
+        <p>出資希望を申請しても再募集が保証されるわけではありません。また、RECMATCHにご登録されているメールアドレスに出資を希望される発行者に関する情報をお知らせします。</p>
+      </div>
+      <div class="modal-footer">
+        <div class="clearfix">
+          <div class="pull-left">
+            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+          </div>
+          <div class="pull-right">
+            <%= f.button :submit, '出資希望', class: 'btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

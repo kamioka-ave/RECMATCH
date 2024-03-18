@@ -1,0 +1,41 @@
+<div class="details-container">
+  <div class="mb-10">
+    <div class="mb-10 f-16 f-600">
+        <div class="mb-9">
+          <%= @company.name %>
+        </div>
+    </div>
+    <div class="clearfix">
+      <i class="fa fa-flag"></i> 所在地
+      <div class="pull-right">
+        <%= @company.prefecture.name %><%= @company.city %>
+      </div>
+    </div>
+    <div class="clearfix">
+      <i class="fa fa-address-card"></i> 代表取締役
+      <div class="pull-right">
+        <%= @company.president_last_name %> <%= @company.president_first_name %>
+      </div>
+    </div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-default" style="width: 100%">
+      <i class="fa fa-industry"></i> 業種<span class="pull-right"><%= @company.business_type.name %></span>
+    </div>
+  </div>
+  <div class="mb-10">
+    <div class="clearfix">
+      <i class="fa fa-clock-o"></i> オファー締切
+      <div class="pull-right">
+        <%= l(@project.entry_closed) %>(23時59分迄)
+      </div>
+    </div>
+  </div>
+  <div id="applicant" class="mt-10"></div>
+  <div class="mt-10">
+    <%= link_to 'この募集は終了しました', '#', class: 'btn btn-lg btn-block btn-gray', disabled:true %>
+  </div>
+</div>
+
+<div id="order_wait_modal" class="modal fade" tabindex="-1"></div>
+<div id="applicant_modal" class="modal fade" tabindex="-1"></div>

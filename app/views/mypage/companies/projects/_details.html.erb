@@ -1,0 +1,50 @@
+<div class="events details <%= defined?(xs_half) && xs_half ? 'half' : '' %>">
+  <% unless defined?(xs_half) && xs_half %>
+    <div class="<%= succeeded ? 'details-body-small' : 'details-body' %>">
+      <div class="project-properties">
+        <div class="mb-5 f-17 clearfix">
+          <div class="media">
+            <div class="pull-left">
+              <%= image_tag(project.company.image.thumb.url, width: 40, class: 'media-object') if project.company.present? && project.company.image.present? %>
+              <%= image_tag('img_50.jpg', width: 40, class: 'media-object') if project.company.present? && project.company.image.blank? %>
+            </div>
+            <div class="media-body">
+              <%= link_to project_path(project) do %>
+                <div class="c-gray-darker pull-left" style="color:#2196F3;font-size: 16px;"><b><%= project.company.name %></b></div>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-5 f-17 clearfix" style="border-radius: 5px 5px 5px 5px;background-color:<%= Project.css_with_colors[project.company.business_type_id] %>">
+            <div class="pull-left p-10 text-muted-type">
+              <i class="fa fa-industry" aria-hidden="true"></i>
+              <small class="f-12 text-muted-type">業界</small>
+            </div>
+            <div class="pull-right p-10">
+              <small class="f-12 text-muted-type"><%= project.company.business_type.name %></small>
+            </div>
+          </div>
+          <div class="mb-5 f-17 clearfix">
+            <div class="pull-left">
+              <span class="circle-15">
+                <i class="fa fa-map-marker"></i>
+              </span>
+              <small class="f-12 text-muted">本社所在地</small>
+            </div>
+            <div class="pull-right c-gray-darker"><small class="f-12 text-muted"><%= project.company.prefecture.name %></small></div><br>
+          </div>
+          <div class="mb-5 f-17 clearfix">
+            <div class="pull-left">
+              <i class="fa fa-clock-o"></i>
+              <small class="f-12 text-muted">オファー締切</small>
+            </div>
+            <div class="pull-right c-gray-darker">
+              <small class="f-12 text-muted">
+                <%= l(project.entry_closed, format: :middle) %>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

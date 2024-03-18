@@ -1,0 +1,5 @@
+<%= simple_form_for(message, url: message_product_order_path(product_id: product), remote: true) do |f| %>
+  <%= f.hidden_field :recipients, value: product.project.company.user_id %>
+  <%= f.input :body, label: false, as: "text", input_html: {rows: 6} %>
+  <%= f.button :submit, "送信する", data: {disable_with: '送信中'}, class: "btn-info" %>
+<% end %>

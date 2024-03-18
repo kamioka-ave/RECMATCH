@@ -1,0 +1,236 @@
+$card-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+
+.card {
+  position: relative;
+  background: none;
+  margin-bottom: $grid-gutter-width;
+  border-radius: 2px;
+  background: #fff;
+
+  h1 span{
+    border-bottom: solid 5px #000080;
+    padding:10px;
+    font-size: 25px;
+  }
+  h2 span{
+    border-bottom: solid 4px #000080;
+    padding:7px;
+    font-size: 17px;
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    margin-bottom: 10px;
+  }
+
+  .card-header {
+    position: relative;
+
+    &:not(.ch-alt):not(.small) {
+      @media screen and (min-width: $screen-sm-min) {
+        padding: 23px 24px;
+      }
+
+      @media screen and (max-width: $screen-sm-max) {
+        padding: 18px;
+      }
+    }
+
+    &.ch-alt {
+      @media screen and (min-width: $screen-sm-min) {
+        padding: 23px 26px;
+      }
+
+      @media screen and (max-width: $screen-sm-max) {
+        padding: 18px 18px 28px;
+      }
+
+      &:not([class*="bgm-"]) {
+        background-color: #f7f7f7;
+      }
+    }
+
+    &.small {
+      @media screen and (min-width: $screen-sm-min) {
+        padding: 15px;
+      }
+
+      @media screen and (max-width: $screen-sm-max) {
+        padding: 15px;
+      }
+
+      .action {
+        position: absolute;
+        right: 15px;
+        z-index: 2;
+        top: 10px;
+      }
+
+      .actions {
+        position: absolute;
+        right: 10px;
+        z-index: 2;
+        top: 5px;
+      }
+    }
+
+    h1 {
+      margin: 0;
+
+      small {
+        display: block;
+        margin-top: 8px;
+        color: #AEAEAE;
+        line-height: 160%;
+      }
+    }
+
+    h2 {
+      margin: 0;
+      line-height: 100%;
+      font-size: 17px;
+      font-weight: 600;
+
+      small {
+        display: block;
+        margin-top: 8px;
+        color: #AEAEAE;
+        line-height: 160%;
+      }
+    }
+
+    h3 {
+      margin: 0;
+      line-height: 100%;
+      font-size: 15px;
+      font-weight: 600;
+
+      small {
+        display: block;
+        margin-top: 8px;
+        color: #AEAEAE;
+        line-height: 160%;
+      }
+    }
+
+    h3 span{
+    border-bottom: solid 3px #000080;
+    padding:8px;
+    }
+
+    &[class*="bgm-"] {
+      h2,
+      h2 small,
+      h3,
+      h3 small {
+        color: #fff;
+      }
+    }
+
+    .actions {
+      position: absolute;
+      right: 10px;
+      z-index: 2;
+      top: 15px;
+    }
+
+    .nav {
+      position: absolute;
+      right: 10px;
+      z-index: 2;
+      top: 15px;
+    }
+
+    .btn-float {
+      right: 25px;
+      bottom: -23px;
+      z-index: 1;
+    }
+  }
+
+  .card-body,
+  .card-footer {
+    border-radius:2px;
+    &.card-padding {
+      @media screen and (min-width: $screen-sm-min) {
+        padding: 23px 26px;
+      }
+
+      @media screen and (max-width: $screen-sm-max) {
+        padding: 18px;
+      }
+    }
+
+    &.card-padding-sm {
+      padding: 10px;
+    }
+
+    .actions {
+      .tmn-counts {
+        position: absolute;
+        font-style: normal;
+        color: #fff;
+        background: $brand-danger;
+        padding: 1px 5px;
+        border-radius: 2px;
+        right: 0px;
+        top: -3px;
+        font-size: 10px;
+        line-height: 15px;
+        @media screen and (max-width: $screen-xs) {
+          position: static;
+          border-radius: 50%;
+          padding: 3px 3px;
+        }
+      }
+    }
+  }
+
+  .with-border {
+    border-bottom: 1px solid #F0F0F0;
+  }
+}
+
+.card-header:not(.ch-alt):not([class*="bgm-"]) + .card-padding {
+  padding-top: 0;
+}
+
+.user-block {
+  @include clearfix();
+  img {
+    width: 40px;
+    height: 40px;
+    float: left;
+  }
+  .username,
+  .description,
+  .comment {
+    display: block;
+    margin-left: 50px;
+  }
+  .username {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .description {
+    color: #999;
+    font-size: 13px;
+  }
+  &.user-block-sm {
+    img {
+      @extend .img-sm;
+    }
+    .username,
+    .description,
+    .comment {
+      margin-left: 40px;
+    }
+    .username {
+      font-size: 14px;
+    }
+  }
+}
+
+.card.shadow {
+  box-shadow: $card-shadow;
+  border: none;
+}

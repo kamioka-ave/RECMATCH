@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-body card-padding">
+    <div class="card-header small"><h3>キーワード検索</h3></div>
+    <%= search_form_for(@q, url: search_questions_path, class: 'form-inline') do |f| %>
+      <div class="input-group">
+        <%= f.text_field :name_or_asking_or_answer_cont, class: 'form-control', placeholder: 'キーワード' %>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-gray">
+            <span class="glyphicon glyphicon-search glyphicon-20"></span>
+          </button>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if controller.action_name != 'index' %>
+  <div class="card">
+    <div class="card-header small">
+      <h3>カテゴリー</h3>
+    </div>
+    <div class="card-body">
+      <ul class="nav nav-pills nav-stacked">
+        <% QuestionCategory.names_with_type.each do |k, v| %>
+          <li>
+            <%= link_to questions_path(anchor: v.underscore) do %>
+              <i class="fa fa-angle-double-right"></i> <%= k %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-header small">
+    <h3>初めての方へ</h3>
+  </div>
+  <div class="card-body">
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="/about#cont1">学生募集をしたい</a></li>
+      <li><a href="/about#cont2">企業の選考に応募したい</a></li>
+    </ul>
+  </div>
+</div>
+
+<% if !@most_viewed_questions.nil? %>
+  <div class="card">
+    <div class="card-header small">
+      <h3>閲覧の多いFAQ</h3>
+    </div>
+    <div class="card-body">
+      <div class="nav nav-pills nav-stacked">
+        <% @most_viewed_questions.each do |q| %>
+          <% if q.name.size > 12 %>
+            <li><%= link_to q.name[0...12] + ' ...', q %></li>
+          <% else %>
+            <li><%= link_to q.name, q %></li>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

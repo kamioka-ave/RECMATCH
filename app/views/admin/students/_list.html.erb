@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th><%= sort_link(@q, :id, t('activerecord.attributes.admin/students_display.identifier')) %></th>
+    <th><%= sort_link(@q, :full_name, t('activerecord.attributes.admin/students_display.full_name')) %></th>
+    <th><%= sort_link(@q, :status, t('activerecord.attributes.admin/students_display.status')) %></th>
+    <th><%= sort_link(@q, :created_at, t('activerecord.attributes.admin/students_display.student_created_at')) %></th>
+    <th><%= sort_link(@q, :user_current_sign_in_at, t('activerecord.attributes.admin/students_display.current_sign_in_at')) %></th>
+    <th><%= sort_link(@q, :introduce, t('activerecord.attributes.admin/students_display.introduce')) %></th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student.id %></td>
+      <td><%= student.last_name + student.first_name %></td>
+      <td>
+        <% if !student.status == Student::S_ACTIVATED && student.not_suitable? %>
+          登録中
+        <% else %>
+          登録済
+        <% end %>
+      </td>
+      <td><%= l(student.created_at.to_date) %></td>
+      <td>
+        <%= (Date.today - student.updated_at.to_date).to_i %>日前
+      </td>
+      <td><%= link_to student.introduce.present? ? '編集':'登録', edit_admin_student_introduce_path(student), remote: true, class: student.introduce.present? ? 'btn btn-xs btn-warning':'btn btn-xs btn-info' %></td>
+      <td><%= link_to '詳細', admin_student_path(student), class: 'btn btn-xs btn-info' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div id="introduce_modal" class="modal fade" tabindex="-1"></div>

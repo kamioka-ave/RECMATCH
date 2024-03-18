@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">カテゴリーを追加</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@staff_group_chat_category, url: admin_company_staff_group_chat_categories_path(@company, @staff), remote: true) do |f| %>
+        <%= f.association :group_chat_category, collection: @group_chat_categories,
+          selected: @current_group_chat_category&.id || @group_chat_categories.first.id, require: true %>
+        <%= f.button :submit, '追加', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+box: ruby:2.5.1
+services:
+  - id: mysql:5.7.19
+    env:
+      MYSQL_ROOT_PASSWORD: rootpasswd
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpasswd
+      MYSQL_DATABASE: recmatch_test
+build:
+    steps:
+        - script:
+            name: install apt-transport-https
+            code: |
+                apt-get update -y --force-yes
+                apt-get install -y --force-yes apt-transport-https
+        - script:
+            name: set nodejs emvironment
+            code: |
+                curl -sL https://deb.nodesource.com/setup_8.x | bash -
+                apt-get install -y --force-yes nodejs
+                npm install -g yarn
+                yarn install
+#        - script:
+#            name: install chrome headless
+#            code: |
+#                wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+#                echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+#                apt-get update -y --force-yes
+#                apt-get install -y --force-yes ca-certificates ttf-wqy-zenhei google-chrome-unstable
+#        - script:
+#            name: set browser
+#            code: export CHROME_BIN=/usr/bin/google-chrome-unstable
+        - script:
+            name: bundle - nokogiri use sys lib
+            code: bundle config build.nokogiri --use-system-libraries
+        - bundle-install
+        - script:
+            name: timezone
+            code: ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+        - script:
+            name: DB migrate
+            code: |
+                echo $MYSQL_PORT_3306_TCP_ADDR
+                echo $MYSQL_ENV_MYSQL_USER
+                echo $MYSQL_ENV_MYSQL_PASSWORD
+                export RECMATCH_DATABASE_HOST=$MYSQL_PORT_3306_TCP_ADDR
+                export RECMATCH_DATABASE_USERNAME=$MYSQL_ENV_MYSQL_USER
+                export RECMATCH_DATABASE_PASSWORD=$MYSQL_ENV_MYSQL_PASSWORD
+                bundle exec rails db:drop RAILS_ENV=test
+                bundle exec rails db:create RAILS_ENV=test
+                bundle exec rails db:migrate RAILS_ENV=test
+        - script:
+            name: rspec
+#            code: bundle exec rspec
+            code: bundle exec rspec spec/models
+deploy:
+    steps:
+        - script:
+            name: bundle - nokogiri use sys lib
+            code: bundle config build.nokogiri --use-system-libraries
+        - bundle-install
+        - script:
+            name: make .ssh directory
+            code: mkdir -p "$HOME/.ssh"
+        - create-file:
+            name: write ssh key
+            filename: $HOME/.ssh/id_rsa
+            overwrite: true
+            hide-from-log: true
+            content: $WERCKER_SSH_KEY_PRIVATE
+        - script:
+            name: set permissions for ssh key
+            code: chmod 0400 $HOME/.ssh/id_rsa
+        - script:
+            name: install ssh
+            code: sudo apt-get -y install openssh-client
+        - cap:
+            stage: $WERCKER_DEPLOYTARGET_NAME
+            tasks: deploy
+    after-steps:
+        - wantedly/pretty-slack-notify:
+            webhook_url: $SLACK_WEBHOOK_URL
+            channel: $SLACK_CHANNEL

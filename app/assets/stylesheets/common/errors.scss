@@ -1,0 +1,22 @@
+.errors {
+  background-color: #fff;
+  padding-top: 240px;
+  font-size: 16px;
+
+  h1 {
+    font-size: 32px;
+  }
+
+  a {
+    color: #009FED;
+  }
+
+  @media (max-width: 768px) {
+    padding: 120px 20px 0 20px;
+    font-size: 16px;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+}

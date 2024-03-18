@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">面談日の再調整依頼</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="pt-20">
+        ※面談日の再調整はチャットを利用することで効率的に計画できます。<br>
+        お済みでない方は<%= link_to 'チャット', mypage_student_chat_messages_path %>の利用をご検討ください。
+      </div>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@meet, url: change_make_date_mypage_student_project_applicant_path(@meet), remote: true, method: 'post') do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :status, value: ProjectMeet::S_ADJUST %>
+        <%= f.input :start, label: '開始日時' %>
+        <%= f.input :end, label: '終了日時' %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

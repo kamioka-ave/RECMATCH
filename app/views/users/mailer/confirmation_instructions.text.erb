@@ -1,0 +1,10 @@
+<%= @resource.last_name %>様
+
+平素よりRECMATCHをご利用いただきありがとうございます。
+以下のリンクをクリックして、メールアドレスの変更登録を完了してください。
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+※RECMATCHにご登録いただいたメールアドレス宛に自動送信しています。
+※このメールに心当たりのない場合や、ご不明な点がある場合は誠に恐縮ですが、下記お問い合わせフォームよりご連絡ください。
+<%= contact_url %>

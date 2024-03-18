@@ -1,0 +1,576 @@
+ja:
+  date:
+    abbr_day_names:
+    - 日
+    - 月
+    - 火
+    - 水
+    - 木
+    - 金
+    - 土
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 日曜日
+    - 月曜日
+    - 火曜日
+    - 水曜日
+    - 木曜日
+    - 金曜日
+    - 土曜日
+    formats:
+      default: "%Y年%-m月%-d日"
+      long: "%Y年%-m月%-d日(%a)"
+      middle: "%-Y/%-m/%-d"
+      short: "%-m/%-d"
+    month_names:
+    -
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 約1時間前
+        other: 約%{count}時間前
+      about_x_months:
+        one: 約1ヶ月前
+        other: 約%{count}ヶ月前
+      about_x_years:
+        one: 約1年前
+        other: 約%{count}年前
+      almost_x_years:
+        one: 1年弱前
+        other: "%{count}年弱前"
+      half_a_minute: 30秒前後前
+      less_than_x_minutes:
+        one: 1分以内前
+        other: "%{count}分未満前"
+      less_than_x_seconds:
+        one: 1秒以内前
+        other: "%{count}秒未満前"
+      over_x_years:
+        one: 1年以上前
+        other: "%{count}年以上前"
+      x_days:
+        one: 1日前
+        other: "%{count}日前"
+      x_minutes:
+        one: 1分前
+        other: "%{count}分前"
+      x_months:
+        one: 1ヶ月前
+        other: "%{count}ヶ月前"
+      x_seconds:
+        one: 1秒前
+        other: "%{count}秒前"
+    prompts:
+      day: 日
+      hour: 時
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+  helpers:
+    select:
+      prompt: 選択してください
+    submit:
+      create: 登録する
+      submit: 保存する
+      update: 更新する
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 0
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: 十億
+          million: 百万
+          quadrillion: 千兆
+          thousand: 千
+          trillion: 兆
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n%u"
+        units:
+          byte: バイト
+          gb: ギガバイト
+          kb: キロバイト
+          mb: メガバイト
+          tb: テラバイト
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: と
+      two_words_connector: と
+      words_connector: と
+  time:
+    am: 午前
+    formats:
+      default: "%Y年%-m月%-d日 %H:%M"
+      long: "%Y年%-m月%-d日(%a) %H:%M"
+      short: "%Y年%-m月%-d日"
+      short_with_0: "%Y年%m月%d日"
+    pm: 午後
+  sousa:
+    message:
+      create: "登録"
+      update: "編集"
+      destroy: "削除"
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      accepted: を受諾してください
+      blank: を入力してください
+      present: は入力しないでください
+      confirmation: と%{attribute}の入力が一致しません
+      empty: を入力してください
+      equal_to: は%{count}にしてください
+      even: は偶数にしてください
+      exclusion: は予約されています
+      greater_than: は%{count}より大きい値にしてください
+      greater_than_or_equal_to: は%{count}以上の値にしてください
+      inclusion: を入力してください
+      invalid: は不正な値です
+      less_than: は%{count}より小さい値にしてください
+      less_than_or_equal_to: は%{count}以下の値にしてください
+      not_a_number: は数値で入力してください
+      not_an_integer: は整数で入力してください
+      odd: は奇数にしてください
+      record_invalid: バリデーションに失敗しました %{errors}
+      restrict_dependent_destroy: "%{record}が存在しているので削除できません"
+      taken: はすでに存在します
+      too_long: は%{count}文字以内で入力してください
+      too_short: は%{count}文字以上で入力してください
+      wrong_length: は%{count}文字で入力してください
+      other_than: は%{count}以外の値にしてください
+      carrierwave_processing_error: 処理できませんでした
+      carrierwave_integrity_error: は許可されていないファイルタイプです
+      carrierwave_download_error: はダウンロードできません
+      extension_whitelist_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできるファイルタイプ: %{allowed_types}"
+      extension_blacklist_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできないファイルタイプ: %{prohibited_types}"
+      rmagick_processing_error: "rmagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+      mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+      min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
+      max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
+    template:
+      body: 次の項目を確認してください
+      header:
+        one: "%{model}にエラーが発生しました"
+        other: "%{model}に%{count}個のエラーが発生しました"
+    models:
+      user:
+        attributes:
+          password:
+            too_short: パスワードが短すぎます
+          confirmation_token:
+            invalid: 不正なトークンです
+          password_confirmation:
+            confirmation: パスワードが異なります
+      admin:
+        attributes:
+          password:
+            too_short: パスワードが短すぎます
+          confirmation_token:
+            invalid: 不正なトークンです
+          password_confirmation:
+            confirmation: パスワードが異なります
+  message_mailer:
+    new_message_email:
+      hello: 'こんにちは。Fundinnoです。'
+      message: "%{name}さんよりメッセージが届いています。"
+      subject: "件名:"
+      check: "次のURLからメッセージをチェックしてください。"
+  activerecord:
+    models:
+      user: ユーザー
+      student: 学生
+      company: 企業
+      project: 企業情報
+      order: 申込み
+    attributes:
+      user:
+        roles: RECMATCHでの役割
+        id: ユーザーID
+        id_string: ユーザーID（文字列）
+        email: Eメール
+        created_at: 登録日時
+        last_sign_in_at: 最終ログイン日時
+      admin:
+        name: 管理者名
+        roles: 権限
+      profile:
+        name: ニックネーム
+        name_kana: ひらがな
+        tel: 電話番号
+        gender: 性別
+        zip_code: 郵便番号
+        image: プロフィール写真
+        description: 自己紹介
+        receive_notification: RECMATCHからのお知らせを電子メールで受け取ることに同意します
+        use_social: 学生フォロー機能
+      project:
+        name: タイトル
+        user_id: ユーザー
+        categories: カテゴリ
+        company: 企業
+        company_id: 企業ID
+        short_description: 概要（255文字以内、metaのdescriptionなので適当に入力しないこと）
+        description: 詳細
+        company_info: 会社情報
+        solicit_info: 募集情報
+        risk_info: 企業のリスク等
+        image: カバー画像（16:9）
+        president_image: 代表のプロフィール画像
+        president_name: 代表の氏名
+        president_description: 代表のプロフィール
+        risk_summery: リスクについて（概要）
+        status: 状態
+        capital: 資本金（円）
+        support_phone: 電話番号
+        support_email: メールアドレス
+        updated_at: 更新日時
+        contract_attachment: 別紙のPDF
+      project_draft:
+        name: タイトル
+        image: カバー画像
+        president_image: 代表取締役写真
+        president_description: 代表取締役メッセージ
+        short_description: 概要
+        description: 詳細
+        company_info: 会社情報
+        number_hired: 採用予定人数
+        revision: リビジョン
+        salary: 給与例
+        process_selection: 選考過程
+        selection_condition: 応募条件など
+        start_at: 掲載開始日
+        end_at: 掲載終了日
+        entry_closed: エントリー締切日
+        student_assumption: 求める人物像
+        recruit_kind: 応募職種
+        duty_station: 勤務地
+        new_salary: 給与
+        allowance: 諸手当
+        raise_salary: 昇給
+        reward: 賞与
+        holiday: 休暇
+        insurance: 保険
+        welfare_program: 福利厚生
+        company_event: 社内イベント
+        sex_ratio: 男性女性比率
+        trial_period: 試用期間
+        other_welfare: その他
+        retired_ratio: 過去3年間の離職率
+        sex_ratio_hired: 過去3年間の女性採用率
+        continuous: 平均勤続年数
+        old: 平均年齢
+        training: 研修
+        vacation: 有給休暇消化率
+        childcare: 育児休暇取得人数
+        recruit_univ: 採用実績校
+        univ_depart: 採用実績学部
+      project_headline:
+        name: タイトル
+        body: 内容（改行可）
+      project_contract_image:
+        image: 別紙用の画像
+      project_company_president:
+        position: 役職
+        first_name: 名
+        first_name_kana: メイ
+        last_name: 姓
+        last_name_kana: セイ
+      pickup_project:
+        project: プロジェクト
+        rank: 表示順位
+      event:
+        title: イベントタイトル
+        start: 開始日時
+        end: 終了日時
+        image: イベントヘッダ画像
+        event_type: イベント種類
+        capacity: 定員
+        prefecture_id: 開催場所
+        address: 住所
+        description: イベント内容
+      slider:
+        slider_type: タイプ
+        project: 企業名
+        event: イベント
+        headline: NEWS
+        rank: 表示順位
+        image: 画像
+        bg_image: 背景画像
+      executed_project:
+        project: プロジェクト
+        rank: 表示順位
+      schedule:
+        date: 日付
+        title: タイトル
+        description: 内容
+      job:
+        title: タイトル
+        description: 募集内容
+        close_on: 募集締切日
+      student:
+        id: 学生ID
+        id_string: 学生ID（文字列）
+        user_id: ユーザーID
+        first_name: 名
+        first_name_kana: メイ
+        last_name: 姓
+        last_name_kana: セイ
+        full_name: 学生名
+        full_name_kana: 学生名（カナ）
+        gender: 性別
+        birth_on: 生年月日
+        zip_code: 郵便番号
+        prefecture_id: 都道府県
+        city: 市区町村
+        address1: 住所
+        address2: 建物名
+        phone: 自宅固定電話番号（要ハイフン）
+        phone_mobile: 携帯電話番号（要ハイフン）
+        bunri: 文系理系
+        university: 大学名
+        depart: 学部名
+        depart_detail: 学科・専攻名
+        graduation_year: 卒後年月
+        labo: 所属ゼミ・研究室名
+        circle: 所属サークル・愛好会名
+        club: 体育会経験
+        industry_1: 志望業界
+        occupaton_1: 志望職種
+        jobhuntingaxis: 就活軸
+        intern_is: インターン歴がある場合はチェックを入れてください
+        intern_company: インターン先企業名
+        intern_detail: 業務内容
+        toeic_score: TOEICスコア
+        mypr: キャッチコピー
+        qualifications: その他資格
+        card_note: 備考欄
+        lock_reason: 理由
+        identified_at: 本人確認実施日時
+        identifier: 本人確認実施者
+        approved_at: 学生登録承認日時
+        approver: 学生登録承認実施者
+        status: 学生状況
+        created_at: 登録日時
+        applied_at: 申請日時
+        locked_at: ロックされた日時
+        is_mail_target: メール対象フラグ
+        enable_reapply: 再申請
+      student_agreement:
+        pdf1: 利用規約
+        pdf2: プライバシーポリシー
+        pdf3: 資料3
+        pdf4: 資料4
+        pdf5: 資料5
+        agreement: 私は、「確認および同意事項」書面の内容に同意します。
+      company_agreement:
+        pdf1: 利用規約
+        pdf2: プライバシーポリシー
+        pdf3: 資料3
+        pdf4: 資料4
+        pdf5: 資料5
+        agreement: （当社は、上記各書面の内容を確認のうえ、これに同意します。）
+        terms10_agreed: （当社は、上記各書面の内容を確認のうえ、これに同意します。）
+      student/list:
+        name: リスト名
+      student/list_email:
+        subject: タイトル
+        plain: 内容
+      student/change_notification:
+        notified_at: 変更日
+        file: ファイル
+      headline:
+        title: タイトル
+        headline_type: NEWS種別
+        body: 本文（改行可）
+        published_at: 掲載日時
+      site:
+        project: 企業情報
+      report:
+        report_type: テーマ
+        sheet: 本文
+      student/applicant:
+        meet_type: 面談方法
+        book1_at: 第1希望面談日時
+        book2_at: 第2希望面談日時
+        book3_at: 第3希望面談日時
+      company:
+        id: 企業ID
+        id_string: 企業ID（文字列）
+        name: 会社名
+        name_kana: 会社名（カナ）
+        president_last_name: 代表者名（姓）
+        president_first_name: 代表者名（名）
+        president_last_name_kana: 代表者名（姓、カナ）
+        president_first_name_kana: 代表者名（名、カナ）
+        president_birth_on: 代表者の生年月日
+        zip_code: 郵便番号
+        prefecture_id: 都道府県
+        city: 市区町村
+        address1: 住所
+        address2: 建物名
+        phone: 法人電話番号
+        stage: ステージ
+        birth_on: 設立年月日
+        capital: 資本金
+        sales_profit: 売上高
+        website: ウェブサイトURL
+        image: 会社のロゴ
+        business_summary: 会社・事業紹介
+        business_philosophy: 企業理念、社訓など
+        hope: 業務内容・得られるスキル・キャリアプラン
+        business_shebang: 社風・社員の士気
+        main_shareholders: 主要株主名
+        financing: 資金調達実績
+        introduce_something: 〇〇紹介
+        business_type: 業種・主な事業
+        board_members: 役員数
+        has_board: 取締役会はありますか？
+        employees: 社員数
+        part_timers: アルバイト数
+        issuable_stocks: 発行可能株式数
+        competitive_strength: 自社の強み
+        competitive_difference: 他社との違い
+        target: 今後の展望
+        ceo_hopes: 学生へのメッセージ
+        capital_ties: 関係会社の有無
+        capital_ties_note: 関係会社が有の場合
+        president_name: 代表者氏名
+        president_name_kana: 代表者氏名（カナ）
+        issuer_id: 企業ID
+        creator_id: 登録者
+        status: 企業状況
+        updated_at: 更新日時
+        reject_mail: 却下メールを送信する
+        this_year_employments: 本年度採用予定人数
+        last_year_employments: 昨年度採用人数
+      company_balance_sheet:
+        date: 日付
+        name: タイトル
+        file: ファイル
+      company_graph:
+        name: タイトル
+        rank: 表示順位
+      company_graph_datum:
+        label: ラベル
+        data: 値
+      company/follower:
+        email: メールアドレス
+      company/followers_email:
+        subject: タイトル
+        plain: 内容
+      page_draft:
+        path: パス
+        page_type: 種類
+        title: タイトル
+        head: ソースコード（doctype htmlから）
+        body: 本文
+        description: メタディスクリプション（255文字以内）
+        keywords: メタキーワード（カンマ区切り）
+      category:
+        name: カテゴリ名
+      admin_company:
+        admin: 担当者
+      question:
+        question_category: カテゴリー
+        name: 質問タイトル
+        asking: 質問本文
+        answer: 回答文
+        rank: 表示順位
+      question_draft:
+        question_category: カテゴリー
+        name: 質問タイトル
+        asking: 質問本文
+        answer: 回答文
+        rank: 表示順位
+        status: 状態
+      question_category:
+        type: 大カテゴリー
+        name: カテゴリー名
+        rank: 表示順位
+      medium:
+        name: タイトル
+        url: URL
+        date: 掲載日
+      admin/students_display:
+        identifier: ID
+        full_name: 氏名
+        birth_on: 生年月日
+        birth_on_ja: 生年月日の和暦
+        status: 状態
+        student_created_at: 登録日
+        introduce: 紹介文
+        applied_at: 申請日
+        rejected_at: 却下日
+        approved_at: 承認日
+        waiting_activation_at: 承認待ち開始日
+        activated_at: アクティベート完了日
+        created_days: 登録中日数
+        applied_days: 承認待ち日数
+        locked_at: ロック
+        lock_reason: ロックの理由
+        current_sign_in_at: 直近のログイン日時
+        enable_reapply: 再申請
+      cancel_reason_question:
+        name: キャンセル理由
+        rank: 表示順位
+  notification:
+    company_message: "%{user_name}さんが %{category_name} でメッセージを送信しました。"
+    company_mention: "%{user_name}さんが %{category_name} であなたにメッセージを送信しました。"
+    supporter_message: "%{user_name}さんが %{company_name} の %{category_name} でメッセージを送信しました。"
+    supporter_mention: "%{user_name}さんが %{company_name} の %{category_name} であなたにメッセージを送信しました。"

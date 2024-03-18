@@ -1,0 +1,54 @@
+<% content_for(:page_classes) { 'mypage companies wizard agreements show' } %>
+
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'mypage/companies/wizard/progress', {step: 1} %>
+      </div>
+      <div class="card-body card-padding z-depth-1">
+        <%= simple_form_for(@agreement, url: mypage_company_wizard_agreement_path) do |f| %>
+          <% if @agreement.errors.any? %>
+            <div class="alert alert-danger">
+              <% @agreement.errors.full_messages.each do |msg| %>
+                <p><%= msg %></p>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-danger">※下記書面の内容をご確認ください</p>
+          <% end %>
+
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :pdf1, value: true %>
+          <%= f.hidden_field :pdf2, value: true %>
+
+          <table class="table mb-20">
+            <tr id="1">
+              <td><%= link_to '1. 利用規約', kiyaku_pages_path, class: 'pdf', target: '_blank' %></td>
+              <td id="confirm_pdf1"><%= @agreement.pdf1 ? '' : '' %></td>
+            </tr>
+            <tr id="2">
+              <td><%= link_to '2. プライバシーポリシー', privacy_policy_pages_path, class: 'pdf', target: '_blank' %></td>
+              <td id="confirm_pdf2"><%= @agreement.pdf2 ? '' : '' %></td>
+            </tr>
+          </table>
+
+          <div class="checkbox mb-50">
+            <%= f.input :agreement, as: :boolean, checked_value: true, unchecked_value: false %>
+          </div>
+
+          <div class="text-center">
+            <%= f.button :submit, '同意して次の画面へ', class: 'btn-lg btn-info' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(".pdf").on('click', function(event) {
+    var id = $(this).closest('tr').attr('id');
+    $("#confirm_pdf" + id).text("確認済");
+  });
+</script>

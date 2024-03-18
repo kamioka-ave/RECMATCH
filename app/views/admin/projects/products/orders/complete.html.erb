@@ -1,0 +1,148 @@
+<div class="row order-complete">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>投資の申込みを確定致しました！ありがとうございます。<small>引き続き募集成立までお待ちください。</small></h1>
+      </div>
+      <div class="card-body card-padding text-center">
+        <table class="table without-border f-40 mb-40 text-right">
+          <tbody>
+            <tr>
+              <td class="c-black"><%= number_to_currency(@solicited_prev, format: '%n%u', unit: '円') %></td>
+              <td><i class="zmdi zmdi-arrow-right"></i><td>
+              <td class="c-info"><%= number_to_currency(@product.project.solicited, format: '%n%u', unit: '円') %></td>
+            </tr>
+            <tr>
+              <td class="c-black"><%= @solicited_prev * 100 / @product.project.solicit %>%</td>
+              <td><i class="zmdi zmdi-arrow-right"></i><td>
+              <td class="c-info"><%= @product.project.solicited * 100 / @product.project.solicit %>%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-center mb-30">
+          <%= link_to notice_project_path(@product.project, format: 'pdf'), class: 'c-info', target: '_blank' do %>
+            <i class="fa fa-file-pdf-o pr-5"></i>契約締結前交付書面を表示する
+          <% end %>
+        </div>
+
+        <div class="text-center mb-40">
+          <%= link_to "#{@product.project.name}のページに戻る", @product.project, class: 'btn btn-lg btn-info' %>
+        </div>
+      </div>
+    </div>
+
+    <% if false && current_user.use_social? %>
+      <div class="card">
+        <div class="card-header ch-alt">
+          <h2>企業へ向けて応援メッセージをお願い致します！</h2>
+        </div>
+        <div id="message" class="card-body card-padding">
+          <%= render 'message', {message: @message, product: @product} %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if false %>
+      <div class="card">
+        <div class="card-header ch-alt">
+          <h2><%= @product.project.company.name %></h2>
+        </div>
+        <div class="card-body card-padding">
+          <p class="f-20 c-lime">ご投資ありがとうございます！私どもの、このプロジェクトをシェアして頂けるとうれしいです！</p>
+          <div class="well text-center">
+            <p>このプロジェクトを友人に広めよう！</p>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-2">
+                <%= link_to '', class: 'btn btn-block btn-social btn-facebook' do %>
+                  <i class="fa fa-facebook"></i> Facebookにシェア
+                <% end %>
+              </div>
+              <div class="col-md-4">
+                <%= link_to '', class: 'btn btn-block btn-social btn-twitter' do %>
+                  <i class="fa fa-twitter"></i> Twitterにシェア
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  gtag('event', 'purchase', {
+    "transaction_id": '<%= @order_id %>',
+    "affiliation": '<%= Settings.application_name %>',
+    "value": <%= @product.price %>,
+    "currency": "JPY",
+    "items": [{
+      "id": "<%= @product.id %>",
+      "name": "<%= @product.name %>",
+      "quantity": 1,
+      "price": <%= @product.price %>
+    }]
+  });
+</script>
+
+<% if Rails.env.production? %>
+  <script type="text/javascript">
+    fbq('track', 'Purchase', {content_ids:['<%= @product.project_id %>'], content_type:'product', value:'<%= @product.price %>', currency:'JPY'});
+    window.dataLayer = window.dataLayer || []
+    dataLayer.push({
+      'transactionId': '<%= Time.now.strftime("%Y%m%d%H%M%S")  %>',
+      'transactionTotal': <%= @product.price %>,
+      'transactionProducts': [{
+        'sku': '<%= @product.id %>',
+        'name': '<%= @product.title %>',
+        'price': <%= @product.price %>,
+        'quantity': 1
+      }]
+    });
+  </script>
+  <!-- リマーケティング タグの Google コード -->
+  <!--
+  リマーケティング タグは、個人を特定できる情報と関連付けることも、デリケートなカテゴリに属するページに設置することも許可されません。タグの設定方法については、こちらのページをご覧ください。
+  http://google.com/ads/remarketingsetup
+  --------------------------------------------------->
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 925126299;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+  <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/925126299/?guid=ON&amp;script=0"/>
+  </div>
+  </noscript>
+  <!-- Yahoo Code for your Target List -->
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    var yahoo_ss_retargeting_id = 1000343146;
+    var yahoo_sstag_custom_params = window.yahoo_sstag_params;
+    var yahoo_ss_retargeting = true;
+    /* ]]> */
+  </script>
+  <script type="text/javascript" src="//s.yimg.jp/images/listing/tool/cv/conversion.js">
+  </script>
+  <noscript>
+  <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="//b97.yahoo.co.jp/pagead/conversion/1000343146/?guid=ON&script=0&disvt=false"/>
+  </div>
+  </noscript>
+  <!-- Yahoo Code for your Target List -->
+  <script type="text/javascript" language="javascript">
+    /* <![CDATA[ */
+    var yahoo_retargeting_id = 'ADM4ZIHNLJ';
+    var yahoo_retargeting_label = '';
+    var yahoo_retargeting_page_type = '';
+    var yahoo_retargeting_items = [{item_id: '', category_id: '', price: '', quantity: ''}];
+    /* ]]> */
+  </script>
+  <script type="text/javascript" language="javascript" src="//b92.yahoo.co.jp/js/s_retargeting.js"></script>
+<% end %>

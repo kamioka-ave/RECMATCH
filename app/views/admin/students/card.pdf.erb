@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>顧客カード</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger', media: 'all' %>
+</head>
+<body class="student-card">
+  <h3>顧客カード</h3>
+  <table border="1" width="100%" class="mb-20">
+    <tr>
+      <th width="12%">ID</th>
+      <th width="16%">申込日</th>
+      <th width="16%">登録日</th>
+      <th width="16%">更新日</th>
+      <th width="20%">反社会的勢力チェック</th>
+      <th width="20%" class="line-height">非上場株式の取引に関する確認書徴求日</th>
+    </tr>
+    <tr class="text-center">
+      <td><%= @student.id %></td>
+      <td><%= l(@student.applied_at.present? ? @student.applied_at : @student.created_at, format: :short) %></td>
+      <td><%= @student.activated_at.present? ? l(@student.activated_at, format: :short) : '' %></td>
+      <td><%= l(@student.updated_at, format: :short) %></td>
+      <td><%= l(@student.antisocial_checked_at, format: :short) if @student.antisocial_checked_at.present? %></td>
+      <td><%= l(@student.term_confirmed_at, format: :short) if @student.term_confirmed_at.present? %></td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="mb-20">
+    <tr>
+      <th width="15%">顧客名</th>
+      <td width="35%"><%= @student.last_name %><%= @student.first_name %></td>
+      <th width="15%" class="line-height">顧客名<br>（フリガナ）</th>
+      <td width="35%" colspan="3"><%= @student.last_name_kana %><%= @student.first_name_kana %></td>
+    </tr>
+    <tr>
+      <th width="15%">生年月日</th>
+      <td width="35%"><%= l(@student.birth_on) %></td>
+      <th width="15%">性別</th>
+      <td width="10%"><%= Student.names_with_gender.key(@student.gender) %></td>
+      <th width="15%">年齢</th>
+      <td width="10%"><%= (Date.today.strftime("%Y%m%d").to_i - @student.birth_on.strftime("%Y%m%d").to_i) / 10000 %>才</td>
+    </tr>
+    <tr>
+      <th width="15%">住所</th>
+      <td width="35%" colspan="5"><%= "〒#{@student.zip_code} #{@student.full_address}" %></td>
+    </tr>
+    <tr>
+      <th width="15%">電話番号</th>
+      <td width="35%" colspan="5">
+        <%= "#{@student.phone}（自宅固定電話番号）" if @student.phone.present? %>
+        <%= "#{@student.phone_mobile}（携帯電話番号）" if @student.phone_mobile.present? %>
+      </td>
+    </tr>
+    <tr>
+      <th width="15%">金融機関名</th>
+      <td width="35%" colspan="3"><%= @student.bank.name_with_bank if @student.bank.present? %></td>
+      <th width="15%">金融機関コード</th>
+      <td width="10%"><%= sprintf('%04d', @student.bank.id) if @student.bank.present? %></td>
+    </tr>
+    <tr>
+      <th width="15%">支店名</th>
+      <td width="35%" colspan="3"><%= @student.bank_branch.name_with_branch if @student.bank_branch.present? %></td>
+      <th width="15%">支店コード</th>
+      <td width="10%"><%= sprintf('%03d', @student.bank_branch.code) if @student.bank_branch.present? %></td>
+    </tr>
+    <tr>
+      <th width="15%">口座種別</th>
+      <td width="35%"><%= Student.names_with_bank_account_type.key(@student.bank_account_type) %></td>
+      <th width="15%">口座番号</th>
+      <td width="10%" colspan="3"><%= @student.bank_account_number %></td>
+    </tr>
+    <tr>
+      <th width="15%">口座名義</th>
+      <td width="35%" colspan="5"><%= @student.bank_account_name %></td>
+    </tr>
+    <tr>
+      <th width="15%"><%= t('activerecord.attributes.student_interview.income_resource') %></th>
+      <td width="35%"><%= StudentInterview.names_with_income_resource.key(@student.interview.income_resource) %></td>
+      <th width="15%"><%= t('activerecord.attributes.student_interview.income') %></th>
+      <td width="35%" colspan="3"><%= StudentInterview.names_with_income.key(@student.interview.income) %></td>
+    </tr>
+    <tr>
+      <th width="15%">金融資産の状況</th>
+      <td width="35%"><%= StudentInterview.names_with_assets.key(@student.interview.assets) %></td>
+      <th width="15%"><%= t('activerecord.attributes.student_interview.capital_character') %></th>
+      <td width="35%" colspan="3"><%= StudentInterview.names_with_capital_character.key(@student.interview.capital_character) %></td>
+    </tr>
+    <tr>
+      <th width="15%">投資経験</th>
+      <td width="35%" colspan="5" class="f-10 line-height">
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_stock') %>: <%= @student.interview.exp_stock %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_bond') %>: <%= @student.interview.exp_bond %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_trust_fund') %>: <%= @student.interview.exp_trust_fund %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_commodity_futures') %>: <%= @student.interview.exp_commodity_futures %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_foreign_currency_saving') %>: <%= @student.interview.exp_foreign_currency_saving %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_foreign_exchange') %>: <%= @student.interview.exp_foreign_exchange %>年</span>
+        <span class="mr-10"><%= t('activerecord.attributes.student_interview.exp_account') %>: <%= @student.interview.exp_account %>年</span>
+    </td>
+    </tr>
+    <tr>
+      <th width="15%"><%= t('activerecord.attributes.student_interview.purpose') %></th>
+      <td width="35%" colspan="5"><%= StudentInterview.names_with_purpose.key(@student.interview.purpose) %></td>
+    </tr>
+    <tr>
+      <th width="15%">勤務先</th>
+      <td width="35%" colspan="5"><%= @student.company %></td>
+    </tr>
+    <tr>
+      <th width="15%"><%= t('activerecord.attributes.student.job') %></th>
+      <td width="35%"><%= Student.names_with_job.key(@student.job) %><%= "（#{@student.job_details}）" if @student.job == Student::J_OTHERS %></td>
+      <th width="15%"><%= t('activerecord.attributes.student.business') %></th>
+      <td width="35%" colspan="3"><%= Student.names_with_business.key(@student.business) %><%= "（#{@student.business_details}）" if @student.business == Student::B_OTHERS %></td>
+    </tr>
+    <tr>  
+      <th width="15%">勤務先電話番号</th>
+      <td width="85%" colspan="5"><%= @student.phone_company %></td>
+    </tr>
+    <tr>
+      <th width="15%" class="line-height">勤務先<br>メールアドレス</th>
+      <td width="85%" colspan="5"><%= @student.email_company %></td>
+    </tr>
+    <tr height="140">
+      <th width="15%">備考</th>
+      <td width="85%" colspan="5"><%= simple_format(@student.card_note) if @student.card_note.present? %></td>
+    </tr>
+    <tr height="140">
+      <th width="15%">変更履歴</th>
+      <td width="85%" colspan="5" class="f-10" valign="top">
+        <%= simple_format(@student.change_history) if @student.change_history.present? %>
+      </td>
+    </tr>
+    <tr>
+      <th width="15%" class="line-height">本人確認<br>実施日時</th>
+      <td width="35%"><%= l(@student.identified_at) if @student.identified_at.present? %></td>
+      <th width="15%">本人確認実施者</th>
+      <td width="35%" colspan="3"><%= @student.identifier.name if @student.identifier.present? %></td>
+    </tr>
+    <tr>
+      <th width="15%" class="line-height">学生登録<br>承認日時</th>
+      <td width="35%"><%= l(@student.approved_at) if @student.approved_at.present? %></td>
+      <th width="15%">承認実施者</th>
+      <td width="35%" colspan="3"><%= @student.approver.name if @student.approver.present? %></td>
+    </tr>
+  </table>
+</body>
+</html>

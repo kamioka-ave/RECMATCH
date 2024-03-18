@@ -1,0 +1,22 @@
+<div>
+  <fieldset class="mb-10">
+    <div class="clearfix">
+      <div class="pull-left">
+        <% if f.object.image.present? %>
+          <% if f.object.image.cached? %>
+            <%= f.hidden_field :file_cache if f.object.image.cached? %>
+          <% end %>
+          <%= image_tag(f.object.image.thumb.url, width: 192) %>
+        <% else %>
+          <%= f.input :image, label: false, input_html: { accept: '.jpg,.gif,.png,image/gif,image/jpeg,image/png' } %>
+        <% end %>
+      </div>
+      <div class="pull-right">
+        <%= f.hidden_field :_destroy %>
+        <%= link_to '#', class: 'ml-10 remove_fields' do %>
+          <i class="fa fa-minus-circle"></i> 削除
+        <% end %>
+      </div>
+    </div>
+  </fieldset>
+</div>

@@ -1,0 +1,16 @@
+<div class="students media">
+  <div class="pull-left">
+    <%= image_tag(profile_image_url(student.user.profile), class: 'lv-img-sm') %>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= student.user.name %>
+    </h4>
+    <div class="description mb-10">
+      <%= student.user.profile.description %>
+    </div>
+    <div id="student_<%= student.id %>_follow_button">
+      <%= render 'students/follow_button', student: student %>
+    </div>
+  </div>
+</div>

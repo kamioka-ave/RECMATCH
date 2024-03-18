@@ -1,0 +1,156 @@
+<% content_for(:page_classes) { 'mypage students edit_wizard change_notifications show'} %>
+
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>変更届</h1>
+      </div>
+      <div class="card-body card-padding">
+        <div class="mb-30">
+          <p><b>(1) ご登録氏名の変更</b></p>
+          <table class="changes">
+            <tr>
+              <th rowspan="2" class="width-basis">氏名</th>
+              <th>変更前</th>
+              <th>変更後</th>
+            </tr>
+            <tr>
+              <td>
+                <% if @change_notification.name_modified %>
+                  <%= @change_notification.full_name_prev %><br>
+                  <%= "（#{@change_notification.full_name_kana_prev}）" %>
+                <% else %>
+                  &nbsp;
+                <% end %>
+              </td>
+              <td>
+                <% if @change_notification.name_modified %>
+                  <%= @change_notification.full_name %><br>
+                  <%= "（#{@change_notification.full_name_kana}）" %>
+                <% else %>
+                  &nbsp;
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mb-30">
+          <p><b>(2) ご登録住所の変更</b></p>
+          <table class="changes">
+            <tr>
+              <th rowspan="2" class="width-basis">住所</th>
+              <th>変更前</th>
+              <th>変更後</th>
+            </tr>
+            <tr>
+              <td>
+                <%= "〒 #{@change_notification.zip_code_prev}" if @change_notification.zip_code_prev.present? %><br>
+                <%= @change_notification.full_address_prev if @change_notification.prefecture_id_prev.present? %>
+              </td>
+              <td>
+                <%= "〒 #{@change_notification.zip_code}" if @change_notification.zip_code.present? %><br>
+                <%= @change_notification.full_address if @change_notification.prefecture_id.present? %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mb-20">
+          <p><b>(3) 振込口座の変更</b></p>
+          <table class="changes">
+            <tr>
+              <th class="width-basis">区分</th>
+              <th>変更前</th>
+              <th>変更後</th>
+            </tr>
+            <tr>
+              <th>金融機関名</th>
+              <td><%= @change_notification.bank_prev.name if @change_notification.bank_id_prev.present? %></td>
+              <td><%= @change_notification.bank.name if @change_notification.bank_id.present? %></td>
+            </tr>
+            <tr>
+              <th>支店名</th>
+              <td><%= @change_notification.bank_branch_prev.name if @change_notification.bank_branch_prev.present? %></td>
+              <td><%= @change_notification.bank_branch.name if @change_notification.bank_branch.present? %></td>
+            </tr>
+            <tr>
+              <th>預金種別</th>
+              <% if @change_notification.bank_account_type_prev.present? %>
+                <td><%= Student.names_with_bank_account_type.key(@change_notification.bank_account_type_prev) %></td>
+              <% else %>
+                <td class="text-center">普通預金</td>
+              <% end %>
+              <% if @change_notification.bank_account_type.present? %>
+                <td><%= Student.names_with_bank_account_type.key(@change_notification.bank_account_type) %></td>
+              <% else %>
+                <td class="text-center">普通預金</td>
+              <% end %>
+            </tr>
+            <tr>
+              <th>口座番号</th>
+              <td><%= @change_notification.bank_account_number_prev if @change_notification.bank_account_number_prev.present? %></td>
+              <td><%= @change_notification.bank_account_number if @change_notification.bank_account_number.present? %></td>
+            </tr>
+            <tr>
+            <tr>
+              <th>名義人<br/><span class="normal-font">(本人名義限定)</span></th>
+              <td><%= @change_notification.bank_account_name_prev if @change_notification.bank_account_name_prev.present? %></td>
+              <td><%= @change_notification.bank_account_name if @change_notification.bank_account_name.present? %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="clearfix">
+          <div class="pull-right">
+            <ul class="asterisk text-muted mb-20">
+              <li>(1)(2)の場合、本人確認書類の提出が必須です。</li>
+            </ul>
+            <div class="text-right mb-20">
+              上記のとおり届出いたします。
+            </div>
+
+            <% if request.variant.include?(:mobile) %>
+              <table class="table without-border sign">
+                <tr>
+                  <th>お届け年月日</th>
+                  <td><%= Date.today.to_era("%O%E年%-m月%-d日") %></td>
+                </tr>
+                <tr>
+                  <th>学生ID</th>
+                  <td><%= @student.id %></td>
+                </tr>
+                <tr>
+                  <th>氏名</th>
+                  <td><%= @change_notification.name_modified? ? @change_notification.full_name : @student.full_name %></td>
+                </tr>
+              </table>
+            <% else %>
+              <dl class="dl-horizontal">
+                <dt>お届け年月日</dt>
+                <dd><%= Date.today.to_era("%O%E年%-m月%-d日") %></dd>
+                <dt>学生ID</dt>
+                <dd><%= @student.id %></dd>
+                <dt>氏名</dt>
+                <dd><%= @change_notification.name_modified? ? @change_notification.full_name : @student.full_name %></dd>
+              </dl>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer card-padding">
+        <%= simple_form_for(@change_notification, url: mypage_student_edit_wizard_change_notification_path) do |f| %>
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '戻る', @change_notification.need_identification? ? mypage_student_edit_wizard_identification_path : mypage_student_edit_wizard_student_path, class: 'btn btn-lg btn-info-o' %>
+            </div>
+            <div class="pull-right">
+              <%= f.button :submit, '提出する', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

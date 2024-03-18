@@ -1,0 +1,2 @@
+class QuitReasonStudent < QuitReason
+end

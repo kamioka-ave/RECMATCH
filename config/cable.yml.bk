@@ -1,0 +1,14 @@
+development:
+  adapter: redis
+  url: redis://<%= ENV['RECMATCH_REDIS_HOSTNAME'] %>:6379
+
+test:
+  adapter: async
+
+staging:
+  adapter: redis
+  url: redis://recmatch.efnqy8.0001.apne1.cache.amazonaws.com:6379
+
+production:
+  adapter: redis
+  url: redis://recmatch.efnqy8.0001.apne1.cache.amazonaws.com:6379

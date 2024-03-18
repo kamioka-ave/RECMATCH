@@ -1,0 +1,150 @@
+@import "bootstrap/forms";
+
+.form-control {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.input-group-addon {
+  border-radius: 0;
+}
+
+.form-control:focus {
+  border-color: #bbb;
+  box-shadow: 0 0 2px #c9c9c9;
+}
+
+.form-spacing .form-control {
+  margin-bottom: 15px;
+}
+
+.input-group-addon {
+  color: #b3b3b3;
+  font-size: 14px;
+  background: #fff;
+}
+
+.form-horizontal {
+  @media (min-width: $screen-sm-min) {
+    .control-label {
+      text-align: left;
+    }
+  }
+}
+
+.input-group {
+  .input-group-btn {
+    .btn {
+      line-height: 25px;
+    }
+  }
+}
+
+.required {
+  abbr {
+    @include text-emphasis-variant('.text-danger', $state-danger-text);
+  }
+}
+
+.checkbox {
+  padding-top: 0 !important;
+
+  label {
+    display: block;
+    padding-left: 28px;
+  }
+
+  input {
+    top: 0;
+    left: 0;
+    margin-left: 0 !important;
+    z-index: 1;
+    cursor: pointer;
+    @include opacity(0);
+    margin-top: 0;
+
+    &:checked + .input-helper {
+      &:before {
+        border-color: $brand-primary;
+      }
+    }
+  }
+
+  .input-helper {
+    &:before, &:after {
+      position: absolute;
+      content: "";
+    }
+
+    &:before {
+      left: 0;
+      border: 2px solid lighten($text-color, 20%);
+    }
+  }
+
+  &.disabled {
+    @include opacity(0.6);
+  }
+}
+
+.checkbox {
+  input {
+    width: 17px;
+    height: 17px;
+
+    &:checked + .input-helper {
+      &:before {
+        background-color: $brand-primary;
+      }
+
+      &:after {
+        @include opacity(1);
+        @include scale(1);
+      }
+    }
+  }
+
+  .input-helper {
+    &:before {
+      top: 2px;
+      width: 17px;
+      height: 17px;
+      border-radius: 2px;
+    }
+
+    &:after {
+      @include opacity(0);
+      @include scale(0);
+      content: '\f26b';
+      font-family: $font-icon-md;
+      position: absolute;
+      font-size: 12px;
+      left: 2px;
+      top: 2px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .form-inline {
+    .form-control {
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+    }
+    .form-group {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+  }
+}
+
+.radio-inline {
+  label {
+    font-weight: normal;
+  }
+}
+

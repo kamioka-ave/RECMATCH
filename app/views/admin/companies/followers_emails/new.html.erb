@@ -1,0 +1,23 @@
+<section class="content-header">
+  <h1>メールの作成</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for(@email, url: confirm_admin_company_followers_emails_path(@company)) do |f| %>
+    <%= f.error_notification %>
+    <%= f.hidden_field :company_id, value: @company.id %>
+    <%= f.hidden_field :admin_id, value: current_admin.id %>
+    <%= f.input :subject %>
+    <div class="mb-10">
+      使える変数
+      <table>
+        <tr>
+          <td>学生の苗字（学生ではない場合、メールアドレスが設定されます）</td>
+          <td>{{last_name}}</td>
+        </tr>
+      </table>
+    </div>
+    <%= f.input :plain, input_html: { rows: 20 } %>
+    <%= f.button :submit, '確認画面へ', class: 'btn-primary' %>
+  <% end %>
+</section>

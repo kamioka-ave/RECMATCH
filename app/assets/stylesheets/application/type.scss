@@ -1,0 +1,44 @@
+@import "bootstrap/type";
+
+h1, .h1,
+h2, .h2 {
+  margin-top: 0;
+  margin-bottom: $line-height-computed * 1.2;
+  font-weight: 600;
+}
+
+ul {
+  &.asterisk {
+    padding-left: 1em;
+
+    li {
+      list-style-type: none;
+      text-indent: -1em;
+
+      &:before {
+        display: inline;
+        content: "※";
+      }
+    }
+  }
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+h1 small,
+h1 .small, .h1 small,
+.h1 .small,
+h2 small,
+h2 .small, .h2 small,
+.h2 .small,
+h3 small,
+h3 .small, .h3 small,
+.h3 .small {
+  font-size: 45%;
+}
+
+.text-muted-type {
+  color: #fff;
+}

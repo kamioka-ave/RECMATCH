@@ -1,0 +1,143 @@
+<style>
+  .md3-text {
+    font-size: 18px;
+    border-left: solid;
+  }
+  h1.recruit-head {
+    color: #2196F3;
+  }
+  h3.box-title{
+    color: #5E5E5E;
+  }
+  .md7-text{
+    text-align: right;
+  }
+  .md5-text{
+    text-align: left;
+  }
+</style>
+
+
+<div class="row" style="padding: 23px 26px 0;">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="tab-content">
+        <%= image_tag(@company.image.url, width: '100%', alt: @event.title) %>
+        <br>
+        <h1 class="recruit-head" id="toc-1">事業紹介</h1>
+        <br>
+          <%= @company.business_summary.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-2">企業理念・社訓など</h1>
+        <br>
+          <%= @company.business_philosophy.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-3">業務内容・スキル・キャリアプラン</h1>
+        <br>
+          <%= @company.hope.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-4">社風・社員の士気</h1>
+        <br>
+          <%= @company.business_shebang.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-5">自社の強み</h1>
+        <br>
+          <%= @company.competitive_strength.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-6">他社との違い</h1>
+        <br>
+          <%= @company.competitive_difference.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-7">今後の展望</h1>
+        <br>
+          <%= @company.target.html_safe %>
+        <br>
+        <h1 class="recruit-head" id="toc-8">皆さんへのメッセージ</h1>
+        <br>
+          <%= @company.ceo_hopes.html_safe %>
+        <br>
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card profile-view">
+    <div class="title">
+
+        <h1 class="recruit-head" id="toc-0"><%= @company.name %></h1>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-flag"></i> 所在地
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.prefecture.name %><%= @company.city %><br>
+            <%= @company.address1 %><%= @company.address2 if @company.address2.present? %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-address-card"></i> 代表取締役
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.president_last_name %> <%= @company.president_first_name %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-phone-square"></i> 法人電話番号
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.phone %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-calendar"></i> 設立年月日
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= l(@company.birth_on) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-yen"></i> 資本金
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= number_to_currency(@company.capital) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-bar-chart"></i> 売上高
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= number_to_currency(@company.sales_profit) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-home"></i> 会社URL
+          </div>
+          <div class="col-md-7 md7-text">
+            <a href="<%= @company.website %>" target="_blank"><%= @company.website %></a>
+          </div>
+        </div>
+        <br>
+    </div>
+     </div>
+  </div>
+</div>

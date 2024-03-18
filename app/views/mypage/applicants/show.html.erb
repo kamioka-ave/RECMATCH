@@ -1,0 +1,118 @@
+<% content_for(:page_classes) { 'mypage applicants show' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-paper-plane" aria-hidden="true"></i> オファー中の企業一覧</span></h3>
+    <p class="pt-10"><small>※オファー中の企業はオファーした日の翌々月に自動的に削除されます。</small></p>
+  </div>
+  <% if @projects.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>＃</th>
+          <th>企業名</th>
+          <th>状況</th>
+          <th>表示</th>
+        </tr>
+        </thead>
+        <% @projects.each.with_index(1) do |p, i| %>
+          <tbody>
+            <tr>
+              <td><%= i %></td>
+              <td><%= link_to project_path(p.project) do %><%= p.project.company.name %><% end %></td>
+              <td><%= Project::Applicant.name_with_status.key(p.status) %></td>
+              <td>
+                <%= link_to '表示', project_path(p.project), class: 'btn btn-xs btn-info' %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      企業へのオファーはありません。<br>
+      オファー受付中の企業を検索してオファーを送ることができます。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row text-center">
+            <%= link_to 'オファー受付中の企業を検索', projects_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i> 参加予定のイベント一覧</span></h3>
+    <p class="pt-10"><small>※参加予定イベントはイベント終了日の翌日に自動的に削除されます。</small></p>
+  </div>
+  <% if @events.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>＃</th>
+          <th>企業名</th>
+          <th>イベント名</th>
+          <th>日時</th>
+          <th>状況</th>
+          <th>表示</th>
+        </tr>
+        </thead>
+          <% @events.each.with_index(1) do |e, i|%>
+          <tbody>
+            <tr>
+              <td><%= i %></td>
+              <td><%= link_to project_path(e.event.company.project) do %><%= e.event.company.name %><% end %></td>
+              <td><%= e.event.title %></td>
+              <td>
+                <%= e.event.start.year %>/<%= e.event.start.month %>/<%= e.event.start.day %> <%= e.event.start.hour %>:<%= e.event.start.min %>〜
+                <%= e.event.end.year %>/<%= e.event.end.month %>/<%= e.event.end.day %> <%= e.event.end.hour %>:<%= e.event.end.min %>
+              </td>
+              <td><%= EventApplicant.name_with_status.key(e.status) %></td>
+              <td>
+                <%= link_to '表示', event_path(e.event), class: 'btn btn-xs btn-info' %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      参加予定のイベントははありません。<br>
+      イベントでは出会った人事から直接選考オファーをもらえる可能性があります。<br>
+      イベント検索から興味のあるイベントを探してみましょう。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row text-center">
+            <%= link_to 'イベントを検索', events_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<style>
+a {
+  color: #3c8dbc;
+}
+a:hover,
+a:active,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #72afd2;
+}
+</style>

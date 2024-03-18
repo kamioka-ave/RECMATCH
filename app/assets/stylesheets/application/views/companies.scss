@@ -1,0 +1,105 @@
+$company-bg-color: #f7f7f7;
+
+.companies {
+  h1 {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .profile-body {
+    padding: 20px;
+    background: $company-bg-color;
+  }
+
+  .company-card {
+    @extend .card;
+
+    .card-body {
+      .name {
+        height: $line-height-computed;
+        overflow: hidden;
+      }
+      .summary {
+        font-size: 12px;
+        height: $line-height-computed;
+        @include text-overflow();
+      }
+    }
+  }
+
+  &.index {
+    .side-widget {
+      .nav {
+        > li {
+          > a {
+            padding-top: 3px;
+            padding-bottom: 3px;
+          }
+
+          &.active > a {
+            &,
+            &:hover,
+            &:focus {
+              //color: $nav-tabs-active-link-hover-color;
+              color: $text-color;
+              background-color: $gray-lighter;
+            }
+
+            & {
+              &:after {
+                font-family: "FontAwesome";
+                content: "\f00d";
+                font-size: 12px;
+                position: absolute;
+                right: 8px;
+                top: 5px;
+                -webkit-transition: all 0.2s ease-in-out;
+                -o-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.irs{
+    &.show{
+      .votes {
+        position: relative;
+      }
+
+      .arrow_box {
+        display: none;
+        position: absolute;
+        padding: 10px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background: #333;
+        color: #fff;
+        font-size: 50%;
+        z-index: 1;
+      }
+
+      .arrow_box:after {
+        position: absolute;
+        bottom: 100%;
+        left: 40%;
+        width: 0;
+        height: 0;
+        margin-left: -10px;
+        border: solid transparent;
+        border-color: rgba(51, 51, 51, 0);
+        border-bottom-color: #333;
+        border-width: 7px;
+        pointer-events: none;
+        content: " ";
+      }
+
+      span:hover + p.arrow_box {
+        display: block;
+      }
+    }
+  }
+}

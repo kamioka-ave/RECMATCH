@@ -1,0 +1,15 @@
+.my.companies.supporters.messages {
+  &.index {
+    .pre-scrollable {
+      max-height: 480px;
+      overflow-y: scroll;
+    }
+    .media {
+      img {
+        @media screen and (max-width: $screen-xs) {
+          width:35px;
+        }
+      }
+    }    
+  }
+}

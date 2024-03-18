@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>特定取引を行う者の届出書 兼 外国PEPsに関する届出書</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger' %>
+</head>
+<body class="peps">
+  <h3 class="text-center">特定取引を行う者の届出書 兼 外国PEPsに関する届出書</h3>
+
+  株式会社UNCHAIN御中
+  <p>
+    私は、「租税条約等の実施に伴う所得税法、法人税法及び地方税法の特例等に関する法律」第10条の５第１項前段の規定に基づき、
+    同条第７項第１号に規定する報告金融機関等である貴社に対して特定取引を行う者の届出書を提出いたします。<br>
+    また、以下の情報が正しいことを誓います。居住地国に変更があった場合は、変更日から3ヶ月以内に異動届出書により申告します。
+  </p>
+  <p>
+    私は「犯罪による収益の移転防止に関する法律」（以下、「犯収法」といいます。）第4条第2項の定めおよび米国政府および日本政府による
+    「外国口座税務コンプライアンス法（FATCA）」遵守の要請により、以下のとおり貴社へ申告いたします。
+  </p>
+  <p>
+    なお、「外国政府等において重要な地位を占める方」外国PEPs）に該当した際は「犯収法」に基づき、
+    貴社との取引の都度、厳格な取引時確認手続きを行うことについて承諾します。
+  </p>
+
+  <table border="1" class="mb-5">
+    <tr>
+      <th class="f-14" width="200px">お届出（西暦）日</th>
+      <td class="f-14" width="200px"><%= l(@history.applied_at, format: :short) %></td>
+    </tr>
+  </table>
+
+  <table border="1" class="mb-20">
+    <tr>
+      <th class="f-14" rowspan="2" width="200px">お名前</th>
+      <td class="f-8" width="200px">
+        <%= @student.full_name_kana %>
+      </td>
+    </tr>
+    <tr>
+      <td class="f-14">
+        <%= @student.full_name %>
+      </td>
+    </tr>
+  </table>
+
+  <h4><u>居住地国・外国PEPs・FATCAに関するお届出事項</u></h4>
+
+  <table border="1" width="100%" class="mb-20">
+    <tr>
+      <th width="40%" class="text-left">
+        <u>① 居住地国</u><br>
+        <small>「居住地国」とは、各国税法に基づく居住者として、所得税等に相当する税を納める国（納税地国）のことです。</small>
+      </th>
+      <td width="30%">
+        <i class="fa <%= @history.country == StudentPep::C_JAPAN ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>日本（居住地国コード100）
+      </td>
+      <td width="30%">
+        <i class="fa <%= @history.country != StudentPep::C_JAPAN ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>日本以外
+      </td>
+    </tr>
+    <tr>
+      <th width="40%" class="text-left">
+        <u>② 外国PEPs</u><br>
+        <small>外国の元首、外国の政府、中央銀行その他これらに類する機関において重要な地位を占める方または、そのご家族(詳しくは説明書をご確認下さい。)</small>
+      </th>
+      <td width="30%">
+        <i class="fa <%= @history.peps ? 'fa-square-o' : 'fa-check-square-o' %> mr-5"></i>該当しない
+      </td>
+      <td width="30%">
+        <i class="fa <%= @history.peps ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>該当する
+      </td>
+    </tr>
+    <tr>
+      <th width="40%" class="text-left">
+        <u>③ FATCA</u><br>
+        <small>
+          ・米国市民（米国籍保有者）<br>
+          ・グリーンカード保有者<br>
+          ・または米国居住者である
+        </small>
+      </th>
+      <td width="30%">
+        <i class="fa <%= @history.fatca ? 'fa-square-o' : 'fa-check-square-o' %> mr-5"></i>該当しない
+      </td>
+      <td width="30%">
+        <i class="fa <%= @history.fatca ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>該当する
+      </td>
+    </tr>
+  </table>
+
+  <h4><u>居住地国が日本以外の場合のお届出事項</u></h4>
+
+  <table border="1" width="100%">
+    <tr>
+      <th colspan="2">居住地国</th>
+      <th colspan="2">日本以外の居住地国における納税者番号</th>
+    </tr>
+    <tr>
+      <td width="15%" rowspan="3">
+        <%= @history.residence_country.name if @history.country != StudentPep::C_JAPAN && @history.residence_country.present? %>
+      </td>
+      <td width="15%">
+        <i class="fa <%= @history.country != StudentPep::C_JAPAN && !@history.has_residence.nil? && @history.has_residence != '' && !@history.has_residence ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>居住地国なし
+      </td>
+      <th width="40%">納税者番号　※左詰めでご記入ください。</th>
+      <td rowspan="3">
+        <i class="fa <%= @history.country != StudentPep::C_JAPAN && @history.taxpayer_number_status == 1 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>
+        居住地国が納税者番号を発行していない<br>
+        <i class="fa <%= @history.country != StudentPep::C_JAPAN && @history.taxpayer_number_status == 2 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>
+        居住地国が納税者番号を発行しているが、客様には呈示されていない<br>
+        <i class="fa <%= @history.country != StudentPep::C_JAPAN && @history.taxpayer_number_status == 3 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>
+        納税者番号を発行した 国の法令により、金融機関等に納税者番号を提供することができない
+      </td>
+    </tr>
+    <tr>
+      <th>コード</th>
+      <td rowspan="2">
+        <%= @history.taxpayer_number if @history.country != StudentPep::C_JAPAN && @history.taxpayer_number.present? %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= @history.residence_country.code_ja if @history.country != StudentPep::C_JAPAN && @history.residence_country.present? %></td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="mb-10" style="border-top: none">
+    <tr>
+      <th colspan="3" class="text-left">お届出住所の所在する国と居住地国が異なる。<br>または居住地国がない理由をご記入ください。</th>
+      <td colspan="1"><%= @history.residence_reason if @history.country != StudentPep::C_JAPAN && @history.residence_reason.present? %></td>
+    </tr>
+    <tr>
+      <th width="15%" rowspan="7" class="text-left">
+        英語表記<br>
+        <small>※左詰めブロック体でご記入ください。</small>
+      </th>
+      <th width="10%" rowspan="3">Name</th>
+      <th width="25%" class="text-left">First Name</th>
+      <td><%= @history.first_name if @history.country != StudentPep::C_JAPAN && @history.first_name.present? %></td>
+    </tr>
+    <tr>
+      <th class="text-left">Middle Name</th>
+      <td><%= @history.middle_name if @history.country != StudentPep::C_JAPAN && @history.middle_name.present? %></td>
+    </tr>
+    <tr>
+      <th class="text-left">Last Name</th>
+      <td><%= @history.last_name if @history.country != StudentPep::C_JAPAN && @history.last_name.present? %></td>
+    </tr>
+    <tr>
+      <th rowspan="4">Address</th>
+      <th class="text-left">House Name Number, Street</th>
+      <td><%= @history.house_street if @history.country != StudentPep::C_JAPAN && @history.house_street.present? %></td>
+    </tr>
+    <tr>
+      <th class="text-left">Town/City</th>
+      <td><%= @history.town_city if @history.country != StudentPep::C_JAPAN && @history.town_city.present? %></td>
+    </tr>
+    <tr>
+      <th class="text-left">Province/County/State</th>
+      <td><%= @history.province if @history.country != StudentPep::C_JAPAN && @history.province.present? %></td>
+    </tr>
+    <tr>
+      <th class="text-left">Postal Code/ZIP Code</th>
+      <td><%= @history.postal_code if @history.country != StudentPep::C_JAPAN && @history.postal_code.present? %></td>
+    </tr>
+  </table>
+
+  <h4><u>外国PEPsに関するご申告</u></h4>
+
+  <table border="1" width="100%" class="mb-10">
+    <tr>
+      <th width="30%">続柄</th>
+      <td width="40%">
+        <span class="mr-15"><i class="fa <%= @history.peps && @history.pep_relationship == 0 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>本人</span>
+        <i class="fa <%= @history.peps && @history.pep_relationship == 1 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>ご家族
+        （お客様とのご関係：<%= @history.pep_relationship_note if @history.peps && @history.pep_relationship_note.present? %>）
+      </td>
+      <th width="10%">国名</th>
+      <td width="20%"><%= @history.pep_country.name if @history.peps && @history.pep_country.present? %></td>
+    </tr>
+    <tr>
+      <th>
+        該当する方のご氏名<br>
+        <span class="f-8">※ご本人の場合は記入不要です。</span>
+      </th>
+      <td><%= @history.pep_relationship_name if @history.peps && @history.pep_relationship_name.present? %></td>
+      <th>職位</th>
+      <td><%= @history.pep_job_title if @history.peps && @history.pep_job_title.present? %></td>
+    </tr>
+  </table>
+
+  <div class="clearfix mb-10">
+    <div class="pull-left mr-20">
+      <table border="1">
+        <tr>
+          <th class="text-center">学生ID</th>
+        </tr>
+        <tr>
+          <td><%= @student.id %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="pull-left mr-15">
+      <table border="1">
+        <tr>
+          <th class="text-center" colspan="2">米国示唆情報区分</th>
+        </tr>
+        <tr>
+          <td>
+            <i class="fa <%= @history.fatca && !@history.fatca_suggestion ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>0：なし
+          </td>
+          <td>
+            <i class="fa <%= @history.fatca && @history.fatca_suggestion ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>1：あり（国籍・出生地）
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="pull-left mr-15">
+      <table border="1">
+        <tr>
+          <th class="text-center" colspan="2">FATCA属性区分</th>
+        </tr>
+        <tr>
+          <td>
+            <i class="fa <%= @history.fatca && @history.fatca_status == 0 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>非米国人
+          </td>
+          <td>
+            <i class="fa <%= @history.fatca && @history.fatca_status == 1 ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>米国人
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="pull-left">
+      <table border="1">
+        <tr>
+          <td>外国PEPs該当時</td>
+        </tr>
+        <tr>
+          <td>＜厳格な取引確認＞の起票が必要</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="pull-right">
+      <table border="1">
+        <tr>
+          <th class="text-center">確認</th>
+          <th class="text-center">受付</th>
+          <th class="text-center">受付日</th>
+        </tr>
+        <tr>
+          <td>&nbsp;<%= @history.approver.name if @history.approver.present? %> </td>
+          <td>&nbsp;<%= @history.receiver.name if @history.receiver.present? %> </td>
+          <td>&nbsp;<%= l(@history.received_at, format: :short) if @history.received_at.present? %> </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

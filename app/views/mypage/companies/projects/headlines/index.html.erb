@@ -1,0 +1,27 @@
+<% content_for(:title) { 'お知らせ' } %>
+<% content_for(:page_classes) { 'project headlines index' } %>
+
+<div class="card">
+  <div class="card-header with-border">
+    <div class="clearfix">
+      <div class="pull-left">
+        <h1>お知らせ</h1>
+      </div>
+      <div class="pull-right">
+        <small><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+      </div>
+    </div>
+  </div>
+  <div class="listview lv-bordered lv-lg">
+    <div class="lv-body">
+      <% @headlines.each do |headline| %>
+        <%= link_to project_headline_path(@project, headline), class: 'lv-item' do %>
+          <%= render 'projects/headlines/media', headline: headline %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-footer text-center">
+    <%= paginate @headlines %>
+  </div>
+</div>

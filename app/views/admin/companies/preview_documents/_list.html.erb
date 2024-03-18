@@ -1,0 +1,37 @@
+<% if documents.size > 0 %>
+  <div class="box-body no-padding">
+    <table class="table">
+      <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.company/preview_document.name') %></th>
+        <th><%= t('activerecord.attributes.company/preview_document.document_type') %></th>
+        <th>登録者</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% documents.each do |d| %>
+        <tr>
+          <td><%= d.name %></td>
+          <td><%= Company::PreviewDocument.names_with_document_type.key(d.document_type) %></td>
+          <td><%= d.uploader.present? ? d.uploader.name : '企業' %></td>
+          <td>
+            <% if d.document_type == Company::PreviewDocument::SHARE_HOLDERS && current_admin.has_any_role?(:recmatch_sales_department, :project_creator, :business_manager) %>
+              <button type="button" class="btn btn-xs btn-info" disabled="disabled">表示</button>
+              <button type="button" class="btn btn-xs btn-danger" disabled="disabled">削除</button>
+            <% else %>
+              <%= link_to '表示', d.file.url, class: 'btn btn-xs btn-info' %>
+              <%= link_to '削除', admin_company_preview_document_path(@company, d), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="box-body">
+    事前審査書類は登録されていません
+  </div>
+<% end %>

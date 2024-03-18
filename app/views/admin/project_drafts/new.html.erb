@@ -1,0 +1,82 @@
+<section class="content-header">
+  <h1>プロジェクト作成</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for([:admin, @draft]) do |f| %>
+    <%= f.error_notification %>
+    <%= f.hidden_field :solicit %>
+    <%= f.hidden_field :solicit_limit %>
+    <%= f.hidden_field :stock_price %>
+    <%= f.hidden_field :start_at %>
+    <%= f.hidden_field :finish_at %>
+    <%= f.hidden_field :start_on %>
+    <%= f.hidden_field :shareholder_meeting_on %>
+    <%= f.hidden_field :is_temporarily_shareholder_meeting %>
+    <%= f.hidden_field :board_meeting_on %>
+    <%= f.hidden_field :agreement_on %>
+    <%= f.hidden_field :deliv_start_on %>
+    <%= f.hidden_field :deliv_end_on %>
+    <%= f.hidden_field :deliv_start_changed_on %>
+    <%= f.hidden_field :deliv_end_changed_on %>
+    <%= f.hidden_field :contract_before_type %>
+    <%= f.hidden_field :remote_contract_before_url %>
+    <%= f.hidden_field :remote_law_notification_url %>
+    <%= f.hidden_field :remote_image_url %>
+    <%= f.hidden_field :remote_president_image_url %>
+    <%= f.hidden_field :remote_stamp_url %>
+    <%= f.hidden_field :president_name %>
+    <%= f.hidden_field :president_description %>
+    <%= f.hidden_field :interview_movie %>
+    <%= f.hidden_field :angel_type %>
+    <%= f.hidden_field :angel_download_start_on %>
+    <%= f.hidden_field :angel_download_end_on %>
+    <%= f.hidden_field :angel_arrival_deadline_on %>
+    <%= f.hidden_field :shareholder_benefit %>
+    <%= f.hidden_field :stockholder_management %>
+    <%= f.hidden_field :capital %>
+    <%= f.hidden_field :capital_submitted_on %>
+    <%= f.hidden_field :issued_stock %>
+    <%= f.hidden_field :transcript_submitted_on %>
+    <%= f.hidden_field :issuable_stocks %>
+    <%= f.hidden_field :stock_price_for_reserve %>
+    <%= f.hidden_field :support_phone %>
+    <%= f.hidden_field :support_email %>
+    <%= f.hidden_field :risk_summery %>
+    <%= f.hidden_field :how_to_use %>
+    <%= f.hidden_field :transfer_restriction %>
+    <%= f.hidden_field :company_summery %>
+    <%= f.hidden_field :business_plan %>
+    <%= f.hidden_field :finance_condition %>
+    <%= f.hidden_field :business_plan_validity %>
+    <%= f.hidden_field :company_eligibility %>
+    <%= f.hidden_field :stake %>
+    <%= f.hidden_field :governance_system %>
+    <%= f.hidden_field :description %>
+    <%= f.hidden_field :company_info %>
+    <%= f.hidden_field :solicit_info %>
+    <%= f.hidden_field :risk_info %>
+    <%= f.hidden_field :financial_info %>
+    <%= f.hidden_field :review_result %>
+    <%= f.hidden_field :remote_contract_attachment_url %>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-body">
+            <%= f.input :name %>
+            <%= f.association :company %>
+            <%= f.input :short_description, as: 'text', input_html: { rows: 6 } %>
+            <%= f.input :clone_from_staging, as: :boolean, label: 'ステージング環境のプロジェクトを複製する', checked_value: true, unchecked_value: false %>
+            <%= f.input :staging_project_id, collection: [], label: '複製するステージング環境のプロジェクト', include_blank: true %>
+          </div>
+          <div class="box-footer">
+            <%= f.button :submit, '作成する', class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<%= jquery_view('views.admin.projects.NewView') %>

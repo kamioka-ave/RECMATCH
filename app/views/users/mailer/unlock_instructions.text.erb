@@ -1,0 +1,8 @@
+<%= @resource.name %>様
+
+ログインの試行回数の上限を超えたため、アカウントがロックされました。
+以下のリンクを訪れてアカウントのロックを解除してください。
+
+<%= unlock_url(@resource, unlock_token: @token) %>
+
+<%= render :partial => 'layouts/mailer_sign' %>

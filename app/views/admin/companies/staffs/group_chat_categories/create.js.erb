@@ -1,0 +1,4 @@
+$("#staff_group_chat_categories")
+  .html("<%= escape_javascript(render('staff_group_chat_categories', staff_group_chat_categories: @staff_group_chat_categories, company: @company)) %>");
+$("#group-chat-category-modal").modal('hide');
+notify('', '追加が完了しました', 'top', 'center', '', 'success', '', '');

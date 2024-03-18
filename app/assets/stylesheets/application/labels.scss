@@ -1,0 +1,11 @@
+@import "bootstrap/labels";
+
+.label-default-inverse {
+  color: $label-default-bg;
+  background-color: lighten($label-default-bg, 40%);
+}
+
+.label-deeporange {
+  @include label-variant($deeporange);
+}
+

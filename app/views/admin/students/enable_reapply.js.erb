@@ -1,0 +1,2 @@
+$('#reapply_<%= @student.id %>').html("<%= escape_javascript(render('reapply', student: @student)) %>");
+notify('', '再申請可能にしました', 'top', 'center', '', 'success', '', '');

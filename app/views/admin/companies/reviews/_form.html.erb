@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title"><%= CompanyReview.names_with_review_type.key(@review.review_type) %></h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@review, url: @review.id.present? ? admin_company_review_path(@company, @review) : admin_company_reviews_path(@company), multipart: true, remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :review_type %>
+        <%= f.input :file, label: false %>
+        <%= f.button :submit, '登録する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

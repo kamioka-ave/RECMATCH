@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-header">
+    <h1>会社情報入力フォーム</h1>
+  </div>
+  <div class="card-body card-padding">
+    <% if @company.draft? %>
+      現在担当者が確認を行っております。承認されるまでしばらくお待ちください。
+    <% else %>
+      <p><span class="text-danger">*</span> は必須入力項目になります。</p>
+      <%= render partial: 'companies/form', locals: {url: mypage_company_path, title: "更新依頼を行う"} %>
+    <% end %>
+  </div>
+</div>

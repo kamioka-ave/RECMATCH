@@ -1,0 +1,61 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">登録状況の履歴</h4>
+    </div>
+    <div class="modal-body">
+      <% if @status_histories.size > 0 %>
+        <table class="table" id="accordion">
+          <thead>
+          <tr>
+            <th>状態</th>
+            <th>本人確認</th>
+            <th>反社チェック</th>
+            <th>変更日時</th>
+            <th>メール</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @status_histories.each do |h| %>
+            <tr>
+              <td><%= Student.names_with_status.key(h.status) %></td>
+              <td>
+                <% if h.is_identification_passed.present? %>
+                  <%= h.is_identification_passed ? 'OK' : 'NG' %>
+                <% else %>
+                  未
+                <% end %>
+              </td>
+              <td>
+                <% if h.is_antisocial_check_passed.present? %>
+                  <%= h.is_antisocial_check_passed ? 'OK' : 'NG' %>
+                <% else %>
+                  未
+                <% end %>
+              </td>
+              <td><%= l(h.created_at) %></td>
+              <td>
+                <% if h.mail_body.present? %>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#history<%= h.id %>" class="btn btn-xs btn-info">
+                    表示
+                  </a>
+                <% end %>
+              </td>
+            </tr>
+            <% if h.mail_body.present? %>
+              <tr id="history<%= h.id %>" class="collapse">
+                <td colspan="5">
+                  <%= simple_format(h.mail_body) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        履歴はありません
+      <% end %>
+    </div>
+  </div>
+</div>

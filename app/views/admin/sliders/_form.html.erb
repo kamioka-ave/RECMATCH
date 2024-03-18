@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-6">
+    <%= simple_form_for(@slider, url: @slider.persisted? ? admin_slider_path(@slider) : admin_sliders_path) do |f| %>
+      <%= f.error_notification %>
+      <div class="mb-20">
+        <%= f.input :slider_type, collection: Slider.names_with_slider_type %>
+        <%= f.association :project %>
+        <%= f.association :event, label_method: :title %>
+        <%= f.association :headline %>
+        <%= f.input :rank %>
+        <%= f.input :image %>
+        <span id="preview_image" class="preview" style="display: none"></span>
+        <%= f.input :bg_image %>
+        <span id="preview_bg_image" class="preview" style="display: none"></span>
+      </div>
+      <%= f.button :submit, class: 'btn-primary' %>
+    <% end %>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.admin.sliders.FormView',
+    image: @slider.image.present? ? @slider.image.url : '',
+    bgImage: @slider.bg_image.present? ? @slider.bg_image.url : ''
+  )
+%>

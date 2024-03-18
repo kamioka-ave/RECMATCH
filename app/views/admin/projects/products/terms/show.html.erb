@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card">
+      <div class="card-header">
+        <h1>非上場株式の取引に関する確認書</h1>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@term, url: project_product_term_path(@project, @product, type: params[:type])) do |f| %>
+          <%= f.error_notification %>
+          <p class="text-muted"><%= l(Date.today) %></p>
+          <div class="mb-20">
+            <p>
+              <%= link_to shokai_pages_path, id: 'shokai', class: 'pdf text-info f-15', target: '_blank' do %>
+                <i class="fa fa-file-pdf-o pr-5"></i>非上場株式の取引に関する確認書を開く
+              <% end %>
+            </p>
+            <p>
+              <%= link_to clause_student_pages_path, id: 'yakkan', class: 'pdf text-info f-15', target: '_blank' do %>
+                <i class="fa fa-file-pdf-o pr-5"></i>RECMATCH取引約款（学生）を開く
+              <% end %>
+            </p>
+          </div>
+          <div class="mb-30">
+            <%= f.input :confirmed, as: :boolean,
+                        label: '私は、貴社から受領した確認書の内容を十分理解し、私の判断と責任において店頭有価証券の取引を行います。' %>
+            <%= f.input :condition_confirmed, as: :boolean,
+                        label: '私は、取引約款第6条（表明保証・誓約）の内容を確認し、表明保証・誓約致します。' %>
+          </div>
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+              <%= f.button :submit, '確認した上で次の画面へ', class: 'btn-block btn-lg btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

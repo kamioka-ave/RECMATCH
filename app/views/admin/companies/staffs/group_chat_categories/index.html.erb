@@ -1,0 +1,25 @@
+<section class="content-header">
+  <div>
+    <h1><%= @staff.full_name %></h1>
+  </div>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">カテゴリー設定</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div id="staff_group_chat_categories" class="box-body no-padding">
+          <%= render 'staff_group_chat_categories', staff_group_chat_categories: @staff_group_chat_categories, company: @company %>
+        </div>
+        <div id="group-chat-category-modal" class="modal fade" tabindex="-1"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+<% content_for(:name) { @headline.name } %>
+
+<div class="card">
+  <div class="card-header clearfix">
+    <div class="pull-left">
+      <h1><%= @headline.name %></h1>
+      <small><i class="fa fa-clock-o"></i> <%= show_datetime(@headline.created_at) %></small>
+    </div>
+    <div class="pull-right">
+      <small><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+    </div>
+  </div>
+  <div class="card-body card-padding">
+    <%= simple_format(@headline.body) %>
+  </div>
+</div>

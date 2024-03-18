@@ -1,0 +1,228 @@
+<div id="mypage_student_form_view">
+  <div class="mb-50">
+    <h2 style="color:#5bc0de;"><i class="fa fa-address-card" aria-hidden="true"></i> 基本情報</h2>
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="require">*</span> 氏名
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :last_name, label: false, placeholder: '姓', wrapper: 'horizontal_inline' %>
+        <%= f.input :first_name, label: false, placeholder: '名', wrapper: 'horizontal_inline' %>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 氏名（カナ）
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :last_name_kana, label: false, placeholder: 'セイ', wrapper: 'horizontal_inline' %>
+        <%= f.input :first_name_kana, label: false, placeholder: 'メイ', wrapper: 'horizontal_inline' %>
+        <p class="help-block">全角カタカナのみ入力可能です</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 表示名(半角英数字)※本名や名前は不可
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :nickname, label: false, placeholder: 'recmatch001', wrapper: 'horizontal_inline' %>
+        <p class="help-block">半角英数字のみ入力可能です</p>
+      </div>
+    </div>
+
+    <%= f.input :gender, as: :radio_buttons, collection: Student.names_with_gender, required: true, wrapper: 'horizontal_radio_and_checkboxes' %>
+
+    <%= f.input :birth_on, as: :date, start_year: Date.today.year - 30, end_year: Date.today.year - 20,
+                required: true, wrapper: 'horizontal_date', hint: 'RECMATCHのサービスは新卒・第二新卒の方が対象となります' %>
+
+    <div class="row mb-20">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 住所
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :zip_code, label: false, placeholder: '郵便番号', hint: '例）141-0002', wrapper: 'horizontal_form_with_hint' %>
+        <%= f.input :prefecture_id, label: false, placeholder: '都道府県', collection: Prefecture.all,
+                    label_method: :name, value_method: :id, hint: '例）東京都', wrapper: 'horizontal_form_with_hint' %>
+        <%= f.input :city, label: false, placeholder: '市区町村', hint: '例）港区', wrapper: 'horizontal_form_with_hint' %>
+        <%= content_for(:address1_hint) do %>
+          例）麻布1-1-1<br>
+          町名番地以降は直接ご入力ください。
+        <% end %>
+        <%= f.input :address1, label: false, placeholder: '町名番地', hint: content_for(:address1_hint), wrapper: 'horizontal_form_with_hint' %>
+        <%= f.input :address2, label: false, placeholder: '建物名 部屋番号', hint: '例）○○マンション ○○号室', wrapper: 'horizontal_form_with_hint' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 電話連絡先（要ハイフン）
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :phone, as: 'string', label: false, placeholder: '自宅固定電話番号' %>
+        <%= f.input :phone_mobile, as: 'string', label: false, placeholder: '携帯電話番号' %>
+        <p class="help-block">
+          ハイフンを入れてご入力ください。<br>
+          電話連絡先は「自宅固定電話」「携帯電話番号」のいずれか片方が必須入力になります。<br>
+          両方ご入力いただくことも可能です。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-50">
+    <h2 style="color:#5bc0de;"><i class="fa fa-university" aria-hidden="true"></i>学校情報</h2>
+    <%= f.input :university, required: true, collection: University.names_with_univ, hint: '学校名を選択してください'  %>
+    <div id="university_name" style='display: none;'>
+      <div class="form-group">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9">
+          <%= f.input :university_name, label: false, hint: '大学名を入力してください', placeholder: '例）Harvard University' %>
+        </div>
+      </div>
+    </div>
+    <%= f.input :bunri, required: true, collection: University.names_with_bunri, hint: '文理を選択してください'  %>
+    <%= f.input :depart, required: true, hint: '学部を入力してください'  %>
+    <div class="row pb-20">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="require">*</span> 卒業年月
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :graduation_year, required: true, label: false, collection: University.names_with_graduation_year, wrapper: 'horizontal_inline' %>
+        <%= f.input :graduation_month, required: true, label: false, collection: University.names_with_graduation_month, wrapper: 'horizontal_inline' %>
+        <p class="help-block"></p>
+      </div>
+    </div>
+    <%= f.input :labo, required: true, hint: '所属していない場合は「なし」と記入してください' %>
+    <%= f.input :circle, required: true, hint: '所属していない場合は「なし」と記入してください' %>
+    <%= f.input :club, hint: '体育会経験があれば入力してください'  %>
+  </div>
+
+  <div class="mb-50">
+    <h2 style="color:#5bc0de;"><i class="fa fa-registered" aria-hidden="true"></i> 就活情報・PRポイント</h2>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 志望業界
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :industry_1, required: true, label: false, collection: Student.names_with_industry, hint: '第一志望業界を選択してください' %>
+        <%= f.input :industry_2, required: true, label: false, collection: Student.names_with_industry, hint: '(任意)第二志望業界を選択してください' %>
+        <%= f.input :industry_3, required: true, label: false, collection: Student.names_with_industry, hint: '(任意)第三志望業界を選択してください' %>
+        <p class="help-block">
+          ※第二志望以降は任意となりますが選択しておくことで企業からのオファー獲得率が増加します
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 志望職種
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <%= f.input :occupation_1, required: true, label: false, collection: Student.names_with_occupation, hint: '第一志望職種を選択してください' %>
+        <%= f.input :occupation_2, required: true, label: false, collection: Student.names_with_occupation, hint: '(任意)第二志望職種を選択してください' %>
+        <%= f.input :occupation_3, required: true, label: false, collection: Student.names_with_occupation, hint: '(任意)第三志望職種を選択してください'  %>
+        <p class="help-block">
+          ※第二志望以降は任意となりますが選択しておくことで企業からのオファー獲得率が増加します
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> 就活軸
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <p class="help-block">
+          あなたが就職を希望する企業に求めるものを選択してください
+        </p>
+        <%= f.input :jobhuntingaxis, as: :radio_buttons, label: false, collection: Student.names_with_jobhuntingaxis %>
+        <div id="jobhuntingaxis_text_toggle">
+          <%= f.input :jobhuntingaxis_text, label: false, placeholder: '例）企業理念の考え方が共感できる', hint: '就活軸を入力してください' %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="string required control-label">
+          <span title="required">*</span> インターン歴
+        </label>
+      </div>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-8">
+        <p></p>
+        <%= f.input :intern_is %>
+      </div>
+    </div>
+    <div id="intern-detail" style='display: none;'>
+      <div class="form-group">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9">
+          <%= content_for(:intern_company) do %>
+            インターン先企業を入力してください。<br>
+            複数社ある場合はカンマ(,)区切りで入力してください。
+          <% end %>
+          <%= content_for(:intern_detail) do %>
+            インターンの業務内容を入力してください。<br>
+            複数社ある場合はカンマ(,)区切りで入力してください。
+          <% end %>
+          <%= f.input :intern_company, label: false, hint: content_for(:intern_company), placeholder: '例）A社,B社' %>
+          <%= f.input :intern_detail, label: false, hint: content_for(:intern_detail), placeholder: '例）経理,営業,マーケティング' %>
+        </div>
+      </div>
+    </div>
+    <%= f.input :toeic_score, required: true, hint: '受験歴がない場合は「0」と記入してください。' %>
+    <%= f.input :mypr, hint: 'ご自身のキャッチコピーを入力してください', input_html: { rows: 5 } %>
+    <%= content_for(:qualifications_hint) do %>
+          その他資格がある場合入力してください。<br>
+          複数記載する場合はカンマ(,)区切りで入力してください。<br>
+          得点がある場合はカッコ()の中に点数を記入してください。<br>
+          例）簿記2級,TOEFL(60),英検2級
+        <% end %>
+    <%= f.input :qualifications, hint: content_for(:qualifications_hint) %>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $('#intern-detail').toggle($('#student_intern_is').prop('checked') );
+    $('#student_intern_is').on('change', function() {
+      $('#intern-detail').toggle($('#student_intern_is').prop('checked') );
+    });
+    $('input[name="student[jobhuntingaxis]"]').on('change', function() {
+      $('#jobhuntingaxis_text_toggle').toggle($('input[name="student[jobhuntingaxis]"]:checked').val() == '15' );
+    });
+    $('#jobhuntingaxis_text_toggle').toggle($('#student_jobhuntingaxis_15').prop('checked') );
+  });
+  $('#student_university').on('change', function() {
+    var univ = $('#student_university option:selected').text();
+    if(univ == 'その他'){
+      $('#university_name').toggle();
+    }else{
+      $('#university_name').hide();
+    }
+  });
+</script>
+<%= jquery_view('views.mypage.students.FormView', turbolinks: true) %>

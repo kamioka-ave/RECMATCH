@@ -1,0 +1,179 @@
+.my.pages {
+  &.student {
+    .student-asset-pie-chart {
+      position: relative;
+      height: 480px;
+      width: 100%
+    }
+
+    @media(max-width: 500px) {
+      .student-asset-pie-chart {
+        height: 360px;
+      }
+    }
+
+    .student-asset-line-chart {
+      padding: 30px 50px;
+
+      .units {
+        text-align: center;
+        margin-bottom: 20px;
+
+        input[type="radio"] {
+          display: none;
+
+          &:checked+label {
+            background: $blue;
+            color: $white;
+          }
+        }
+
+        label {
+          display: inline-block;
+          padding: 3px 30px;
+          border: 2px solid $blue;
+          color: $blue;
+          border-radius: 3px;
+        }
+      }
+
+      .y-axis {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .wrapper {
+        position: relative;
+
+        .chart-wrapper {
+          overflow-x: auto;
+          visibility: hidden;
+
+          canvas, &:hover, &:focus {
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    @media(max-width: 500px) {
+      .student-asset-line-chart {
+        padding: 30px 10px;
+      }
+
+      .student-asset-line-chart .units label {
+        padding: 3px 15px;
+      }
+    }
+
+
+    .documents {
+      .nav {
+        font-size: 13px;
+        > li {
+          > a {
+            padding-top: 3px;
+            padding-bottom: 3px;
+          }
+        }
+      }
+    }
+
+    .note {
+      padding-top: 3px;
+      font-size: 11px;
+      background-color: #f6f6f6;
+    }
+
+    .banner-wrapper {
+      background: linear-gradient(to right, #C0C0C0, #EEEEEE);
+      padding: 27px;
+      color: #fff;
+      .stat {
+        font-size: 24px;
+        padding: 0 30px 8px 30px;
+      }
+      .money {
+        font-size: 1.7em;
+        width: 48%;
+        display: inline-block;
+      }
+      span.small-note {
+        font-size: 10px;
+        float: right;
+        margin-right: 15px;
+      }
+      p.banner-note {
+        font-size: 13px;
+        margin-bottom: 2px;
+      }
+
+      .stats {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        padding-bottom: 20px;
+        .cell-left {
+          align-self: flex-start;
+          width: 100%;
+          border-bottom: 1px solid #ffffff61;
+
+          .small-note {
+            margin-right: 0;
+            margin-top: 12px;
+          }
+        }
+        .cell-right {
+          font-size: 20px;
+          align-self: flex-end;
+        }
+      }
+    }
+
+    @media(max-width: 500px) {
+      .banner-wrapper {
+        padding: 27px 9px;
+
+        p.note {
+          font-size: 11px;
+          text-align: justify;
+        }
+      }
+    }
+  }
+
+  &.company {
+    .documents {
+      .nav {
+        font-size: 13px;
+        > li {
+          > a {
+            padding-top: 3px;
+            padding-bottom: 3px;
+          }
+        }
+      }
+    }
+  }
+
+  &.account {
+    .nav-pills {
+      li {
+        background-color: #fff;
+
+        .title {
+          color: $blue;
+        }
+
+        .no-link {
+          padding: $nav-link-padding;
+
+          .title {
+            color: $gray;
+          }
+        }
+      }
+    }
+  }
+}

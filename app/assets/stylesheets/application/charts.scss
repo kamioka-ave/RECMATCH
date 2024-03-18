@@ -1,0 +1,10 @@
+// Charts
+.chart {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  svg,
+  canvas {
+    width: 100% !important;
+  }
+}

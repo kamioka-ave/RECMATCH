@@ -1,0 +1,120 @@
+<section class="content-header">
+  <h1><%= @company.name %></h1>
+</section>
+
+<section class="content">
+  <% if true %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">基本情報</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <table class="table">
+              <tr>
+                <th>企業ID</th>
+                <td colspan="2"><%= @company.id %></td>
+              </tr>
+              <tr>
+                <th>Eメールアドレス</th>
+                <td colspan="2"><a href="mailto:<%= @company.user.email %>"><%= @company.user.email %></a></td>
+              </tr>
+              <tr>
+                <th>チャット機能</th>
+                <td><%= @company.chat_off? ? "非表示" : "表示" %></td>
+                <td class="clearfix">
+                  <% if @company.chat_off? %>
+                      <%= link_to toggle_admin_company_path(@company, type: :display),
+                        method: :put, class: 'pull-right btn-xs btn btn-warning' do %>
+                        表示させる
+                      <% end %>
+                    </td>
+                  <% else %>
+                      <%= link_to toggle_admin_company_path(@company, type: :hide),
+                        method: :put, class: 'pull-right btn btn-xs btn-warning' do %>
+                        非表示させる
+                      <% end %>
+                    </td>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">登録状況</h3>
+            <div class="box-tools pull-right">
+              <%= link_to admin_company_status_histories_path(@company), remote: true, class: 'btn btn-box-tool' do %>
+                <i class="fa fa-history"></i>
+              <% end %>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div id="status" class="box-body no-padding">
+            <%= render 'status' %>
+          </div>
+          <div id="status_histories_modal" class="modal fade" tabindex="-1"></div>
+          <div id="reject_modal" class="modal fade" tabindex="-1"></div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">企業情報</h3>
+            <div class="box-tools pull-right">
+              <%= link_to edit_admin_company_path(@company), class: 'btn btn-box-tool' do %>
+                <i class="fa fa-wrench"></i>
+              <% end %>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <%= render 'show', company: @company %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <% if can?(:create, AdminCompany) %>
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">担当者</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div id="charges" class="box-body no-padding">
+              <%= render 'admin/companies/charges/list', charges: @company.admin_companies %>
+            </div>
+            <div class="box-footer">
+              <%= link_to '担当者を追加する', new_admin_company_charge_path(@company), class: 'btn btn-primary btn-sm pull-right', remote: true %>
+            </div>
+          </div>
+          <div id="charge-modal" class="modal fade" tabindex="-1"></div>
+        <% end %>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">採用募集ページの作成</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <%= @company.agree_with_pre_judge_at.present? ? 'ページ作成の申込みが行われています' : 'ページ作成の申込みはありません' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>

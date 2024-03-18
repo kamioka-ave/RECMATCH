@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">プロジェクトへの投資について</h4>
+    </div>
+    <div class="modal-body">
+      <%= @message.html_safe %><br>
+      ご不明な点がありましたら<%= link_to 'こちら', contact_path, class: 'c-info' %>よりお問い合わせください。
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" data-dismiss="modal">閉じる</button>
+    </div>
+  </div>
+</div>

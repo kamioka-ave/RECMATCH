@@ -1,0 +1,180 @@
+<section class="content-header">
+  <h1>ダッシュボード</h1>
+</section>
+
+<section class="content">
+  <div id="student_count_chart_view" class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">学生登録数</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:;" id="2weeks">2週間</a></li>
+          <li><a href="javascript:;" id="3months">3ヶ月</a></li>
+          <li><a href="javascript:;" id="year">1年</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="chart">
+        <canvas id="student_count_chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="user_count_chart_view" class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">各ユーザ登録比</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:;" id="2weeks">2週間</a></li>
+          <li><a href="javascript:;" id="3months">3ヶ月</a></li>
+          <li><a href="javascript:;" id="year">1年</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="chart">
+        <canvas id="user_count_chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="company_count_chart_view" class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">企業登録数</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:;" id="2weeks">2週間</a></li>
+          <li><a href="javascript:;" id="3months">3ヶ月</a></li>
+          <li><a href="javascript:;" id="year">1年</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="chart">
+        <canvas id="company_count_chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div id="student_gender_chart_view" class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">学生の男女比</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="student_gender_chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div id="student_HS_chart_view" class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">学生の文理比</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="student_HS_chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="student_prefecture_view" class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">学生の地域</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="student_prefecture"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="student_interests_view" class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">学生の人気業界</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="student_interests"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<%= jquery_view('views.admin.pages.StudentCountChartView') %>
+<%= jquery_view('views.admin.pages.UserCountChartView') %>
+<%= jquery_view('views.admin.pages.CompanyCountChartView') %>
+<%=
+  jquery_view(
+    'views.admin.pages.StudentGenderChartView',
+    male: @students.select { |i| i.gender == Student::G_MALE }.count,
+    female: @students.select { |i| i.gender == Student::G_FEMALE }.count
+  )
+%>
+<%=
+  jquery_view(
+    'views.admin.pages.StudentHSChartView',
+    humanities: 40,
+    sciences: 60,
+  )
+%>
+
+<%=
+  jquery_view(
+    'views.admin.pages.BarChartView',
+    el: '#student_prefecture_view',
+    canvas: '#student_prefecture',
+    interests: @prefectures_students
+  )
+%>
+
+<%=
+  jquery_view(
+    'views.admin.pages.BarChartView',
+    el: '#student_interests_view',
+    canvas: '#student_interests',
+    interests: @interests_students
+  )
+%>
+

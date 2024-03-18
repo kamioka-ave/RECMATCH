@@ -1,0 +1,10 @@
+<%= simple_form_for(@graph, url: @graph.persisted? ? admin_company_graph_path(@company, @graph) : admin_company_graphs_path(@company)) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :name %>
+      <%= f.input :rank %>
+    </div>
+  </div>
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>

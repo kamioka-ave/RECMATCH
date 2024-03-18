@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th><%= t('activerecord.attributes.company_graph_datum.label') %></th>
+    <th><%= t('activerecord.attributes.company_graph_datum.data') %></th>
+    <th>操作</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @graph.company_graph_data.each do |d| %>
+    <tr>
+      <td><%= d.label %></td>
+      <td><%= d.data %></td>
+      <td>
+        <%= link_to '編集', edit_admin_company_graph_datum_path(@company, @graph, d), remote: true, class: 'btn btn-xs btn-warning' %>
+        <%= link_to '削除', admin_company_graph_datum_path(@company, @graph, d), method: :delete, remote: true, data: {confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

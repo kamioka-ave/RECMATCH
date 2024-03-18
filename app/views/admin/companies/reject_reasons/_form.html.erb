@@ -1,0 +1,18 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title"><%= @company.name %>の却下理由を更新する</h4>
+    </div>
+    <%= simple_form_for(@company, url: admin_company_reject_reason_path(@company), remote: true) do |f| %>
+      <div class="modal-body">
+        <%= f.error_notification %>
+        <%= f.hidden_field :status, value: Company::S_REJECTED %>
+        <%= f.input :reject_reason, as: :text, label: '却下理由', input_html: { rows: 10 } %>
+      </div>
+      <div class="modal-footer">
+        <%= f.button :submit, class: 'btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

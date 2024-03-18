@@ -1,0 +1,120 @@
+<% content_for(:page_classes) { 'projects show' } %>
+<% content_for(:title) { @event.name } %>
+<% content_for(:description) { @event.description } %>
+<% content_for(:image) { @event.image.url } %>
+
+<div class="introduction mb-25">
+  <h1><%= @event.title %></h1>
+  <div class="row" style="background-color: #fff;">
+    <div class="col-md-8">
+        <%= image_tag(@event.image.url, width: '100%', alt: @event.title) %>
+    </div>
+    <div class="col-md-4 details">
+      <% if !@event.status == Event::E_OPEN %>
+        <%= render 'mypage/companies/events/details_failed' %>
+      <% elsif @event.status == Event::E_OPEN && @event.start <= Time.zone.now %>
+        <%= render 'mypage/companies/events/details_succeeded' %>
+      <% else %>
+        <%= render 'mypage/companies/events/details_failed' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="show" class="row mb-30">
+  <div class="social">
+    <% if false %>
+      <div class="social__item">
+        <div class="fb-like" data-href="<%= request.original_url %>" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+      </div>
+    <% end %>
+    <div class="social__item">
+      <a class="social__link social__link--facebook" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a class="social__link social__link--twitter" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a style="background-image: url(<%= asset_path 'social/line.png' %>)" class="social__link social__link--line" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__line">
+      </a>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <%= render 'mypage/companies/events/content' %>
+  </div>
+
+  <% if @event.persisted? %>
+    <div class="modal fade" id="model__facebook" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @event.name, title_modal: 'ここから先はFacebookのサイトに遷移します。', social: 'facebook' %>
+    </div>
+    <div class="modal fade" id="model__twitter" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @event.name, title_modal: 'ここから先はTwitterのサイトに遷移します。', social: 'twitter' %>
+    </div>
+    <div class="modal fade" id="model__line" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @event.name, title_modal: 'ここから先はLINEのサイトに遷移します。', social: 'line' %>
+    </div>
+  <% end %>
+</div>
+
+<%=
+  jquery_view(
+    'views.events.ShowView',
+    turbolinks: true,
+    isMobile: request.variant.include?(:mobile)
+  )
+%>
+
+<script type="text/javascript">
+  <% if @event.present? && request.fullpath == '/events/' + @event.id.to_s %>
+    var content_id1 = '<%= 'event' + @event.id.to_s %>';
+    var solicited = <%= @event.solicited %>;
+
+    <% if @event.start_at > Time.zone.now %>
+      var content_id2 = content_id1 + '_disclosure';
+    <% elsif @event.status == event::S_IN_PROGRESS %>
+      <% if @event.solicited < @event.solicit %>
+        var content_id2 = content_id1 + '_start';
+      <% else %>
+        var content_id2 = content_id1 + '_goal';
+      <% end %>
+      <% elsif @event.is_succeeded_with_limit && @event.execution_at > Time.zone.now %>
+        var content_id2 = content_id1 + '_wait';
+      <% elsif @event.status == event::S_SUCCEEDED || @event.status == event::S_EXECUTED %>
+        var content_id2 = content_id1 + '_end';
+      <% else %>
+        exit;
+    <% end %>
+
+    fbq('track', "ViewContent", {
+      content_ids: [content_id1, content_id2],
+      content_type: 'product',
+      value: solicited,
+      currency: 'JPY'
+    });
+  <% end %>
+
+  <% if Rails.env.production? %>
+    window._pt_lt = new Date().getTime();
+    window._pt_sp_2 = [];
+    _pt_sp_2.push('setAccount,62a43b5c');
+    var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    (function () {
+      var atag = document.createElement('script');
+      atag.type = 'text/javascript';
+      atag.async = true;
+      atag.src = _protocol + 'js.ptengine.jp/pta.js';
+      var stag = document.createElement('script');
+      stag.type = 'text/javascript';
+      stag.async = true;
+      stag.src = _protocol + 'js.ptengine.jp/pts.js';
+      // var s = document.getElementsByTagName('script')[0];
+      var s = document.getElementsByTagName('footer')[0];
+      s.parentNode.insertBefore(atag, s);
+      s.parentNode.insertBefore(stag, s);
+    })();
+  <% end %>
+</script>
+

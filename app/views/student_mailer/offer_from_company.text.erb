@@ -1,0 +1,9 @@
+<%= @student.nickname %> 様
+
+本日のオファー状況です。
+本日は<%= @offers.size %>件のオファーが届いています。
+以下URLよりご確認をお願いいたします。
+
+https://recmatch.co.jp/mypage/offers
+
+<%= render partial: 'layouts/mailer_sign' %>

@@ -1,0 +1,20 @@
+<section class="content-header">
+  <h1>プロジェクトのカテゴリ</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div id="categories" class="box-body no-padding">
+          <%= render 'list', categories: @categories %>
+        </div>
+        <div class="box-footer">
+          <%= link_to 'カテゴリを追加', new_admin_category_path, class: 'btn btn-primary', remote: true %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="category-modal" class="modal fade" tabindex="-1"></div>

@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">学生のロックを解除する</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@student, url: admin_student_unlock_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :id, value: @student.id %>
+        <%= f.button :submit, 'ロックを解除する', class: 'btn-primary' %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+      <% end %>
+    </div>
+  </div>
+</div>

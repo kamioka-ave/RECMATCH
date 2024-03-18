@@ -1,0 +1,147 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">承認依頼中のイベント</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.event.title') %></dt>
+            <dd><%= @event.title %></dd>
+            <dt>企業名</dt>
+            <dd><%= @event.company.name %></dd>
+            <dt><%= t('activerecord.attributes.event.event_type') %></dt>
+            <dd><%= Event.names_with_event_type.key(@event.event_type) %></dd>
+            <dt><%= t('activerecord.attributes.event.description') %></dt>
+            <dd><%= @event.description.html_safe %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">イベント画像</h2>
+        </div>
+        <div class="box-body">
+            <dl>
+              <dt><%= t('activerecord.attributes.event.image') %></dt>
+              <dd><%= image_tag @event.image.thumb.url, width: '60%' %></dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+<section>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">基本情報</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.event.start') %></dt>
+            <dd><%= l(@event.start) %></dd>
+          </dl>
+          <dl>
+            <dt><%= t('activerecord.attributes.event.end') %></dt>
+            <dd><%= l(@event.end) %></dd>
+            <dl>
+            <dt><%= t('activerecord.attributes.event.capacity') %></dt>
+            <dd><%= @event.capacity %>人</dd>
+          </dl>
+          <dl>
+            <dt><%= t('activerecord.attributes.event.prefecture_id') %></dt>
+            <dd><%= @event.prefecture.name %></dd>
+          </dl>
+          <dl>
+            <dt><%= t('activerecord.attributes.event.address') %></dt>
+            <dd><%= @event.address %></dd>
+          </dl>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">状況</h2>
+        </div>
+        <div class="box-body no-padding">
+          <table class="table">
+            <tr>
+              <td>状態</td>
+              <td><%= Event.names_with_status.key(@event.status) %></td>
+            </tr>
+            <tr>
+              <td>作成者</td>
+              <td><%= @event.company.name %></td>
+            </tr>
+            <tr>
+              <td>承認者</td>
+              <td><%= @event.authorizer.name if @event.authorizer.present? %></td>
+            </tr>
+            <tr>
+              <td>更新日</td>
+              <td><%= l(@event.updated_at) %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="box-footer">
+          <% if @event.status == Event::E_JUDGE %>
+            <% if can?(:admit, Event) %>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">承認する</button>
+            <% end %>
+            <% if can?(:deny, Event) %>
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reject-modal">差戻す</button>
+            <% end %>
+            <%= link_to 'プレビュー', preview_admin_event_path(@event), class: 'btn btn-info', target: '_blank' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="modal fade" id="approve-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">承認する</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@event, url: approve_admin_event_path(@event)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: Event::E_OPEN %>
+          <%= f.hidden_field :proposal_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '承認', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reject-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">差戻す</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@event, url: reject_admin_event_path(@event)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: Event::E_BACK %>
+          <%= f.hidden_field :authorizer_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '差戻す', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

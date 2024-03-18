@@ -1,0 +1,10 @@
+<%= @resource.name %>様
+
+RECMATCHより、登録の確認です。
+登録を完了するには、以下のリンクを訪れて変更の確認を行ってください。
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+パスワードは<%= @resource.password %>です。
+
+<%= render partial: 'layouts/mailer_sign' %>

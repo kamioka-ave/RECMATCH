@@ -1,0 +1,45 @@
+<% content_for(:page_classes) { 'mypage profiles edit' } %>
+
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h2><span><i class="fa fa-cog" aria-hidden="true"></i> ユーザー情報編集</span></h2>
+  </div>
+  <div class="card-body card-padding">
+    <%= simple_form_for([:mypage, @profile], wrapper: 'horizontal_form', html: { class: 'form-horizontal' }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :name %>
+      <%= f.input :gender, required: true, collection: Profile.names_with_gender, as: 'radio_buttons', wrapper: 'horizontal_radio_and_checkboxes' %>
+      <div class="row">
+        <div class="col-sm-3">
+          <label class="mt-10">電子メールの受け取り</label>
+        </div>
+        <div class="col-sm-9">
+          <%= f.input :receive_notification %>
+        </div>
+      </div>
+      <%= f.input :image, wrapper: 'horizontal_file_input' %>
+      <%= f.hidden_field :image_cache if @profile.image_cache.present? %>
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3">
+          <span id="preview" class="preview" style="display: none"></span>
+        </div>
+      </div>
+      <% if false %>
+        <%= f.input :description, input_html: { rows: 6 }, wrapper: 'horizontal_form_full' %>
+      <% end %>
+      <div class="row mt-30">
+        <div class="col-sm-5 col-md-offset-3">
+          <%= f.button :submit, '更新', class: 'btn-lg btn-block btn-info' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.profiles.FormView',
+    turbolinks: true,
+    image: @profile.image.present? ? @profile.image.url : ''
+  )
+%>

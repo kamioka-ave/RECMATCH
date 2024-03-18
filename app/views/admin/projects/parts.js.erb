@@ -1,0 +1,2 @@
+var recmatchParts = document.getElementById("recmatch-parts");
+recmatchParts.innerHTML='<%= escape_javascript(render(partial: 'parts', locals: {project: @project, width: @width})) %>';

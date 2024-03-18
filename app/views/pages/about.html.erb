@@ -1,0 +1,123 @@
+<% content_for(:page_classes) { 'pages about' } %>
+<% content_for(:title) { '初めての方へ' } %>
+
+<h3>
+  <% if false %>
+    <div class="pull-right">
+      <%= link_to '企業はこちら', about_company_pages_path, class: 'pull-right btn btn-primary mb-20 mr-5' %>
+    </div>
+  <% end %>
+</h3>
+
+<div class="card">
+  <div class="card-header">
+    <h2>
+      <i class="fa fa-shield" aria-hidden="true"></i> 初めての方へ
+    </h2>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="embed-responsive embed-responsive-16by9 mb-60">
+          <%= image_tag 'about/recmatch-service.png', width: '100%', class: 'p-10', alt: 'RECMATCHのしくみ' %>
+          <% if false %><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/"></iframe><% end %>
+        </div>
+
+        <section class="mb-80">
+          <h3>RECMATCHとは</h3>
+          <div>
+            ミスマッチZEROの就活を提供するための就活プラットフォームです。
+            学生と企業がお互いを深く理解し、気軽にコミュニケーションを取ることで
+            ミスマッチを解消しようと考えております。
+            また登録いただいた学生さんには元外資系コンサル会社リクルーターによる
+            就活支援を無料でご利用いただけます。
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <section class="mb-80">
+          <h3 class="mb-30">RECMATCH４つの魅力</h3>
+
+          <div class="row mb-40">
+            <div class="col-md-8">
+              <h4><span class="circle mr-5">1</span>登録するだけで厳選された優良企業からオファーが届く</h4>
+              <p>
+                大学名等の簡単な情報を登録するだけで、RECMATCHが厳選した
+                優良企業よりオファーが届きます。また自己PRを入力することで、
+                よりオファーが届くようになります。
+                （※RECMATCHは匿名でのご利用となるためご安心ください）
+              </p>
+            </div>
+            <div class="col-md-4 hidden-sm hidden-xs" style="font-size: 24px; color: #327AB7">
+              <i class="fa fa-envelope-open-o fa-5x"></i>
+            </div>
+          </div>
+
+          <div class="row mb-40">
+             <div class="col-md-4 hidden-sm hidden-xs" style="font-size: 24px; color: #327AB7">
+              <i class="fa fa-address-card-o fa-5x"></i>
+            </div>
+            <div class="col-md-8">
+              <h4><span class="circle mr-5">2</span>人事に対して直接オファーを出すことが可能</h4>
+              <p>
+                従来の就活は企業の採用ページよりエントリーすることが主流でした。
+                一方RECMATCHでは学生さん自ら、志望する企業にオファーを送ることが可能です。
+                オファーが承認されれば早期選考や特別枠での選考も可能となる場合がございます。
+              </p>
+            </div>
+          </div>
+
+          <div class="row mb-40">
+            <div class="col-md-8">
+              <h4><span class="circle mr-5">3</span>人事と近い距離で気軽にコミュニケーションを取ることが可能</h4>
+              <p>
+                企業からのオファーを承認するor自分のオファーが企業に承認されると
+                RECMATCH内のチャットにて人事と気軽にコミュニケーションを取ることができます。
+                普段は聞けない質問・不明点を聞くこともでき、非常に参考になるかと思います。
+              </p>
+            </div>
+            <div class="col-md-4 hidden-xs hidden-sm" style="font-size: 24px; color: #327AB7">
+              <i class="fa fa-comments-o fa-5x"></i>
+            </div>
+          </div>
+
+          <div class="row mb-40">
+             <div class="col-md-4 hidden-xs hidden-sm" style="font-size: 24px; color: #327AB7">
+              <i class="fa fa-bullhorn fa-5x"></i>
+            </div>
+            <div class="col-md-8">
+              <h4><span class="circle mr-5">4</span>元外資系コンサル会社リクルーターによる就活支援を受けられる</h4>
+              <p>
+                具体的には以下のような就活支援を受けることが可能です。
+              <ul>
+                <li>模擬面接</li>
+                <li>ES添削</li>
+                <li>自己分析支援</li>
+                <li>GD対策資料配布</li>
+                <li>面接チェックポイント資料配布</li>
+                <li>ESの書き方資料配布</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <% unless user_signed_in? %>
+      <section class="row pb-60">
+        <div class="col-md-4 col-md-offset-4">
+          <%= link_to 'お申込みはこちら（学生）', new_user_registration_path, class: 'btn btn-lg btn-block btn-info' %>
+        </div>
+      </section>
+    <% end %>
+    <div class="text-center">
+      <%= link_to contact_path, class: 'c-info' do %>
+        <i class="fa fa-arrow-circle-right mr-5"></i>お問い合わせフォームはこちら
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+/*
+ *= require ion-rangeslider/css/ion.rangeSlider.css
+ *= require rc-slider/assets/index.css
+ *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css
+ *= require codemirror/lib/codemirror.css
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "admin-lte/dist/css/AdminLTE";
+@import "admin-lte/dist/css/skins/skin-black";
+@import "font-awesome";
+@import "summernote";
+@import "sweetalert/dev/sweetalert";
+@import "common/mixins";
+@import "common/generics";
+@import 'common/errors';
+@import "admin/views/companies";
+@import "admin/views/supporters";
+@import "admin/pages/messages";
+
+.form-horizontal {
+  @media (min-width: 768px) {
+    .control-label {
+      text-align: left;
+    }
+  }
+}
+
+#preview_headline_image {
+  @include preview-image(128px, 72px);
+}
+
+#preview_case_study_image {
+  @include preview-image(256px, 144px);
+}
+
+.text-danger {
+  color: #ff0000;
+  font-weight: 900;
+}
+
+dd {
+  margin-bottom: 16px;
+}
+
+.CodeMirror {
+  font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+  font-size: 9pt;
+  height: 100%;
+}
+
+.toggle {
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  &:hover {
+    color: #fff;
+  }
+  &--on {
+    background: #4a90e2;
+    &:hover {
+      background: #2a64a7;
+    }
+  }
+  &--off {
+    background: #9f9f9f;
+    &:hover {
+      background: #808080;
+    }
+  }
+}
+
+.dashed-button {
+  font-weight: bold;
+  padding: 7px 7px;
+  border-radius: 3px;
+  border: 3px dashed #4a90e2;
+  color: #4a90e2;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#filter_by_category_form {
+  display: inline-block;
+  min-width: 400px;
+}
+
+.text-center {
+  text-align: center;
+}

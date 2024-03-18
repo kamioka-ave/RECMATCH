@@ -1,0 +1,395 @@
+/* Header Style
+-------------------------------------------------------------------------------*/
+@import "application/variables";
+
+#main-header {
+  background-color: #FFF;
+  padding: 10px 0;
+
+  .inner01 {
+    color:#FFF;
+    background-color: $blue;
+    padding:5px 0;
+    height: 42px;
+
+    h1 {
+      color: #fff;
+      float:left;
+      font-weight:normal;
+      font-size:12px;
+      margin-top:6px;
+    }
+
+    a {
+      color: #fff;
+    }
+  }
+
+  .inner02 {
+    background-color: #FFF;
+    padding-top: 4px;
+    .logo img {
+      height: 40px;
+    }
+  }
+}
+
+#g-menu {
+  float:right;
+
+  ul {
+    margin-bottom: 0;
+    margin-top: 0;
+
+    li {
+      display: inline-block;
+      *display: inline; /* ie6, ie7 */
+      *zoom: 1; /* ie6, ie7 */
+
+      width: auto;
+      text-align: center;
+      vertical-align: top;
+
+      &:not(:last-child) {
+        padding-right: 15px;
+      }
+
+      a {
+        color: $blue;
+        font-weight: bold;
+        text-decoration: none;
+
+        transition-property: all;
+        transition: 0.3s linear;
+
+        &:hover {
+          color: lighten($blue, 10%);
+        }
+
+        i {
+          display: block;
+          margin-bottom: 0;
+          font-size: 20px;
+          padding-top: 18px;
+          line-height: 10px;
+          vertical-align: bottom;
+        }
+
+        .title {
+          color: $blue;
+          font-size: 12px;
+          font-weight: 900;
+          padding-left: 6px;
+        }
+      }
+    }
+  }
+}
+
+#main-header .screen-reader-text {
+  position: absolute;
+  display: block;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.white {
+  color: white;
+}
+
+.transparent {
+  background:none;
+  border:none;
+  box-shadow:none;
+}
+
+.display_none {
+  display: none;
+}
+
+.notification {
+  &__pointer {
+    position: relative;
+
+    &:hover {
+      color: $white;
+    }
+
+    &:before {
+      content: "";
+      height: 8px;
+      width: 8px;
+      position: absolute;
+      left: 25px;
+      right: auto;
+      top: 20px;
+      display: block;
+      z-index: 2;
+      background: $red;
+      border-radius: 100%;
+
+      @include tablet {
+        right: 0;
+        top: 10px;
+        left: auto;
+      }
+    }
+  }
+
+  &__messages {
+    position: absolute;
+    z-index: -1;
+    padding: 0;
+    max-height: 350px;
+    overflow-y: scroll;
+    border-radius: 2px;
+    padding-bottom: 20px;
+    visibility: hidden;
+    box-shadow: 2px 1px 1px 1px rgba($azure-radiance, 0.3);
+    top: 150%;
+    width: 100%;
+    right: 0;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 5px rgba($azure-radiance, 0.2);
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: $panel-inner-border;
+      -webkit-box-shadow: inset 0 0 5px rgba($azure-radiance, 0.2);
+    }
+
+    &::-webkit-scrollbar-thumb:window-inactive {
+      background: $lightblue;
+    }
+
+    &--active {
+      visibility: visible;
+      transition: all 0.5s;
+      z-index: 10;
+      background: $white;
+      top: 75px;
+    }
+
+    @include tablet {
+      background: $white;
+      width: 400px;
+      top: 100px;
+      right: 0;
+      box-shadow: 0px 1px 1px 1px $panel-inner-border;
+      display: block;
+
+      &--active {
+        top: 70px;
+      }
+    }
+  }
+
+  &__sub-item {
+    list-style: none;
+  }
+
+  &__link {
+    color: $abbey;
+    cursor: pointer;
+    padding: 10px 25px;
+    display: block;
+    width: 100%;
+    min-height: 60px;
+    border-bottom: solid 1px $iron;
+    background: $white;
+
+    &:hover {
+      text-decoration: none;
+      background: rgba($malibu, 0.2);
+      color: $abbey;
+    }
+
+    @include tablet {
+      font-size: $font-size-base;
+    }
+
+    &--unread {
+      background: rgba($malibu, 0.2);
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+        background: $red;
+      }
+    }
+  }
+
+  &__icon {
+    display: block;
+    cursor: pointer;
+    padding: 10px 15px;
+    color: $text-color;
+
+
+    &:hover {
+      color: $text-color;
+    }
+    @include tablet {
+      padding: 0;
+      margin-top: 6px;
+      color: $white;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &__active {
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid $white;
+      position: absolute;
+      top: 33px;
+      left: 15px;
+      right: auto;
+      z-index: 100;
+    }
+
+    @include tablet {
+      &:before {
+        top: 27px;
+        right: 5px;
+        left: auto;
+      }
+    }
+
+    &__title {
+      position: absolute;
+      width: 100%;
+      top: 42px;
+      right: 0;
+      z-index: 10;
+      display: block;
+      background: $white;
+      padding: 5px;
+      box-sizing: border-box;
+      border: solid 1px $iron;
+      border-top-right-radius: 2px;
+
+      @include tablet {
+        width: 400px;
+        top: 37px;
+      }
+    }
+  }
+
+  &__date {
+    display: block;
+    color: $coffee;
+    text-align: right;
+    font-size: $font-size-small;
+  }
+
+  &__loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border: 1px solid rgba($black, 0.8);
+    border-left-color: rgba($black, 0.6);
+    border-bottom-color: rgba($black, 0.4);
+    border-right-color: rgba($black, 0.2);
+    border-radius: 50%;
+    @include animated(loading, 600ms);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &__sender {
+    float: left;
+    margin-left: -10px;
+
+    &--avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+
+  &__content {
+    padding-left: 45px;
+  }
+
+  @include keyframes(loading) {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  &__empty {
+    padding-top: 20px;
+    text-align: center;
+  }
+}
+
+
+.mobie-menu {
+  display: flex;
+  justify-content: flex-start;
+  float: none;
+  align-items: center;
+
+  &__btn {
+    float: none;
+  }
+
+  &__logo {
+    position: relative;
+    left: auto;
+    margin: auto;
+    margin-left: auto !important;
+    padding: 8px 0;
+  }
+
+  &__p-3 {
+    padding: 3px;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+}
+section#agency-contact{
+      background: $agency-gray;
+      background-image: image_url('agency/map-image.png');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    section#agency-contact .section-heading{color:#fff}
+    section#agency-contact .form-group{margin-bottom:25px}
+    section#agency-contact .form-group input,section#contact .form-group textarea{padding:20px}
+    section#agency-contact .form-group input.form-control{height:auto}
+    section#agency-contact .form-group textarea.form-control{height:248px}
+    section#agency-contact .form-control:focus{border-color:#fed136;-webkit-box-shadow:none;box-shadow:none}
+    section#agency-contact ::-webkit-input-placeholder{font-weight:700;color:#ced4da;font-family:Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}
+    section#agency-contact :-moz-placeholder{font-weight:700;color:#ced4da;font-family:Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}
+    section#agency-contact ::-moz-placeholder{font-weight:700;color:#ced4da;font-family:Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}
+    section#agency-contact :-ms-input-placeholder{font-weight:700;color:#ced4da;font-family:Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}
+

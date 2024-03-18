@@ -1,0 +1,87 @@
+<% content_for(:page_classes) { 'projects show' } %>
+<% content_for(:title) { @project.name } %>
+<% content_for(:description) { @project.short_description } %>
+<% content_for(:image) { @project.image.url } %>
+
+<div class="introduction mb-25">
+  <div class="clearfix mb-10">
+    <div class="pull-left">
+      <h1><span style="border-bottom: solid 3px #000080;"><i class="fa fa-address-card" aria-hidden="true"></i> <%= @project.name %></span></h1>
+    </div>
+    <div class="pull-right ">
+      <small class="text-muted"><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <% if request.variant.include? :mobile %>
+        <%= image_tag(@project.image.url, width: '100%', height: '100%', alt: @project.name) %>
+      <% else %>
+        <%= image_tag(@project.image.url, width: '100%', height: '500px', alt: @project.name) %>
+      <% end %>
+    </div>
+    <div class="col-md-4 details z-depth-1" style="border: solid rgba(130, 130, 130, 0.5);">
+      <% if @project.status == Project::S_ACTIVE && Time.zone.now <= @project.entry_closed %>
+        <%= render 'projects/details_succeeded' %>
+      <% else %>
+        <%= render 'projects/details_failed' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="show" class="row mb-30">
+  <div class="social">
+    <% if false %>
+      <div class="social__item">
+        <div class="fb-like" data-href="<%= request.original_url %>" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+      </div>
+    <% end %>
+    <div class="social__item">
+      <a class="social__link social__link--facebook" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a class="social__link social__link--twitter" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a style="background-image: url(<%= asset_path 'social/line.png' %>)" class="social__link social__link--line" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__line">
+      </a>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <%= render 'projects/content' %>
+  </div>
+
+  <% if @project.persisted? %>
+    <div class="modal fade" id="model__facebook" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'projects/model_social', title: @project.name, title_modal: 'ここから先はFacebookのサイトに遷移します。', social: 'facebook' %>
+    </div>
+    <div class="modal fade" id="model__twitter" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'projects/model_social', title: @project.name, title_modal: 'ここから先はTwitterのサイトに遷移します。', social: 'twitter' %>
+    </div>
+    <div class="modal fade" id="model__line" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'projects/model_social', title: @project.name, title_modal: 'ここから先はLINEのサイトに遷移します。', social: 'line' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row mb-30 disclaimers">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="p-25" style="background-color:#FFFFBB;color:#999999;">
+      <%= render 'projects/disclaimers' %>
+    </div>
+  </div>
+</div>
+<%=
+  jquery_view(
+    'views.projects.ShowView',
+    turbolinks: true,
+    isMobile: request.variant.include?(:mobile)
+  )
+%>
+
+
+

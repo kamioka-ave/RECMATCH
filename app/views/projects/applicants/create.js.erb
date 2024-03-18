@@ -1,0 +1,3 @@
+$("#applicant").html("<%= escape_javascript(render('projects/applicant')) %>");
+$("#applicant_modal").modal("hide");
+notify('', '出資希望を行いました', 'top', 'center', '', 'success', '', '');

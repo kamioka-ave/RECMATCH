@@ -1,0 +1,11 @@
+.my.students {
+  &.details {
+    @media (min-width: $screen-sm-min) {
+      table {
+        th {
+          width: 260px;
+        }
+      }
+    }
+  }
+}

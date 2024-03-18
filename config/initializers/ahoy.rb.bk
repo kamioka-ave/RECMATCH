@@ -1,0 +1,14 @@
+Ahoy.api = true
+Ahoy.server_side_visits = false
+
+AhoyEmail.api = true
+AhoyEmail.default_options[:message] = false
+AhoyEmail.default_options[:open] = true
+AhoyEmail.default_options[:click] = true
+AhoyEmail.default_options[:utm_params] = true
+
+class Ahoy::Store < Ahoy::DatabaseStore
+  def visit_model
+    Visit
+  end
+end

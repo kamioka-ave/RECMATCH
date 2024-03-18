@@ -1,0 +1,47 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<%= render 'layouts/head' %>
+<body class="<%= yield(:page_classes) %>">
+<div id="sb-site">
+  <%= render 'layouts/header' %>
+
+  <% if user_signed_in? && current_user.confirmed_at.nil? %>
+    <div class="alert alert-unconfirmed alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="container">
+        <div class="row">
+          <div class="" margin="auto">
+            <%= link_to '確認メールを再送信', user_confirmation_path, method: :post, remote: true, id: 'user_confirmation_button', class: 'btn btn-block btn-lg btn-teal-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? && current_user.student.present? && current_user.student.status == Student::S_REJECTED && request.fullpath.include?('/mypage/student/wizard') %>
+    <div class="alert alert-unconfirmed alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="container text-center">
+        以前ご申請いただいた時の情報から変更がある場合は、最新の情報をご登録ください。
+      </div>
+    </div>
+  <% end %>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="content">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  <%= render 'layouts/footer' %>
+</div>
+</body>
+</html>

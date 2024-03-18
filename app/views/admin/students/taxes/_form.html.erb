@@ -1,0 +1,17 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">納税書の更新</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@student, url: admin_student_tax_path, remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :tax_payment_receipt_status, value: Student::TPRS_APPROVED %>
+        <%= f.input :tax_payment_receipt, required: true, hint: "画像またはPDF、ZIPファイルでの提出が可能です" %>
+        <br>
+        <%= f.button :submit, "更新", class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

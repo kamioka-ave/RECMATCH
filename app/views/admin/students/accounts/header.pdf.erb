@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>顧客勘定元帳</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger', media: 'all' %>
+  <script>
+      function number_pages() {
+          var vars={};
+          var x=document.location.search.substring(1).split('&');
+          for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+          var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+          for(var i in x) {
+              var y = document.getElementsByClassName(x[i]);
+              for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+          }
+      }
+  </script>
+</head>
+<body class="student-account" onload="number_pages()">
+  <div class="clearfix">
+    <div class="pull-left">
+      <h3>学生勘定元帳＜学生勘定元帳兼取引残高報告書（控）＞</h3>
+      <h4>期間: <%= l(@account.start_at) %>〜<%= l(@account.end_at) %></h4>
+      <table border="1" class="mb-20">
+        <tr>
+          <th>委託者名</th>
+          <th>学生ID</th>
+          <th>学生名</th>
+        </tr>
+        <tr class="text-center">
+          <td>JCC</td>
+          <td class="text-right"><%= @student.id %></td>
+          <td><%= @student.full_name %>様</td>
+        </tr>
+      </table>
+    </div>
+    <div class="pull-right">
+      <div class="text-right">
+        <div class="mb-10">
+          Page : <span class="page"></span> / <span class="topage"></span>
+        </div>
+        <div>
+          <span class="mr-20">基準日</span><%= l(@account.end_at) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

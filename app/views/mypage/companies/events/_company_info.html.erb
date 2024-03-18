@@ -1,0 +1,164 @@
+<style>
+  .md3-text {
+    font-size: 18px;
+    border-left: solid;
+  }
+  h1.recruit-head {
+    color: #2196F3;
+  }
+  h1.company_info{
+    border-left: solid;
+  }
+  h3.box-title{
+    color: #5E5E5E;
+  }
+  .md7-text{
+    text-align: right;
+  }
+  .md5-text{
+    text-align: left;
+  }
+</style>
+
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card" style="border: none;">
+      <div class="tab-content">
+        <%= image_tag(@company.image.url, width: '100%', alt: @company.name) %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card profile-view" style="border: none;">
+      <div class="title">
+        <h1 class="recruit-head" id="toc-0"><%= @company.name %></h1>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-flag"></i> 所在地
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.prefecture.name %><%= @company.city %><br>
+            <%= @company.address1 %><%= @company.address2 if @company.address2.present? %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-address-card"></i> 代表取締役
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.president_last_name %> <%= @company.president_first_name %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-phone-square"></i> 法人電話番号
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= @company.phone %>
+          </div>
+        </div>
+        <br>
+        <% if @company.birth_on.present? %>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-calendar"></i> 設立年月日
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= l(@company.birth_on) %>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-yen"></i> 資本金
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= number_to_currency(@company.capital) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-bar-chart"></i> 売上高
+          </div>
+          <div class="col-md-7 md7-text">
+            <%= number_to_currency(@company.sales_profit) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-5 md5-text">
+            <i class="fa fa-home"></i> 会社URL
+          </div>
+          <div class="col-md-7 md7-text">
+            <% if @company.website.include?('http') %>
+              <a href="<%= @company.website %>" target="_blank"><%= @company.website %></a>
+            <% else %>
+              なし
+            <% end %>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="border-top:solid 1px #CCCCCC;">
+  <div class="col-md-7">
+    <div class="card" style="border: none;">
+      <div class="tab-content">
+        <br>
+        <h1 class="recruit-head company_info" id="toc-1">　事業紹介</h1>
+        <br>
+          <%= @company.business_summary.html_safe %>
+        <br>
+        <% if @company.business_philosophy.present? %>
+          <h1 class="recruit-head company_info" id="toc-2">　企業理念・社訓など</h1>
+          <br>
+            <%= @company.business_philosophy.html_safe %>
+          <br>
+        <% end %>
+        <h1 class="recruit-head company_info" id="toc-3">　業務内容・スキル・キャリアプラン</h1>
+        <br>
+          <%= @company.hope.html_safe %>
+        <br>
+        <% if @company.business_shebang.present? %>
+        <h1 class="recruit-head company_info" id="toc-4">　社風・社員の士気</h1>
+        <br>
+          <%= @company.business_shebang.html_safe %>
+        <br>
+        <% end %>
+        <% if @company.competitive_strength.present? %>
+        <h1 class="recruit-head company_info" id="toc-5">　自社の強み</h1>
+        <br>
+          <%= @company.competitive_strength.html_safe %>
+        <br>
+        <% end %>
+        <% if @company.competitive_difference.present? %>
+        <h1 class="recruit-head company_info" id="toc-6">　他社との違い</h1>
+        <br>
+          <%= @company.competitive_difference.html_safe %>
+        <br>
+        <% end %>
+        <% if @company.target.present? %>
+        <h1 class="recruit-head company_info" id="toc-7">　今後の展望</h1>
+        <br>
+          <%= @company.target.html_safe %>
+        <br>
+        <% end %>
+        <% if @company.ceo_hopes.present? %>
+        <h1 class="recruit-head company_info" id="toc-8">　皆さんへのメッセージ</h1>
+        <br>
+          <%= @company.ceo_hopes.html_safe %>
+        <br>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

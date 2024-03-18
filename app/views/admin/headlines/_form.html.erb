@@ -1,0 +1,17 @@
+<%= simple_form_for([:admin, @headline]) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :title %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :headline_type, collection: Headline.names_with_headline_type %>
+      <%= f.input :published_at, as: :date_time_picker %>
+    </div>
+  </div>
+  <%= f.input :body %>
+  <%= button_tag @headline.status == Headline::S_DRAFT ? '公開' : '更新' , name: 'submit', class: 'btn btn-primary' %>
+  <% if @headline.status != Headline::S_PUBLISHED %>
+    <%= button_tag draft_a, name: 'draft', class: 'btn btn-info' %>
+  <% end %>
+  <%= button_tag 'プレビュー', name: 'preview', class: 'btn btn-default', formtarget: '_blank' %>
+<% end %>
+<%= jquery_view('views.admin.headlines.FormView') %>

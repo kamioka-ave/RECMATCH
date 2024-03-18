@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-7">
+    <%= link_to product.project do %>
+      <%= image_tag(product.project.image.thumb16by9.url, width: "100%") %>
+    <% end %>
+  </div>
+  <div class="col-md-5">
+    <h3><%= product.title %></h3>
+    <%= simple_format(product.description) %>
+    <dl>
+      <dt>投資額</dt>
+      <dd><%= number_to_currency(product.price) %></dd>
+      <dt>取得できる株式</dt>
+      <dd><%= number_with_delimiter(product.stocks) %>株</dd>
+      <% if product.incentive.present? %>
+        <dt>株主優待</dt>
+        <dd><%= simple_format(product.incentive) %></dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<section class="content-header">
+  <h1>
+    学生一覧　<%= @students.total_count %><small>名の学生が見つかりました</small>
+    <div class="pull-right">
+      <%= link_to edit_admin_students_display_path, remote: true, class: 'text-muted' do %>
+        <i class="fa fa-cog"></i>
+      <% end %>
+    </div>
+    <div class="pull-right mr-15">
+      <%=
+        react_component(
+          'views.admin.students.SearchModal',
+          conditions: @conditions,
+          attributes: Student.conditionable_attributes,
+          predicates: Student.conditionable_predicates,
+          namesWithStudentStatus: Student.names_with_status,
+          namesWithStudentIsMailTarget: Student.names_with_is_mail_target,
+          namesWithEnableReapply: Student.names_with_enable_reapply
+        )
+      %>
+    </div>
+  </h1>
+  <div id="edit_students_display_modal" class="modal fade" tabindex="-1"></div>
+</section>
+
+<section class="content">
+  <% if @q.conditions.size > 0 && @q.conditions.first.attributes.first.present? %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">絞り込み条件</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <%= render 'conditions', query: @q %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="box">
+    <div class="box-body no-padding">
+      <%= render 'list' %>
+    </div>
+    <div class="box-footer">
+      <%= link_to 'CSVダウンロード', download_admin_students_path({format: 'csv'}.merge(params.to_unsafe_h)), class: 'btn btn-sm btn-info pr-5' %>
+      <%= link_to 'リストに保存', new_admin_student_list_path(params.to_unsafe_h), remote: true, class: 'btn btn-sm btn-success' %>
+      <%= paginate @students, theme: 'admin' %>
+    </div>
+  </div>
+</section>
+
+<div id="new_list_modal" class="modal fade" tabindex="-1"></div>

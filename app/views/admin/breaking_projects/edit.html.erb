@@ -1,0 +1,15 @@
+<section class="content-header">
+  <h1>注目の新着プロジェクト</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for([:admin, @site], url: admin_breaking_project_path) do |f| %>
+    <%= f.error_notification %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.association :project %>
+      </div>
+    </div>
+    <%= f.button :submit, '更新する', class: 'btn-primary' %>
+  <% end %>
+</section>

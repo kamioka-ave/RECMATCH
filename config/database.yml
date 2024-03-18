@@ -1,0 +1,36 @@
+# MySQL.  Versions 5.0+ are recommended.
+#
+# Install the MYSQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+  pool: 5
+  host: <%= ENV["RECMATCH_DATABASE_HOST"] %>
+  username: user
+  password: password
+
+test:
+  <<: *default
+  database: recmatch_test
+
+development:
+  <<: *default
+  database: recmatch_development
+
+staging:
+  <<: *default
+  database: recmatch_staging
+  host: recmatch.cs5nllgemguc.ap-northeast-1.rds.amazonaws.com
+
+production:
+  <<: *default
+  database: recmatch_production

@@ -1,0 +1,21 @@
+<div class="box-body no-padding">
+  <table class="table">
+    <tr>
+      <th>状態</th>
+      <td><%= Student.names_with_tax_payment_receipt_status.key(@student.tax_payment_receipt_status) %></td>
+    </tr>
+    <tr>
+      <th><%= t('activerecord.attributes.student.tax_payment_receipt') %></th>
+      <td><%= link_to "表示", @student.tax_payment_receipt.url, target: "_blank", class: "btn btn-xs btn-info" %></td>
+    </tr>
+  </table>
+</div>
+<% if @student.tax_payment_receipt_status == Student::TPRS_SUBMITTED %>
+  <div class="box-footer">
+    <%= simple_form_for(@student, url: approve_admin_student_tax_path(student_id: @student)) do |f| %>
+      <%= f.hidden_field :tax_payment_receipt_status, value: Student::TPRS_APPROVED %>
+      <%= f.button :submit, "確認済みにする", class: 'btn-primary' %>
+      <%= link_to "却下する", reject_form_admin_student_tax_path(student_id: @student), remote: true, class: "btn btn-warning" %>
+    <% end %>
+  </div>
+<% end %>

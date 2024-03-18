@@ -1,0 +1,53 @@
+  <div class="projects thumb">
+    <div class="card z-depth-1">
+      <div class="card-body card-padding-sm bgm-gray-lighter">
+        <div class="events details <%= defined?(xs_half) && xs_half ? 'half' : '' %>">
+          <div class="details-body-small">
+            <div class="project-properties">
+              <div class="mb-5 f-17 clearfix">
+                <div class="media mb-10">
+                  <div class="pull-left">
+                    <%= link_to mypage_company_search_student_path(s) do %>
+                      <%= profile_image(s.user.profile, width: 70, class: 'img-rounded') %>
+                    <% end %>
+                  </div>
+                  <div class="media-body name-height">
+                    <%= link_to mypage_company_search_student_path(s) do %>
+                      <div class="c-gray-darker pull-left" style="color:#2196F3;font-size: 16px;"><b><%= s.name %></b></div>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="mb-5 f-17 clearfix" style="border-radius: 5px 5px 5px 5px;background-color:<%= University.colors_with_univ(s.university) %>;">
+                  <div class="pull-left p-10 text-muted-type">
+                    <i class="fa fa-university" aria-hidden="true"></i>
+                    <small class="f-12 text-muted-type">大学</small>
+                  </div>
+                  <div class="pull-right p-10">
+                    <small class="f-12 text-muted-type"><%= University.names_with_univ.key(s.university) %></small>
+                  </div>
+                </div>
+                <div class="mb-5 f-17 clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-compass" aria-hidden="true"></i>
+                    <small class="f-12 text-muted">文系理系</small>
+                  </div>
+                  <div class="pull-right c-gray-darker"><small class="f-12 text-muted"><%= University.names_with_bunri.key(s.bunri) %></small></div><br>
+                </div>
+                <div class="mb-5 f-17 clearfix">
+                  <div class="pull-left">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <small class="f-12 text-muted">お住まい</small>
+                  </div>
+                  <div class="pull-right c-gray-darker">
+                    <small class="f-12 text-muted">
+                      <%= s.prefecture.name %>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,264 @@
+<table class="table">
+  <tr class="bg-warning">
+    <th colspan="2">基本情報</th>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.name') %></th>
+    <td><%= company.name %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.name_kana') %></th>
+    <td><%= company.name_kana %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.website') %></th>
+    <td><%= company.website %></td>
+  </tr>
+  <tr>
+    <th>代表者氏名</th>
+    <td><%= company.president_name %></td>
+  </tr>
+  <tr>
+    <th>代表者氏名（フリガナ）</th>
+    <td><%= company.president_name_kana %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.president_birth_on') %></th>
+    <td><%= l(company.president_birth_on) if company.president_birth_on.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.zip_code') %></th>
+    <td><%= company.zip_code %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.prefecture_id') %></th>
+    <td><%= company.prefecture.name if company.prefecture.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.city') %></th>
+    <td><%= company.city %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.address1') %></th>
+    <td><%= company.address1 %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.address2') %></th>
+    <td><%= company.address2 %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.phone') %></th>
+    <td><%= company.phone %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.birth_on') %></th>
+    <td><%= l(company.birth_on) if company.birth_on.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.capital') %></th>
+    <td><%= number_to_currency(@company.capital) if @company.capital.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.business_type') %></th>
+    <td>
+      <% if company.business_type_id.present? %>
+        <%= @company.business_type.name %>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.image') %></th>
+    <td>
+      <% if company.image.present? %>
+        <%= image_tag(company.image.thumb.url, width: 192) %>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+
+  <tr class="bg-warning">
+    <th colspan="2">詳細情報</th>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.employees') %></th>
+    <td>
+      <% if @company.employees.present? %>
+        <%= @company.employees %>名
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.business_summary') %></th>
+    <td>
+      <% if @company.business_summary.present? %>
+        <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#business_summary_modal">表示</button>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.hope') %></th>
+    <td>
+      <% if @company.hope.present? %>
+        <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#hope_modal">表示</button>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.business_shebang') %></th>
+    <td>
+      <% if @company.business_shebang.present? %>
+        <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#business_shebang_modal">表示</button>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+
+  <% if false %>
+    <tr>
+      <th>過去１年での増資</th>
+      <td>
+        <% if @company.company_capital_increases.size > 0 %>
+          <% @company.company_capital_increases.each do |c| %>
+            <p><%= l(c.increased_on) %> <%= number_to_currency(c.capital) %></p>
+          <% end %>
+        <% else %>
+          なし
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th><%= t('activerecord.attributes.company.competitive_strength') %></th>
+    <td>
+      <% if @company.competitive_strength.present? %>
+        <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#competitive_strength_modal">表示</button>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.competitive_difference') %></th>
+    <td><%= @company.competitive_difference.present? ? simple_format(@company.competitive_difference) : '未入力' %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.target') %></th>
+    <td><%= @company.target.present? ? simple_format(@company.target) : '未入力' %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.company.ceo_hopes') %></th>
+    <td>
+      <% if @company.ceo_hopes.present? %>
+        <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#ceo_hopes_modal">表示</button>
+      <% else %>
+        未入力
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<% if @company.business_summary.present? %>
+  <div class="modal fade" id="business_summary_modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= t('activerecord.attributes.company.business_summary') %></h4>
+        </div>
+        <div class="modal-body">
+          <%= @company.business_summary.html_safe %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @company.hope.present? %>
+  <div class="modal fade" id="hope_modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= t('activerecord.attributes.company.hope') %></h4>
+        </div>
+        <div class="modal-body">
+          <%= @company.hope.html_safe %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @company.business_shebang.present? %>
+  <div class="modal fade" id="business_shebang_modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= t('activerecord.attributes.company.business_shebang') %></h4>
+        </div>
+        <div class="modal-body">
+          <%= @company.business_shebang.html_safe %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @company.competitive_strength.present? %>
+  <div class="modal fade" id="competitive_strength_modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= t('activerecord.attributes.company.competitive_strength') %></h4>
+        </div>
+        <div class="modal-body">
+          <%= @company.competitive_strength.html_safe %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @company.ceo_hopes.present? %>
+  <div class="modal fade" id="ceo_hopes_modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= t('activerecord.attributes.company.ceo_hopes') %></h4>
+        </div>
+        <div class="modal-body">
+          <%= @company.ceo_hopes.html_safe %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

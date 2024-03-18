@@ -1,0 +1,62 @@
+<div class="events details <%= defined?(xs_half) && xs_half ? 'half' : '' %>">
+
+  <% unless defined?(xs_half) && xs_half %>
+    <div class="<%= succeeded ? 'details-body-small' : 'details-body' %>">
+      <% if event.status == Event::E_OPEN %>
+        <div class="project-properties">
+          <div class="mb-5 f-17 clearfix">
+            <div class="media">
+              <div class="pull-left">
+                <% if request.variant.include? :mobile %>
+                  <%= image_tag(event.company.image.thumb.url, width: 40, class: 'media-object') if event.company.present? && event.company.image.present? %>
+                  <%= image_tag('img_50.jpg', width: 20, class: 'media-object') if event.company.present? && event.company.image.blank? %>
+                <% else %>
+                  <%= image_tag(event.company.image.thumb.url, width: 40, class: 'media-object') if event.company.present? && event.company.image.present? %>
+                  <%= image_tag('img_50.jpg', width: 40, class: 'media-object') if event.company.present? && event.company.image.blank? %>
+                <% end %>
+              </div>
+              <div class="media-body">
+                <%= link_to event_path(event) do %>
+                  <div class="c-gray-darker pull-left" style="color:#2196F3;font-size: 16px;"><b><%= event.company.name %></b></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="mb-5 f-17 clearfix" style="border-radius: 5px 5px 5px 5px;background-color:<%= Event::colors_with_event_type.key(event.event_type) %>">
+              <div class="pull-left p-10 text-muted-type">
+                <i class="fa fa-tag"></i>
+                <small class="f-12 text-muted-type">イベントタイプ</small>
+              </div>
+              <div class="pull-right p-10">
+                <small class="f-12 text-muted-type"><%= Event.names_with_event_type.key(event.event_type) %></small>
+              </div>
+            </div>
+            <div class="mb-5 f-17 clearfix">
+              <div class="pull-left">
+                <span class="circle-15">
+                  <i class="fa fa-map-marker"></i>
+                </span>
+                <small class="f-12 text-muted">開催場所</small>
+              </div>
+              <div class="pull-right c-gray-darker"><small class="f-12 text-muted"><%= event.prefecture.name %></small></div><br>
+              <div class="pull-right c-gray-darker"><small class="f-12 text-muted"><%= event.address %></small></div>
+            </div>
+            <div class="mb-5 f-17 clearfix">
+              <div class="pull-left">
+                <i class="fa fa-clock-o"></i>
+                <small class="f-12 text-muted">日時</small>
+              </div>
+              <div class="pull-right c-gray-darker">
+                <small class="f-12 text-muted">
+                  <%= event.start.year %>/<%= event.start.month %>/<%= event.start.day %>
+                  <%= event.start.hour %>:<%= event.start.min %>〜
+                  <%= event.end.year %>/<%= event.end.month %>/<%= event.end.day %>
+                  <%= event.end.hour %>:<%= event.end.min %>
+                </small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

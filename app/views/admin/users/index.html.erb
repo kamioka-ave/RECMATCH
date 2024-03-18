@@ -1,0 +1,94 @@
+<section class="content-header">
+  <h1>
+    ユーザー一覧　<%= @users.total_count %><small>名のユーザーが見つかりました</small>
+    <span class="pull-right">
+      <%= search_form_for(@q, url: admin_users_path, class: 'form-inline', html: { novalidate: true }) do |f| %>
+        <div class="input-group">
+          <%= f.input :id_string_or_email_cont, required: false, label: false, placeholder: '検索',
+                      input_html: { value: params.key?(:q) && params[:q].key?(:id_string_or_email_cont) ? params[:q][:id_string_or_email_cont] : '' } %>
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-search glyphicon-20"></span>
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </span>
+  </h1>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table">
+            <thead>
+            <tr>
+              <th><%= sort_link(@q, :id, 'ID') %></th>
+              <th>ユーザー名</th>
+              <th><%= sort_link(@q, :email, 'Eメール') %></th>
+              <th><%= sort_link(@q, :roles_id, 'ロール', default_order: {users: {student: 'desc' }}) %></th>
+              <th><%= sort_link(@q, :created_at, '登録日') %></th>
+              <th><%= sort_link(@q, :last_sign_in_at, '最終ログイン') %></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.id %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td>
+                    <% user.roles.each do |role| %>
+                      <% if role.id == Role::R_COMPANY %>
+                        <span class="label label-default pr-10">
+                          <% if user.company.present? %>
+                            <%= link_to Role.names.key(role.id), admin_company_path(user.company) %>
+                          <% else %>
+                            <%= Role.names.key(role.id) %>
+                          <% end %>
+                        </span>
+                      <% elsif role.id == Role::R_INVESTOR %>
+                        <span class="label label-default pr-10">
+                          <% if user.student.present? %>
+                            <%= link_to Role.names.key(role.id), admin_student_path(user.student) %>
+                          <% else %>
+                            <%= Role.names.key(role.id) %>
+                          <% end %>
+                        </span>
+                      <% elsif role.id == Role::R_SUPPORTER %>
+                        <span class="label label-default pr-10">
+                          <% if user.supporter.present? %>
+                            <%= link_to Role.names.key(role.id), admin_supporter_path(user.supporter) %>
+                          <% else %>
+                            <%= Role.names.key(role.id) %>
+                          <% end %>
+                        </span>
+                      <% else %>
+                        <span class="label label-default pr-10"><%= Role.names.key(role.id) %></span>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td><%= l(user.created_at) %></td>
+                  <td><%= l(user.last_sign_in_at) if user.last_sign_in_at.present? %></td>
+                  <td>
+                    <%= link_to '表示', admin_user_path(user), class: 'btn btn-xs btn-info' %>
+                    <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-xs btn-warning' %>
+                    <% if user.can_delete? %>
+                      <%= link_to '削除', admin_user_path(user), method: :delete, data: {confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-footer">
+          <%= link_to 'CSVダウンロード', download_admin_users_path({format: 'csv'}.merge(params.to_unsafe_h)), class: 'btn btn-sm btn-info pr-5' %>
+          <%= paginate @users, theme: 'admin' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

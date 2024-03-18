@@ -1,0 +1,1 @@
+$("#comments").html("<%= escape_javascript(render(partial: 'list', locals: {project: @project, comments: @comments })) %>");

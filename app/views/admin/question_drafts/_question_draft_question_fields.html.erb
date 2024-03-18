@@ -1,0 +1,9 @@
+<div>
+  <fieldset class="mb-10">
+    <%= f.input :question_id, label: false, collection: Question.all, wrapper: 'horizontal_inline' %>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to '#', class: 'ml-10 remove_fields' do %>
+      <i class="fa fa-minus-circle"></i> 削除
+    <% end %>
+  </fieldset>
+</div>

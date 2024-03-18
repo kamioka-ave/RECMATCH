@@ -1,0 +1,8 @@
+.students {
+  &.media {
+    .description {
+      @include text-overflow();
+      color: $text-muted;
+    }
+  }
+}

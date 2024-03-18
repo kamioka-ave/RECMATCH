@@ -1,0 +1,308 @@
+<div class="m-b-30">
+  <h4>経営をする上で重要視する順位</h4>
+  <table id="emphasis" class="table">
+    <thead>
+      <th width="60">順位</th>
+      <th width="120">大項目</th>
+      <th>小項目</th>
+    </thead>
+    <tbody>
+      <tr id="emphasis_company_rank">
+        <td><%= interview.emphasis_company_rank + 1 %></td>
+        <td>企業</td>
+        <td>
+          <% Interview.names_with_company_elements.each do |k, v| %>
+            <% if (interview.emphasis_company_elements >> v & 1) == 1 %>
+              <span class="p-r-10"><%= k %></span>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <tr id="emphasis_ceo_rank">
+        <td><%= interview.emphasis_ceo_rank + 1 %></td>
+        <td>企業</td>
+        <td>
+          <% Interview.names_with_ceo_elements.each do |k, v| %>
+            <% if (interview.emphasis_ceo_elements >> v & 1) == 1 %>
+              <span class="p-r-10"><%= k %></span>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <tr id="emphasis_position_rank">
+        <td><%= interview.emphasis_position_rank + 1 %></td>
+        <td>ポジション</td>
+        <td>
+          <% Interview.names_with_position_elements.each do |k, v| %>
+            <% if (interview.emphasis_position_elements >> v & 1) == 1 %>
+              <span class="p-r-10"><%= k %></span>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <tr id="emphasis_income_rank">
+        <td><%= interview.emphasis_income_rank + 1 %></td>
+        <td>収入</td>
+        <td>
+          <% Interview.names_with_income_elements.each do |k, v| %>
+            <% if (interview.emphasis_income_elements >> v & 1) == 1 %>
+              <span class="p-r-10"><%= k %></span>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="mb-30">
+  <h4>能力・姿勢</h4>
+  <table class="table">
+    <thead>
+    <th>#</th>
+    <th>項目</th>
+    <th>具体例</th>
+    <th>これからに活かせるポイント</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>1</td>
+      <td width="240">
+        <p><b>戦略立案・企画能力</b></p>
+        <p>自分なりの考えに基づいて、目的達成の為の行動や事業計画を立てる能力</p>
+        <p>
+          <% if interview.strategy.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.strategy >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.strategy_company if interview.strategy_company.present? %></p>
+        <p><%= simple_format(interview.strategy_example) if interview.strategy_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.strategy_point) if interview.strategy_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td>
+        <p><b>意思決定能力</b></p>
+        <p>複雑sな要因を解析し、素早く的確で具体的な行動計画を伴う意思決定を行う能力</p>
+        <p>
+          <% if interview.decision.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.decision >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.decision_company if interview.decision_company.present? %></p>
+        <p><%= simple_format(interview.decision_example) if interview.decision_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.decision_point) if interview.decision_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>
+        <p><b>職務遂行・実行能力</b></p>
+        <p>責任を有する職務に就いて、状況の変化へ柔軟に対応しながら、完遂する能力</p>
+        <p>
+          <% if interview.performance.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.performance >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.performance_company if interview.performance_company.present? %></p>
+        <p><%= simple_format(interview.performance_example) if interview.performance_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.performance_point) if interview.performance_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>4</td>
+      <td>
+        <p><b>プレゼンテーション・コミュニケーション能力</b></p>
+        <p>相手の立場を理解し、自分の考えを相手に伝え、納得させることができる能力</p>
+        <p>
+          <% if interview.presentation.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.presentation >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.presentation_company if interview.presentation_company.present? %></p>
+        <p><%= simple_format(interview.presentation_example) if interview.presentation_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.presentation_point) if interview.presentation_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>5</td>
+      <td>
+        <p><b>リーダーシップ能力</b></p>
+        <p>明確な目標を設定し、メンバーのやる気と総合力を結集することによって、任務を成功に導く能力</p>
+        <p>
+          <% if interview.leadership.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.leadership >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.leadership_company if interview.leadership_company.present? %></p>
+        <p><%= simple_format(interview.leadership_example) if interview.leadership_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.leadership_point) if interview.leadership_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>6</td>
+      <td>
+        <p><b>創造力・先見力</b></p>
+        <p>前例や過去の成功体験にとらわれず、新しい仕事のやり方を創造することができる能力</p>
+        <p>
+          <% if interview.creativity.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.creativity >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.creativity_company if interview.creativity_company.present? %></p>
+        <p><%= simple_format(interview.creativity_example) if interview.creativity_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.creativity_point) if interview.creativity_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>7</td>
+      <td>
+        <p><b>仕事に対する姿勢</b></p>
+        <p>情熱を持って仕事に取り組み、高い目標にチェレンジし、達成の為に努力している</p>
+        <p>
+          <% if interview.stance.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.stance >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.stance_company if interview.stance_company.present? %></p>
+        <p><%= simple_format(interview.stance_example) if interview.stance_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.stance_point) if interview.stance_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>8</td>
+      <td>
+        <p><b>人に対する姿勢</b></p>
+        <p>常に良好なコミュニケーションを維持、向上に努力し、効果を上げている</p>
+        <p>
+          <% if interview.attitude.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.attitude >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.attitude_company if interview.attitude_company.present? %></p>
+        <p><%= simple_format(interview.attitude_example) if interview.attitude_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.attitude_point) if interview.attitude_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>9</td>
+      <td>
+        <p><b>時間に対する姿勢</b></p>
+        <p>常に優先順位を設定し、約束事や納期を厳守している</p>
+        <p>
+          <% if interview.time.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.time >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.time_company if interview.time_company.present? %></p>
+        <p><%= simple_format(interview.time_example) if interview.time_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.time_point) if interview.time_point.present? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>10</td>
+      <td>
+        <p><b>情報に対する姿勢</b></p>
+        <p>常に流行に敏感で、幅広く情報を収集している</p>
+        <p>
+          <% if interview.information.present? %>
+            <% Interview.names_with_level do |k, v| %>
+              <% if (interview.information >> v & 1) == 1 %>
+                <span class="p-r-10"><%= k %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </td>
+      <td>
+        <p>所属企業: <%= interview.information_company if interview.information_company.present? %></p>
+        <p><%= simple_format(interview.information_example) if interview.information_example.present? %></p>
+      </td>
+      <td>
+        <%= simple_format(interview.information_point) if interview.information_point.present? %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

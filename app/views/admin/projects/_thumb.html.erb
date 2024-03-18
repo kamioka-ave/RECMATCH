@@ -1,0 +1,15 @@
+<div class="projects thumb">
+  <div class="card">
+    <% if project.status == Project::S_ACTIVE && project.update_at.month < Time.Zone.now - 2 %>
+      <div class="ribbon executed">
+        <div class="title">新着</div>
+      </div>
+    <% end %>
+    <%= link_to project do %>
+      <%= image_tag(project.image.thumb16by9.url, class: 'img-responsive', alt: project.name) %>
+    <% end %>
+    <div class="card-body card-padding-sm bgm-gray-lighter">
+      <%= render 'projects/details', project: project, title: true, succeeded: defined?(succeeded) && succeeded, xs_half: defined?(xs_half) && xs_half %>
+    </div>
+  </div>
+</div>

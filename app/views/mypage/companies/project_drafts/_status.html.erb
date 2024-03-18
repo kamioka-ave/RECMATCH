@@ -1,0 +1,54 @@
+<div class="card z-depth-1">
+  <div class="card-body card-padding">
+    <% if current_user.has_role?(:company) %>
+      <div class="card">
+        <div class="card-header small">
+          <h2><i class="fa fa-bars" aria-hidden="true"></i> メニュー</h2>
+        </div>
+        <div class="card-body pl-15 pr-15 pb-20">
+          <p>
+            <i class="fa fa-star-o pr-10"></i>状況
+            <span class="pull-right">
+              <%= @draft.id.present? ? ProjectDraft.names_with_status.key(@draft.status) : '新規' %>
+            </span>
+          </p>
+          <% if @draft.id.present? %>
+            <p>
+              <% if @draft.project_histories.size > 1 %>
+                <%= link_to admin_project_histories_path(@draft) do %>
+                  <i class="fa fa-history pr-10"></i> リビジョン
+                <% end %>
+              <% else %>
+                <i class="fa fa-history pr-10"></i> リビジョン
+              <% end %>
+              <span class="pull-right"><%= @draft.revision %></span>
+            </p>
+            <p>
+              <i class="fa fa-clock-o pr-10"></i>更新日
+              <span class="pull-right">
+                <%= l(@draft.updated_at) %>
+              </span>
+            </p>
+          <% end %>
+          <div class="row">
+            <div class="col-md-12">
+              <% if @draft.valid?(:publish) %>
+                <%= button_tag 'プレビュー', name: 'preview', class: 'btn btn-block btn-default', formtarget: '_blank' %>
+              <% else %>
+                <%= button_tag 'プレビュー', name: 'preview', class: 'btn btn-block btn-default', disabled: true %>
+                <span style="font-size:12px;color:#737373;">※全項目入力後、プレビュー表示ができます</span>
+              <% end %>
+              <% if @draft.status == ProjectDraft::S_JUDGE %>
+                <%= button_tag '下書き保存', class: 'btn btn-block btn-default', disabled: true %>
+                <%= button_tag '公開申請', name: 'submit', class: 'btn btn-block btn-primary', disabled: true %>
+              <% else %>
+                <%= button_tag '下書き保存', class: 'btn btn-block btn-default' %>
+                <%= button_tag '公開申請', name: 'submit', class: 'btn btn-block btn-primary' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'projects/products/orders/progress', step: 'notification' %>
+      </div>
+      <div class="card-header text-center">
+        <h1>募集株式の発行事項に関するご通知の確認<br>（発行者の依頼に基づくご通知）</h1>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@notification, url: project_product_order_notification_path(@project, @product, type: params[:type])) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :type, value: @notification.type %>
+
+          <div class="mb-30">
+            <h3>選択中のコース</h3>
+            <%= render 'projects/products/media', product: @product %>
+          </div>
+
+          <div class="mb-30">
+            <div class="mb-10">
+              <%= link_to @product.project.law_notification.present? ? @product.project.law_notification.url : '#', class: 'pdf text-info f-15', target: '_blank' do %>
+                <i class="fa fa-file-pdf-o pr-5"></i>募集株式の発行事項に関するご通知を開く
+              <% end %>
+            </div>
+            <%= f.input :confirmed, as: :boolean, label: '私は、発行者の依頼に基づき貴社が代行通知する「募集株式の発行事項に関するご通知」の内容を確認いたしました' %>
+          </div>
+          <div class="mb-30 bg-info p-20">
+            <b>ご注意</b><br>
+            当該株式の募集を開始する日の前日を起算日として過去１年以内に当社サービスを利用する以外の手段により当該発行者の同一の有価証券を取得されている方は、当該募集にご応募されることはできません。
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <%= f.button :submit, '確認した上で次の画面へ', class: 'btn-block btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  gtag('event', 'checkout_progress', {
+    'items': [
+      {
+        'id': '<%= @product.id %>',
+        'name': '<%= @product.name %>',
+        'brand': '<%= @product.project.company.name %>',
+        'category': "<%= @product.project.categories.map(&:name).join('/') %>",
+        'quantity': 1,
+        'price': <%= @product.price %>
+      },
+    ]
+  });
+</script>

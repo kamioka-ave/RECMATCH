@@ -1,0 +1,11 @@
+<%= simple_form_for(@question_category, url: @question_category.persisted? ? admin_question_category_path(@question_category) : admin_question_categories_path, as: :question_category) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :type, as: 'radio_buttons', collection: QuestionCategory.names_with_type %>
+      <%= f.input :name %>
+      <%= f.input :rank %>
+    </div>
+  </div>
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>

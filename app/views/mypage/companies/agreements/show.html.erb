@@ -1,0 +1,61 @@
+<% content_for(:page_classes) { 'mypage companies agreements show' } %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>確認および同意事項</h1>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@agreement, url: mypage_company_agreement_path) do |f| %>
+          <% if @agreement.errors.any? %>
+            <div class="alert alert-danger">
+              <% @agreement.errors.full_messages.each do |msg| %>
+                <p><%= msg %></p>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-danger">※下記の1〜3の書面の内容をご確認ください</p>
+          <% end %>
+
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :pdf1 %>
+          <%= f.hidden_field :pdf2 %>
+          <%= f.hidden_field :pdf3 %>
+
+          <table class="table mb-20">
+            <tr id="1">
+              <td><i class="fa fa-file-pdf-o pr-10"></i><%= link_to '1. サイト利用規約（企業）', kiyaku_pages_path, class: 'pdf', target: '_blank' %></td>
+              <td id="confirm_pdf1"><%= @agreement.pdf1 ? '確認済' : '未確認' %></td>
+            </tr>
+            <tr id="2">
+              <td><i class="fa fa-file-pdf-o pr-10"></i><%= link_to '2. 企業情報等取扱約款', clause_company_info_pages_path, target: '_blank', class: 'pdf' %></td>
+              <td id="confirm_pdf2"><%= @agreement.pdf2 ? '確認済' : '未確認' %></td>
+            </tr>
+            <tr id="3">
+              <td><i class="fa fa-file-pdf-o pr-10"></i><%= link_to '3. プライバシーポリシー', privacy_policy_pages_path, class: 'pdf', target: '_blank' %></td>
+              <td id="confirm_pdf3"><%= @agreement.pdf3 ? '確認済' : '未確認' %></td>
+            </tr>
+          </table>
+
+          <div class="checkbox mb-50">
+            <%= f.input :agreement, as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :terms10_agreed, as: :boolean, checked_value: true, unchecked_value: false %>
+          </div>
+
+          <div class="text-center">
+            <%= f.button :submit, '同意する', class: 'btn-lg btn-info' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(".pdf").on('click', function(event) {
+    var id = $(this).closest('tr').attr('id');
+    $("#confirm_pdf" + id).text("確認済");
+    $("#company_agreement_pdf" + id).val(true);
+  });
+</script>

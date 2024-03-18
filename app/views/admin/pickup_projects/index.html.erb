@@ -1,0 +1,36 @@
+<section class="content-header">
+  <h1>ピックアッププロジェクト</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>プロジェクト名</th>
+          <th>状態</th>
+          <th>表示順位</th>
+          <th>操作</th>
+        </tr>
+        <% @pickup_projects.each do |p| %>
+          <tr>
+            <td><%= p.project_id %></td>
+            <td><%= link_to p.project.name, p.project %></td>
+            <td><%= Project.names_with_status.key(p.project.status) %></td>
+            <td><%= p.rank %></td>
+            <td>
+              <%= link_to '編集', edit_admin_pickup_project_path(p), class: 'btn btn-xs btn-warning' %>
+              <%= link_to '削除', admin_pickup_project_path(p), method: :delete, class: 'btn btn-xs btn-danger', data: {confirm: '削除しますか？' } %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <% if @pickup_projects.size < 6 %>
+      <div class="box-footer">
+        <%= link_to '登録', new_admin_pickup_project_path, class: 'btn btn-sm btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</section>

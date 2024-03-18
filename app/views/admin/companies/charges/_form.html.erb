@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">担当者を追加</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@admin_company, url: admin_company_charges_path(@company), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :company_id, value: @company.id %>
+        <%= f.association :admin, collection: Admin.with_any_role(:admin) %>
+        <%= f.button :submit, '追加', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

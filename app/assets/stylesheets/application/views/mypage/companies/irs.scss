@@ -1,0 +1,65 @@
+.my.companies.irs {
+  .ir-files {
+    a {
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .important-changes {
+    ol.katakana {
+      padding-left: 30px;
+
+      > li {
+        list-style-type: none;
+        position:relative;
+
+        &:before {
+          position: absolute;
+          left: -30px;
+        }
+
+        &:nth-child(1):before {content: "(ア)";}
+        &:nth-child(2):before {content: "(イ)";}
+        &:nth-child(3):before {content: "(ウ)";}
+        &:nth-child(4):before {content: "(エ)";}
+        &:nth-child(5):before {content: "(オ)";}
+        &:nth-child(6):before {content: "(カ)";}
+        &:nth-child(7):before {content: "(キ)";}
+        &:nth-child(8):before {content: "(ク)";}
+        &:nth-child(9):before {content: "(ケ)";}
+        &:nth-child(10):before {content: "(コ)";}
+        &:nth-child(11):before {content: "(サ)";}
+        &:nth-child(12):before {content: "(シ)";}
+        &:nth-child(13):before {content: "(ス)";}
+      }
+
+      ol.number {
+        padding-left: 20px;
+
+        > li {
+          list-style-type: none;
+          position:relative;
+
+          &:before {
+            position: absolute;
+            left: -20px;
+          }
+
+          &:nth-child(1):before {content: "①";}
+          &:nth-child(2):before {content: "②";}
+          &:nth-child(3):before {content: "③";}
+          &:nth-child(4):before {content: "④";}
+          &:nth-child(5):before {content: "⑤";}
+          &:nth-child(6):before {content: "⑥";}
+          &:nth-child(7):before {content: "⑦";}
+          &:nth-child(8):before {content: "⑧";}
+          &:nth-child(9):before {content: "⑨";}
+          &:nth-child(10):before {content: "⑩";}
+        }
+      }
+    }
+  }
+}

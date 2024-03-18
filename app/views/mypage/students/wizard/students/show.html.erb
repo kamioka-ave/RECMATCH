@@ -1,0 +1,33 @@
+<% content_for(:page_classes) { 'mypage students wizard students show' } %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'mypage/students/wizard/progress', {step: 2} %>
+      </div>
+      <div class="card-body card-padding">
+        <div class="bg-info p-20 mb-30">
+          <span title="require">*</span> 印は必須入力項目です
+        </div>
+        <%= simple_form_for(@student, url: mypage_student_wizard_student_path, wrapper: 'horizontal_form', html: {class: 'form-horizontal'}) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :user_id %>
+
+          <div class="mb-50">
+            <%= render 'mypage/students/form', {f: f} %>
+          </div>
+
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '前へ', mypage_student_wizard_agreement_path, class: 'btn btn-lg btn-info-o' %>
+            </div>
+            <div class="pull-right">
+              <%= f.button :submit, '次へ', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

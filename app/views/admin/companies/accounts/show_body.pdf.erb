@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>取引先勘定元帳</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger', media: 'all' %>
+</head>
+<body class="company-account">
+  <table border="1" width="100%">
+    <thead>
+    <tr>
+      <th>募集取扱締結日</th>
+      <th class="tx-rows">
+        <div class="tx-row">
+        会社法上の払込期間
+        </div>
+        <div class="tx-row">
+          （会社法上の払込期間変更）
+        </div>
+      </th>
+      <th>約定日</th>
+      <th>数量</th>
+      <th>単価</th>
+      <th>約定金額</th>
+      <th>受渡年月日</th>
+      <th>銘柄名</th>
+      <th>取引種類</th>
+      <th>内訳</th>
+      <th>振込入金日<br>（又は振込出金日）</th>
+      <th>借方金額<br>（DR）</th>
+      <th>貸方金額<br>（CR）</th>
+      <th>残高</th>
+      <th>備考</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @company_transactions.each do |t| %>
+      <tr class="text-center">
+        <td>
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= l(t.project.agreement_on) if t.project.agreement_on.present? %>
+          <% end %>
+        </td>
+        <td class="tx-rows">
+          <div class="tx-row">
+            <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+              <% if t.project.deliv_start_on.present? && t.project.deliv_end_on.present? %>
+                <%= "#{l(t.project.deliv_start_on)}〜#{l(t.project.deliv_end_on)}" %>
+              <% else %>
+                &nbsp;
+              <% end %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </div>
+          <div class="text-center tx-row">
+            <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+              <% if t.project.deliv_start_changed_on.present? && t.project.deliv_end_changed_on.present? %>
+                <%= "#{l(t.project.deliv_start_changed_on)}〜#{l(t.project.deliv_end_changed_on)}" %>
+              <% else %>
+                &nbsp;
+              <% end %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </div>
+        </td>
+        <td>
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= l(t.project.execution_at, format: :short) %>
+          <% end %>
+        </td>
+        <td class="text-right">
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED %>
+            <%= t.amount.to_s(:delimited) %><span style="margin-left: 6px"></span>
+          <% elsif t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.amount.to_s(:delimited) %><span> c</span>
+          <% end %>
+        </td>
+        <td class="text-right">
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.project.stock_price.to_s(:delimited) %>
+          <% end %>
+        </td>
+        <td class="text-right">
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED %>
+            <%= (t.amount * t.project.stock_price).to_s(:delimited) %><span style="margin-left: 6px"></span>
+          <% elsif t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= (t.amount * t.project.stock_price).to_s(:delimited) %><span> c</span>
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.project.deliv_at.present? ? l(t.project.deliv_at, format: :short) : 'xxxx年x月x日' %>
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type == CompanyTransactionRecord::TR_EXECUTED || t.transaction_type == CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.company.name %>普通株式
+          <% end %>
+        </td>
+        <td>
+          <%= CompanyTransactionRecord.names_with_transaction_type.key(t.transaction_type) %>
+        </td>
+        <td><%= t.breakdown %></td>
+        <td>
+          <% if [CompanyTransactionRecord::TR_WIRE, CompanyTransactionRecord::TR_COMMISSION, CompanyTransactionRecord::TR_COMMISSION_TRANSFER, CompanyTransactionRecord::TR_OTHERS, CompanyTransactionRecord::TR_REQUIRE_DD_FEE, CompanyTransactionRecord::TR_DD_FEE, CompanyTransactionRecord::TR_SYSTEM_FEE, CompanyTransactionRecord::TR_SYSTEM_FEE_TRANSFER].include?(t.transaction_type) %>
+            <%= l(t.transaction_at, format: :short) %>
+          <% end %>
+        </td>
+        <td class="text-right">
+          <% if t.transaction_type != CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <% if t.depository != 0 %>
+              <%= t.depository.to_s(:delimited) %><span style="margin-left: 6px"></span>
+            <% end %>
+          <% end %>
+        </td>
+        <td class="text-right">
+          <% if t.transaction_type != CompanyTransactionRecord::TR_INVESTOR_CANCEL %>
+            <% if t.credit != 0 %>
+              <%= t.credit.to_s(:delimited) %><span style="margin-left: 6px"></span>
+            <% end %>
+          <% else %>
+            <%= t.depository.to_s(:delimited) %><span> c</span>
+          <% end %>
+        </td>
+        <td class="text-right"><%= t.balance.to_s(:delimited) %></td>
+        <td></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<section class="content-header">
+  <h1>学生の入出金記録</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+        <tr>
+          <th><%= sort_link(@q, :user_id, '学生名') %></th>
+          <th><%= sort_link(@q, :project_id, 'プロジェクト') %></th>
+          <th><%= sort_link(@q, :depository, '借方金額(DR)') %></th>
+          <th><%= sort_link(@q, :credit, '貸方金額(CR)') %></th>
+          <th><%= sort_link(@q, :balance, '残高') %></th>
+          <th><%= sort_link(@q, :transaction_type, '入出金種別') %></th>
+          <th><%= sort_link(@q, :transaction_at, '日時') %></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @student_transactions.each do |t| %>
+          <tr>
+            <td><%= link_to t.student.full_name, admin_student_path(t.student) %></td>
+            <td><%= link_to(t.project.name.truncate(12), p) if t.project.present? %></td>
+            <td><%= number_to_currency(t.depository) %></td>
+            <td><%= number_to_currency(t.credit) %></td>
+            <td><%= number_to_currency(t.balance) %></td>
+            <td><%= StudentTransactionRecord.names_with_transaction_type.key(t.transaction_type) %></td>
+            <td><%= l(t.transaction_at, format: :short) if t.transaction_at.present? %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= paginate @student_transactions, theme: 'admin' %>
+    </div>
+  </div>
+</section>

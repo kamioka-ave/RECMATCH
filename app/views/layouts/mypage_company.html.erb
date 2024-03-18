@@ -1,0 +1,102 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="ja"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="ja"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja"> <!--<![endif]-->
+<%= render 'layouts/head' %>
+<body class="<%= yield(:page_classes) %>">
+<div id="sb-site">
+  <%= render 'layouts/header' %>
+  <div class="content-wrapper">
+    <div class="menu-wrapper">
+      <div class="container text-center">
+        <ul class="tab-nav">
+          <li class="<%= 'active' if controller_path == 'mypage/pages' && controller.action_name == 'company' || controller_path == 'mypage/companies/event_drafts' %>">
+            <%= link_to 'ホーム', mypage_company_path %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/applicants' %>">
+            <%= link_to '採用管理', mypage_company_applicants_path %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/chat_messages' %>">
+            <%= link_to mypage_company_chat_messages_path do %>
+              チャット
+              <% if ChatMessage.where('company_id = ? AND direct = ? AND kidoku = ?', current_user.company.id, true, false).size > 0 %>
+                <span class="badge" style="background-color:red;"><%= ChatMessage.where('company_id = ? AND direct = ? AND kidoku = ?', current_user.company.id, true, false).size %></span>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/event_applicants' %>">
+            <%= link_to 'イベント管理', mypage_company_event_applicants_path %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/basics' %>">
+            <%= link_to '基本情報', mypage_company_basic_path %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/details' %>">
+            <%= link_to mypage_company_detail_path do %>
+              詳細情報
+              <% if Company.find(current_user.company.id).business_summary.blank? %>
+                <span class="badge" style="background-color:red;">1</span>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="<%= 'active' if controller_path == 'mypage/companies/project_drafts' %>">
+            <%= link_to mypage_company_project_drafts_path do %>
+              採用情報
+              <% if Project.find_by(company_id: current_user.company.id).blank? %>
+                <span class="badge" style="background-color:red;">2</span>
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'mypage/companies/status'%>
+          </div>
+          <div class="col-md-9">
+            <% if Project.find_by(company_id: current_user.company.id).blank? %>
+              <div class="card z-depth-1" style="background-color:#FFFFBB;color:#DD0000;">
+                <div class="card-header small">
+                  <h2>企業ページを作成してください</h2>
+                  <h5>※企業ページを作成するまではオファーやチャットなどのサービスはご利用いただけません</h5>
+                  <h5>※企業ページ作成は以下の情報入力が必須です</h5>
+                </div>
+                <div class="card-body pb-10">
+                  <ul class="nav nav-pills nav-stacked">
+                    <% if Company.find(current_user.company.id).business_summary.blank? %>
+                    <li>
+                      <%= link_to mypage_company_detail_path do %>
+                        <span class="badge" style="background-color:red;">1</span> 詳細情報の入力
+                      <% end %>
+                    </li>
+                    <% end %>
+                    <li>
+                      <%= link_to mypage_company_project_drafts_path do %>
+                        <% if ProjectDraft.find_by(company_id: current_user.company.id).present? %>
+                          <% if ProjectDraft.find_by(company_id: current_user.company.id).status == ProjectDraft::S_JUDGE %>
+                            <span class="badge" style="background-color:red;">2</span> ただいま審査中です
+                          <% else %>
+                            <span class="badge" style="background-color:red;">2</span> 採用情報の入力を完成させてください
+                          <% end %>
+                        <% else %>
+                          <span class="badge" style="background-color:red;">2</span> 採用情報の入力
+                        <% end %>
+                      <% end %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            <% end %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'layouts/footer' %>
+</div>
+</body>
+</html>

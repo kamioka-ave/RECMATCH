@@ -1,0 +1,47 @@
+<%= render 'header' %>
+
+<div class="row questions">
+  <div class="col-md-3">
+    <%= render 'menu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h2>「<%= @keyword %>」のFAQ</h2>
+      </div>
+      <div class="card-body">
+        <div class="listview lv-bordered lv-lg">
+          <div class="lv-body">
+            <% @questions.each do |q| %>
+              <%= link_to q, class: 'lv-item' do %>
+                <div class="media">
+                  <div class="pull-left">
+                    <div class="mb-10">
+                      <span class="question-box">Q</span>
+                    </div>
+                    <span class="answer-box">A</span>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <%= q.name %>
+                    </h4>
+                    <div>
+                      <%= strip_tags(q.answer).truncate(256) %>
+                    </div>
+                    <small class="text-muted">
+                      <ul class="list-inline">
+                        <li>No.<%= q.id %></li>
+                        <li>公開日時: <%= l(q.created_at) %><li>
+                        <li>更新日時: <%= l(q.updated_at) %><li>
+                      </ul>
+                    </small>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

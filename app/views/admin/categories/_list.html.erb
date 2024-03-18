@@ -1,0 +1,24 @@
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th>カテゴリ名</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% categories.each do |category| %>
+    <tr>
+      <td><%= category.name %></td>
+      <td>
+        <%= link_to '編集', edit_admin_category_path(category), remote: true, class: "btn btn-xs btn-info" %>
+        <% if category.projects.size > 0 %>
+          <a class="btn btn-xs btn-danger" disabled="disabled" data-confirm="このカテゴリを使用しているプロジェクトがあります。" >削除</a>
+        <% else %>
+          <%= link_to '削除', admin_category_path(category), method: :delete, class: "btn btn-xs btn-danger", data: { confirm: '削除しますか？' } %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

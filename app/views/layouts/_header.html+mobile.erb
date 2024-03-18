@@ -1,0 +1,145 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-fixed-top" id="mainNav">
+  <div class="container">
+    <%= link_to 'RECMATCH', root_path, class: 'navbar-brand js-scroll-trigger' %>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <% if request.fullpath != '/' %>
+          <li class="nav-item mb-10">
+            <%= link_to root_path, class:"nav-link js-scroll-trigger" do %>
+              トップ
+            <% end %>
+          </li>
+        <% end %>
+        <% if !user_signed_in? %>
+          <li class="nav-item mb-10">
+            <%= link_to new_user_session_path, class:"nav-link js-scroll-trigger" do %>
+              <i class="fa fa-sign-in" aria-hidden="true"></i> ログイン
+            <% end %>
+          </li>
+          <li class="nav-item mb-10">
+            <%= link_to new_user_registration_path, class:"nav-link js-scroll-trigger" do %>
+              <i class="fa fa-user-plus" aria-hidden="true"></i> 新規会員登録
+            <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item mb-10">
+            <%= link_to mypage_root_path, class:"nav-link js-scroll-trigger" do %>
+              <i class="fa fa-user-o f-15"></i>
+              マイページ
+            <% end %>
+          </li>
+          <li class="nav-item mb-10">
+            <%= link_to destroy_user_session_path, class:"nav-link js-scroll-trigger" do %>
+              <i class="fa fa-sign-out f-15"></i>
+                ログアウト
+            <% end %>
+          </li>
+        <% end %>
+        <% if false %>
+          <li class="nav-item mb-10">
+            <%= link_to questions_path, class:"nav-link js-scroll-trigger" do %>
+              ヘルプ
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<% if !user_signed_in? && request.fullpath == '/' %>
+  <header class="masthead"></header>
+    <div class="worksslider inside">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="3000">
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <%= image_tag 'agency/main-img.jpg', style: "height: 300px;" %>
+            <div class="carousel-caption" style="bottom: 10px;">
+              <h1 style="font-size:20px;">RECMATCH</h1>
+              <p style="font-size:15px;">- ミスマッチZEROの就活を -</p>
+              <p style="font-size:10px;">
+                【上位校の学生限定の完全招待制】<br>
+                就活プラットフォームです
+                ミスマッチZEROを実現すべく学生と面談を
+                実施した上で情報を登録しております
+              </p>
+              <p>
+                <a class="btn btn-deeporange btn-xs text-uppercase js-scroll-trigger" href="#services">詳細はこちら</a>
+                <a class="btn btn-danger btn-xs text-uppercase js-scroll-trigger" href="/users/sign_up">新規会員登録</a>
+              </p>
+            </div>
+          </div>
+          <div class="item">
+            <%= image_tag 'agency/main-img-2.jpg', style: "height: 300px;" %>
+            <div class="carousel-caption" style="bottom: 10px;">
+              <p style="font-size:15px;">
+                スマホでかんたんマッチング<br>
+                <span style="font-size:20px;">
+                  <b>RECMATCH<br>モバイルアプリ</b>
+                </span><br>
+                <span style="font-size:10px;">
+                  RECMATCHのサービスをスマホアプリでお届け<br>
+                  ※2019年7月頃リリース予定
+                </span>
+              </p>
+              <p>
+                <a href="#services"><%= image_tag 'agency/download-ios.png', style: "height: 20px;" %></a>
+                <a href="#services"><%= image_tag 'agency/download-and.png', style: "height: 20px;" %></a>
+              </p>
+            </div>
+          </div>
+          <div class="item">
+            <%= image_tag 'agency/main-img-3.jpg', style: "width: 100%;height: 300px;" %>
+            <div class="carousel-caption" style="bottom: 10px;">
+              <h1 style="font-size:20px;">以下のサービスを無料で利用できます</h1>
+              <p style="font-size:15px;">
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> ES添削
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 就活相談<br>
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 模擬面談
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 自己分析支援<br>
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 面接対策・ES対策資料配布
+                <a href="/users/sign_up"><%= image_tag 'agency/sign-up.png', style: "height: 40px;" %></a>
+              </p>
+            </div>
+          </div>
+
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+
+<% else %>
+<div style="margin-top:60px; background-color:#fff;"></div>
+<header id="main-header">
+<div class="container inner02">
+    <%= link_to root_path do %>
+      <%= image_tag 'header/logo.png', width: 185, class: 'hover-fade ml-10', alt: 'RECMATCH' %>
+    <% end %>
+  </div>
+</header>
+<% end %>
+<% if flash[:notice] %>
+ <script>
+   notify('','<%= flash[:notice] %>', 'top', 'center', '', 'success', '', '');
+ </script>
+<% elsif flash[:alert] %>
+ <script>
+   notify('','<%= flash[:alert] %>', 'top', 'center', '', 'danger', '', '');
+ </script>
+<% end %>

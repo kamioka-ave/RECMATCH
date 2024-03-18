@@ -1,0 +1,2 @@
+class CompanyQuestionCategory < QuestionCategory
+end

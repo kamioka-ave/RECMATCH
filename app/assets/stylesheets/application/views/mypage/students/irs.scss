@@ -1,0 +1,36 @@
+.my.students.irs {
+  .card {
+    & > .card-header {
+      ul {
+        &.companies {
+          position: absolute;
+          list-style: none;
+          background-color: $gray-lighter;
+          padding: 5px 10px;
+
+          @media screen and (min-width: $screen-sm-min) {
+            top: 19px;
+            right: 19px;
+          }
+
+          @media screen and (max-width: $screen-sm-max) {
+            top: 16px;
+            right: 16px;
+          }
+
+          & > li {
+            & > a {
+              text-decoration: none;
+            }
+
+            & > ul {
+              &.dropdown-menu-right {
+                right: -10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

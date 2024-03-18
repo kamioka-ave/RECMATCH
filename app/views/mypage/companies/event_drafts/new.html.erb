@@ -1,0 +1,41 @@
+<% content_for(:page_classes) { 'mypage pages company' } %>
+
+<div id="index_view" class="card  z-depth-1">
+  <div class="card-header">
+    <h3>
+      <span style="border-bottom: solid 3px #000080;padding: 8px;">
+        <i class="fa fa-wrench" aria-hidden="true"></i>イベントページ作成
+      </span>
+    </h3>
+  </div>
+    <%= simple_form_for([@company, @event], url: mypage_company_event_drafts_path) do |f| %>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <%= f.error_notification %>
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :image %>
+        <%= f.hidden_field :event_type %>
+        <%= f.hidden_field :status %>
+        <%= f.hidden_field :description %>
+        <%= f.hidden_field :capacity %>
+        <%= f.hidden_field :prefecture_id %>
+        <%= f.hidden_field :address %>
+        <%= f.hidden_field :status %>
+        <%= f.hidden_field :selection %>
+
+        <%= f.input :title, placeholder: '例)株式会社◯◯　会社説明会' %>
+        <%= f.input :start %>
+        <%= f.input :end %>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
+        <%= f.button :submit, '登録', class: 'btn-lg btn-info' %>
+      </div>
+    </div>
+  <% end %>
+  <br>
+</div>

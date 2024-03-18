@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header with-border" style="background-image: url(<%= product.image.present? ? product.image.url : image_path('no_img.jpg') %>)">
+    <h2><%= product.title %></h2>
+    <div>株数：<%= product.stocks %>株</div>
+  </div>
+  <div class="card-body p-20">
+    <% if product.description.present? %>
+      <%= simple_format(product.description) %>
+    <% end %>
+
+    <% if product.incentive.present? %>
+      <dl>
+        <dt>株主優待</dt>
+        <dd><%= simple_format(product.incentive) %></dd>
+      </dl>
+    <% end %>
+
+    <% if product.project.status == Project::S_IN_PROGRESS %>
+      <% if user_signed_in? && !current_user.can_invest? %>
+        <%= link_to 'このコースを申し込む', impossible_project_products_path(project), remote: true, class: 'btn btn-lg btn-info btn-block' %>
+      <% else %>
+        <%= link_to 'このコースを申し込む', project_product_order_contract_path(project, product, type: 'normal'), class: 'btn btn-lg btn-info btn-block' %>
+      <% end %>
+    <% else %>
+      <button type="button" class="btn btn-lg btn-info btn-block closed" disabled="disabled">このプロジェクトは終了しています</button>
+    <% end %>
+  </div>
+</div>

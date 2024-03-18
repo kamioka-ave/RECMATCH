@@ -1,0 +1,63 @@
+<% content_for(:page_classes) { 'my quits show' } %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>退会申請</h1>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@quit, url: confirm_mypage_quit_path) do |f| %>
+          <div class="widget">
+            <h2>退会について</h2>
+            RECMATCHをご利用ありがとうございます。<br>
+            下記事項をご確認の上、退会手続きを行ってください。
+          </div>
+
+          <div class="widget">
+            <h2>退会すると利用できなくなるサービス</h2>
+            以下のご利用ができなくなります。
+            <ul>
+              <li>ログインおよびログインが必要なページの閲覧</li>
+              <li>マイページの閲覧</li>
+              <li>プロジェクトへの投資</li>
+              <li>コミュニティ機能</li>
+            </ul>
+          </div>
+
+          <div class="widget">
+            <h2>注意事項</h2>
+            以下のご利用ができなくなります。
+            <ul>
+              <li>退会後はアカウントを復活させることはできません</li>
+              <li>退会後、同じメールアドレスで新規にアカウント登録することはできません。</li>
+              <li>コミュニティ機能の履歴を消すことはできません</li>
+            </ul>
+          </div>
+
+          <div class="widget mb-40">
+            <h2>アンケート「退会の理由」</h2>
+            退会のアンケートにご協力ください（複数選択可）
+            <%= f.association :quit_reasons, as: :check_boxes, label: false,
+                collection: current_user.has_role?(:student) ? QuitReason.student_reasons : QuitReason.company_reasons %>
+            <%= f.input :note, label: false, input_html: {rows: 6} %>
+          </div>
+
+          <div class="row mb-30">
+            <div class="col-md-4 col-md-offset-4">
+              <%= f.button :submit, '退会手続きへ', class: 'btn-block btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.quits.FormView',
+    turbolinks: true,
+    others: @quit.reasons_have_others?
+  )
+%>

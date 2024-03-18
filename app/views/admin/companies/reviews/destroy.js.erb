@@ -1,0 +1,2 @@
+$("#reviews").html("<%= escape_javascript(render(partial: 'list', locals: {company: @company, reviews: @reviews})) %>");
+notify('', '<%= CompanyReview.names_with_review_type.key(@review_type) %>を削除しました。', 'top', 'center', '', 'success', '', '');

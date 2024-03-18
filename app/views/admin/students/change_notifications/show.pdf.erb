@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>変更届</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger' %>
+  <style>
+    body {
+      font-family: "IPA明朝", "IPAMincho", "ヒラギノ明朝 ProN W6", "HiraMinProN-W6", "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", "MS 明朝", serif;
+    }
+  </style>
+</head>
+<body class="student-notification A4">
+  <p class="top">株式会社UNCHAIN御中</p>
+  <section class="numbering">
+    <h2 class="title"><span class="in-title">変　　更　　届</span></h2>
+
+    <h3 class="sub-title">ご登録氏名の変更</h3>
+    <table border="1">
+      <tr>
+        <th rowspan="2">氏名</th>
+        <th class="normal">変　更　前</th>
+        <th>変　更　後</th>
+      </tr>
+      <tr>
+        <td class="high">
+          <%= @change_notification.full_name_prev if @change_notification.first_name_prev.present? %>
+          <%= "（#{@change_notification.full_name_kana_prev}）" if @change_notification.first_name_kana_prev.present? %>
+        </td>
+        <td>
+          <%= @change_notification.full_name if @change_notification.first_name.present? %>
+          <%= "（#{@change_notification.full_name_kana}）" if @change_notification.first_name_kana.present? %>
+        </td>
+      </tr>
+    </table>
+
+    <h3 class="sub-title">ご登録住所の変更</h3>
+    <table border="1">
+      <tr>
+        <th rowspan="3">住所</th>
+        <th class="normal">変　更　前</th>
+        <th>変　更　後</th>
+      </tr>
+      <tr class="border-bottom">
+        <td>
+          <%= "〒 #{@change_notification.zip_code_prev}" if @change_notification.zip_code_prev.present? %>
+        </td>
+        <td>
+          <%= "〒 #{@change_notification.zip_code}" if @change_notification.zip_code.present? %>
+        </td>
+      </tr>
+      <tr class="border-top">
+        <td class="high">
+          <%= @change_notification.full_address_prev if @change_notification.prefecture_id_prev.present? %>
+        </td>
+        <td>
+          <%= @change_notification.full_address if @change_notification.prefecture_id.present? %>
+        </td>
+      </tr>
+    </table>
+
+    <h3 class="sub-title">振込口座の変更</h3>
+    <table border="1" class="mb-20">
+      <tr>
+        <th class="normal">区分</th>
+        <th>変　更　前</th>
+        <th>変　更　後</th>
+      </tr>
+      <tr>
+        <th class="middle">金融機関名</th>
+        <td><%= @change_notification.bank_prev.name if @change_notification.bank_prev.present? %></td>
+        <td><%= @change_notification.bank.name if @change_notification.bank.present? %></td>
+      </tr>
+      <tr>
+        <th class="middle">支店名</th>
+        <td><%= @change_notification.bank_branch_prev.name if @change_notification.bank_branch_prev.present? %></td>
+        <td><%= @change_notification.bank_branch.name if @change_notification.bank_branch.present? %></td>
+      </tr>
+      <tr>
+        <th class="middle">預金種別</th>
+        <td><%= Student.names_with_bank_account_type.key(@change_notification.bank_account_type_prev) if @change_notification.bank_account_type_prev.present? %></td>
+        <td><%= Student.names_with_bank_account_type.key(@change_notification.bank_account_type) if @change_notification.bank_account_type.present? %></td>
+      </tr>
+      <tr>
+        <th class="middle">口座番号</th>
+        <td><%= @change_notification.bank_account_number_prev if @change_notification.bank_account_number_prev.present? %></td>
+        <td><%= @change_notification.bank_account_number if @change_notification.bank_account_number.present? %></td>
+      </tr>
+      <tr>
+      <tr>
+        <th class="middle">名義人<br/><span class="normal-font">(本人名義限定)</span></th>
+        <td><%= @change_notification.bank_account_name_prev if @change_notification.bank_account_name_prev.present? %></td>
+        <td><%= @change_notification.bank_account_name if @change_notification.bank_account_name.present? %></td>
+      </tr>
+    </table>
+
+    <div class="footer clearfix">
+      <div class="pull-right">
+        <div class="text-right mb-20">
+          ※ (1)(2)の場合、本人確認書類の提出が必須です。
+        </div>
+        <div class="text-right mb-20">
+          上記のとおり届出いたします。
+        </div>
+        <dl class="dl-horizontal">
+          <dt>お届け年月日</dt>
+          <dd><%= @change_notification.notified_at.to_era("%O%E年%-m月%-d日") %></dd>
+          <dt>学生ID</dt>
+          <dd><%= @student.id %></dd>
+          <dt>氏　名</dt>
+          <dd><%= @change_notification.name_modified? ? @change_notification.full_name : @student.full_name %></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

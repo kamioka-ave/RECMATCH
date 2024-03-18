@@ -1,0 +1,51 @@
+<% content_for(:page_classes) { 'headlines index' } %>
+<% content_for(:title) { 'NEWS' } %>
+
+<div class="clearfix">
+  <div class="pull-left">
+    <h1 class="headlines-title">NEWS</h1>
+  </div>
+  <div class="pull-right">
+    <small><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+  </div>
+</div>
+
+<div class="card">
+  <ul class="tab-nav tn-justified">
+    <li class="<%= 'active' unless params.key?(:type) %>">
+      <%= link_to '一覧', headlines_path %>
+    </li>
+    <li class="<%= 'active' if params.key?(:type) && params[:type] == Headline::T_KIGYOU.to_s %>">
+      <%= link_to '企業情報', headlines_path(type: Headline::T_KIGYOU) %>
+    </li>
+    <li class="<%= 'active' if params.key?(:type) && params[:type] == Headline::T_EVENT.to_s %>">
+      <%= link_to 'イベント情報', headlines_path(type: Headline::T_EVENT) %>
+    </li>
+    <li class="<%= 'active' if params.key?(:type) && params[:type] == Headline::T_SYSTEM.to_s %>">
+      <%= link_to 'システム情報', headlines_path(type: Headline::T_SYSTEM) %>
+    </li>
+    <li class="<%= 'active' if params.key?(:type) && params[:type] == Headline::T_OTHERS.to_s %>">
+      <%= link_to 'その他', headlines_path(type: Headline::T_OTHERS) %>
+    </li>
+  </ul>
+  <% if @headlines.size > 0 %>
+    <div class="card-body">
+      <div class="listview lv-lg">
+        <div class="lv-body">
+          <% @headlines.each do |headline| %>
+            <%= link_to headline, class: 'lv-item z-depth-1' do %>
+              <%= render 'headlines/media', headline: headline %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <%= paginate @headlines %>
+    </div>
+  <% else %>
+    <div class="card-body card-padding">
+      お知らせはありません
+    </div>
+  <% end %>
+</div>

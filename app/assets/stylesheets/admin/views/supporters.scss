@@ -1,0 +1,48 @@
+.group_chat_category_status {
+
+  &+label {
+    margin-left: 100px;
+    display: inline-block;
+    padding: 6px 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  &:checked+label {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+  }
+}
+
+.group-chat-status{
+  padding-left: 100px;
+  display: inline;
+}
+
+.group_chat_category_icon {
+  input[type="file"] {
+    display: inline;
+    padding-left: 110px;
+  }
+}
+
+.group-chat-category-icon {
+  height: 50px;
+  width: 50px;
+}

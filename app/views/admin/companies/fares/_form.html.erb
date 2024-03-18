@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">システム利用料を<%= @fare.persisted? ? '編集' : '登録' %></h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@fare, url: @fare.persisted? ? admin_company_fare_path(@company, @fare) : admin_company_fares_path(@company), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :priority_no %>
+        <%= f.input :start_at %>
+        <% if @fare.end_at.present? %>
+          <%= f.input :save_end_at, as: :boolean, label: '終了日を設定する', :input_html => { :checked => true } %>
+        <% else %>
+          <%= f.input :save_end_at, as: :boolean, label: '終了日を設定する' %>
+        <% end %>
+        <%= f.input :end_at, include_blank: true %>
+        <%= f.input :price %>
+        <%= f.input :subject, collection: Company::Fare.names_with_subject %>
+        <%= f.input :subject_note, label: false, input_html: { style: 'display:none' } %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $('#company_fare_subject_note').toggle($('#company_fare_subject').val() == <%= Company::Fare::S_OTHER %> );
+    $('#company_fare_subject').on('change', function() {
+      $('#company_fare_subject_note').toggle($('#company_fare_subject').val() == <%= Company::Fare::S_OTHER %> );
+    });
+    $('.company_fare_end_at').toggle($('#company_fare_save_end_at').prop('checked') );
+    $('#company_fare_save_end_at').on('change', function() {
+      $('.company_fare_end_at').toggle($('#company_fare_save_end_at').prop('checked') );
+    });
+  });
+</script>

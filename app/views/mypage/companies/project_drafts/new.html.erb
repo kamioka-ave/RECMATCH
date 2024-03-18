@@ -1,0 +1,66 @@
+<% content_for(:page_classes) { 'mypage pages company' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header">
+    <h1>採用募集ページ<%= @draft.persisted? ? '編集' : '登録' %></h1>
+  </div>
+    <%= simple_form_for([@company, @draft], url: mypage_company_project_drafts_path) do |f| %>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <%= f.error_notification %>
+        <%= f.hidden_field :proposal_id %>
+        <%= f.hidden_field :image %>
+        <%= f.hidden_field :interview_movie %>
+        <%= f.hidden_field :status %>
+        <%= f.hidden_field :president_image %>
+        <%= f.hidden_field :president_description %>
+        <%= f.hidden_field :description %>
+        <%= f.hidden_field :company_info %>
+        <%= f.hidden_field :number_hired %>
+        <%= f.hidden_field :revision %>
+        <%= f.hidden_field :salary %>
+        <%= f.hidden_field :process_selection %>
+        <%= f.hidden_field :selection_condition %>
+        <%= f.hidden_field :entry_closed %>
+        <%= f.hidden_field :student_assumption %>
+        <%= f.hidden_field :recruit_kind %>
+        <%= f.hidden_field :duty_station %>
+        <%= f.hidden_field :new_salary %>
+        <%= f.hidden_field :allowance %>
+        <%= f.hidden_field :raise_salary %>
+        <%= f.hidden_field :reward %>
+        <%= f.hidden_field :holiday %>
+        <%= f.hidden_field :insurance %>
+        <%= f.hidden_field :welfare_program %>
+        <%= f.hidden_field :company_event %>
+        <%= f.hidden_field :sex_ratio %>
+        <%= f.hidden_field :trial_period %>
+        <%= f.hidden_field :other_welfare %>
+        <%= f.hidden_field :retired_ratio %>
+        <%= f.hidden_field :sex_ratio_hired %>
+        <%= f.hidden_field :continuous %>
+        <%= f.hidden_field :old %>
+        <%= f.hidden_field :training %>
+        <%= f.hidden_field :vacation %>
+        <%= f.hidden_field :childcare %>
+        <%= f.hidden_field :recruit_univ %>
+        <%= f.hidden_field :univ_depart %>
+        <%= f.hidden_field :start_at %>
+        <%= f.hidden_field :end_at %>
+        <%= f.input :name, placeholder: '例)株式会社◯◯2020年度新卒採用' %>
+        <%= f.input :short_description, as: 'text', input_html: { rows: 6 } %>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
+        <%= f.button :submit, '登録', class: 'btn-lg btn-info' %>
+      </div>
+    </div>
+  <% end %>
+  <br>
+</div>
+
+<%= jquery_view('views.admin.projects.NewView') %>

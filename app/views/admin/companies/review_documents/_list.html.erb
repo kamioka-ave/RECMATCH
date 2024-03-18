@@ -1,0 +1,37 @@
+<% if documents.size > 0 %>
+  <div class="box-body no-padding">
+    <table class="table">
+      <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.company/review_document.name') %></th>
+        <th><%= t('activerecord.attributes.company/review_document.document_type') %></th>
+        <th><%= t('activerecord.attributes.company/review_document.status') %></th>
+        <th>登録者</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% documents.each do |d| %>
+        <tr>
+          <td><%= d.name %></td>
+          <td><%= Company::ReviewDocument.names_with_document_type.key(d.document_type).to_s %></td>
+          <td><%= Company::ReviewDocument.names_with_status.key(d.status) %></td>
+          <td><%= d.uploader.present? ? d.uploader.name : '企業' %></td>
+          <td>
+            <%= link_to '表示', d.file.url, class: 'btn btn-xs btn-info' %>
+            <% if d.status == Company::ReviewDocument::AS_SUBMITTED %>
+              <%= link_to '承認', edit_admin_company_review_document_approval_path(@company, d), remote: true, class: 'btn btn-xs btn-warning' %>
+            <% end %>
+            <%= link_to '削除', admin_company_review_document_path(@company, d), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="box-body">
+    本審査書類は登録されていません
+  </div>
+<% end %>

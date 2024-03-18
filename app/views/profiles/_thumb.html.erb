@@ -1,0 +1,70 @@
+<div class="card profile-view">
+  <div class="pv-header">
+    <%= profile_image(profile, class: 'pv-main') %>
+  </div>
+
+  <div class="pv-body">
+    <h2>
+      <% if profile.user.has_role?(:student) %>
+        <%= link_to profile.name, profile %>
+      <% else %>
+        <%= profile.name %>
+      <% end %>
+    </h2>
+    <small>
+      <% if profile.description.present? %>
+        <%= simple_format(profile.description) %>
+      <% else %>
+        <span class="pr-10">
+          <% profile.user.roles.each do |role| %>
+            <%= Role.names.key(role.id) %>
+          <% end %>
+        </span>
+      <% end %>
+    </small>
+
+    <% if profile.user.has_role?(:student) %>
+      <ul class="pv-follow">
+        <li>
+          <%= link_to profile_follows_path(profile_id: profile) do %>
+            フォロー <%= profile.user.follow_count %>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to followers_profile_follows_path(profile_id: profile) do %>
+            フォロワー <%= profile.user.followers_count %>
+          <% end %>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="nav nav-stacked mb-20">
+      <li>
+        <% if profile.user.has_connection?(:facebook) %>
+          <%= link_to profile.user.connection(:facebook).link do %>
+            <i class="fa fa-facebook-official p-r-10"></i>コネクトしています
+          <% end %>
+        <% else%>
+          <i class="fa fa-facebook-official p-r-10"></i>コネクトしていません
+        <% end %>
+      </li>
+      <li>
+        <% if profile.user.has_connection?(:twitter) %>
+          <%= link_to profile.user.connection(:twitter).link do %>
+            <i class="fa fa-twitter-square p-r-10"></i>コネクトしています
+          <% end %>
+        <% else%>
+          <i class="fa fa-twitter-square p-r-10"></i>コネクトしていません
+        <% end %>
+      </li>
+    </ul>
+
+    <% if profile.user.has_role?(:student) && (!user_signed_in? || current_user.id != profile.user.id) %>
+      <%= link_to new_mypage_message_path(recipient_id: profile.user.id), remote: user_signed_in?, class: "pv-follow-btn" do %>
+        <i class="fa fa-envelope p-r-10"></i>メッセージで質問や意見を送る
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div id="message-modal" class="modal fade" tabindex="-1"></div>

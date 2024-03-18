@@ -1,0 +1,29 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">キャンセル待ちの申込み</h4>
+    </div>
+    <div class="modal-body">
+      <p>
+        申込期間中に上限応募額に達しましたので、達した時間から24時間（1日）に限りキャンセル待ちのお申込みをお受けいたします。
+        （ただし、上限応募額に到達した時間が申込期間最終日の場合は、お申込みの受付、キャンセル待ちは申込期間最終日終了時間までとなります。）
+      </p>
+      <p>お申込みをご希望される方は、「キャンセル待ちを申込む」ボタンをクリックし、あらかじめ契約締結前交付書面等をご確認のうえ、お申込みください。</p>
+      <p>お申込みの際、以下の点にご注意ください。</p>
+      <ul>
+        <li>キャンセル待ちの1回のお申込みは最小取扱単位分の金額となります。</li>
+        <li>お申込み後、お申込みいただいた時間から8日間のキャンセル可能期間がございます。</li>
+        <li>キャンセル待ちのお申込みいただいてもキャンセルが発生しない場合や、キャンセルがあってもキャンセル待ちの時間優先の原則により、応募の受付ができない場合がございます。</li>
+        <li>上限応募額に達し、上限応募額に達した時間から24時間のキャンセル待ち時間終了後、そのまま目標募集額を下回ることなく、上限応募額に到達した日から起算して10日目が到来した場合当該プロジェクトが約定いたします。</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <%= link_to 'キャンセル待ちを申込む', project_product_order_contract_path(@project, @product, type: 'wait'), class: 'btn btn-lg btn-block btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

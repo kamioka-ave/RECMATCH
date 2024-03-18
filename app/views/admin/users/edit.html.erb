@@ -1,0 +1,28 @@
+<section class="content-header">
+  <h1>ユーザーの編集</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for([:admin, @user]) do |f| %>
+        <%= f.error_notification %>
+        <%= f.simple_fields_for :profile do |p| %>
+          <%= p.input :name %>
+          <%= p.input :image %>
+          <span id="preview_image" class="preview" style="display: none"></span>
+          <%= p.input :receive_notification %>
+          <%= p.input :description, input_html: { rows: 6 } %>
+        <% end %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%=
+  jquery_view(
+    'views.admin.users.FormView',
+    image: @user.profile.image.present? ? @user.profile.image.url : ''
+  )
+%>

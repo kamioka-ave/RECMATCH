@@ -1,0 +1,157 @@
+<%= simple_form_for([:admin, @draft]) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div class="box">
+        <div class="box-body">
+          <%= f.input :name %>
+          <%= f.input :short_description, as: 'text', input_html: { rows: 6 } %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">メニュー</h2>
+        </div>
+        <div class="box-body">
+          <p>
+            <i class="fa fa-star-o pr-10"></i>状況
+            <span class="pull-right">
+              <%= @draft.id.present? ? ProjectDraft.names_with_status.key(@draft.status) : '新規' %>
+            </span>
+          </p>
+          <% if @draft.id.present? %>
+            <p>
+              <% if @draft.project_histories.size > 1 %>
+                <%= link_to admin_project_histories_path(@draft) do %>
+                  <i class="fa fa-history pr-10"></i> リビジョン
+                <% end %>
+              <% else %>
+                <i class="fa fa-history pr-10"></i> リビジョン
+              <% end %>
+              <span class="pull-right"><%= @draft.revision %></span>
+            </p>
+            <p>
+              <i class="fa fa-clock-o pr-10"></i>更新日
+              <span class="pull-right">
+                <%= l(@draft.updated_at) %>
+              </span>
+            </p>
+          <% end %>
+        </div>
+        <% if @draft.status == ProjectDraft::S_EDIT %>
+          <div class="box-footer">
+            <%= button_tag 'プレビュー', name: 'preview', class: 'btn btn-block btn-default', formtarget: '_blank' %>
+            <%= button_tag '下書き保存', class: 'btn btn-block btn-default' %>
+            <%= button_tag '最終確認へ', name: 'submit', class: 'btn btn-block btn-primary' %>
+          </div>
+        <% elsif @draft.status == ProjectDraft::S_JUDGE %>
+          <div class="box-footer">
+            <%= button_tag 'プレビュー', name: 'preview', class: 'btn btn-block btn-default', formtarget: '_blank' %>
+            <%= button_tag '再編集', class: 'btn btn-block btn-default' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box mb-20">
+    <div class="box-header with-border">
+      <h3 class="box-title">基本情報</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="card-body card-padding">
+        <h2>サマリー</h2>
+        <%= f.input :image, required: true, wrapper: 'horizontal_file_input', hint: '拡張子がjpg、jpeg、gif、pngの画像ファイルを選択してください' %>
+        <%= f.hidden_field :image_cache %>
+        <div class="row">
+          <div class="col-sm-9 col-sm-offset-3">
+            <span id="preview_image" class="preview" style="display: none"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <%= f.input :start_at, required: true %>
+          </div>
+          <div class="col-sm-4">
+            <%= f.input :end_at, required: true %>
+          </div>
+          <div class="col-sm-4">
+            <%= f.input :entry_closed, required: true %>
+          </div>
+        </div>
+        <%= f.input :salary, required: true %>
+        <%= f.input :process_selection, required: true %>
+        <%= f.input :selection_condition, required: true %>
+      </div>
+      <div class="card-body card-padding">
+        <h2>募集要項</h2>
+        <%= f.input :student_assumption, required: true %>
+        <%= f.input :recruit_kind, required: true %>
+        <%= f.input :duty_station, required: true %>
+      </div>
+      <div class="card-body card-padding">
+        <h2>給与・福利厚生</h2>
+        <%= f.input :new_salary, required: true %>
+        <%= f.input :allowance, required: true %>
+        <%= f.input :raise_salary, required: true %>
+        <%= f.input :reward, required: true %>
+        <%= f.input :holiday, required: true %>
+        <%= f.input :insurance, required: true %>
+        <%= f.input :welfare_program, required: true %>
+        <%= f.input :company_event, required: true %>
+        <%= f.input :trial_period, required: true %>
+      <div class="row">
+        <div class="col-sm-4">
+          <%= f.input :sex_ratio, required: true, placeholder: '例)45', hint: '全社員に対する女性の割合(%)を記入してください。' %>
+        </div>
+        <div class="col-sm-8">
+          <%= f.input :other_welfare, required: true %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body card-padding">
+      <h2>職場情報</h2>
+        <div class="row">
+          <div class="col-sm-5">
+            <%= f.input :retired_ratio, required: true, placeholder: '例)20', hint: '全社員数に対する離職者の割合(%)を記入してください。' %>
+            <%= f.input :continuous, required: true, placeholder: '例)13', hint: '平均勤続年数を記入してください。' %>
+          </div>
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-5">
+            <%= f.input :sex_ratio_hired, required: true, placeholder: '例)45', hint: '3年間で採用した学生の女性割合(%)を記入してください。' %>
+            <%= f.input :old, required: true, placeholder: '例)37', hint: '平均年齢を記入してください。' %>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <%= f.input :training, required: true %>
+        <%= f.input :vacation, required: true %>
+        <%= f.input :childcare, required: true %>
+      </div>
+      <div class="card-body card-padding">
+        <h2>採用実績</h2>
+        <%= f.input :recruit_univ, required: true, as: :text, :input_html => {:rows => 8}, placeholder: '◯◯◯大学,△△△大学,×××大学' %>
+        <%= f.input :univ_depart, required: true, as: :text, :input_html => {:rows => 8}, placeholder: '経済学部,商学部,理工学部' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'editors/pdf_dialog' %>
+
+<%=
+  jquery_view(
+    'views.admin.projects.FormView',
+    image: @draft.image.present? ? @draft.image.url : '',
+    presidentImage: @draft.president_image.present? ? @draft.president_image.url : '',
+    movie: @draft.interview_movie.present? ? @draft.interview_movie : '',
+    stamp: @draft.stamp.present? ? @draft.stamp.url : '',
+  )
+%>

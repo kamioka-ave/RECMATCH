@@ -1,0 +1,21 @@
+<section class="content-header">
+  <h1>本人確認書類の履歴</h1>
+</section>
+
+<% if @histories.size > 0 %>
+  <%=
+    react_component(
+      'views.admin.students.identifications.histories.IndexView',
+      student: @student,
+      identification: @identification,
+      history: @histories.last,
+      min: @histories.first.revision,
+      max: @histories.last.revision,
+      no_image: image_path('no_img.jpg')
+    )
+  %>
+<% else %>
+  <section class="content">
+    履歴はありません
+  </section>
+<% end %>

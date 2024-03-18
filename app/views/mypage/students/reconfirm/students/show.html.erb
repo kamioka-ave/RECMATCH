@@ -1,0 +1,30 @@
+<div class="my-students-wizard row">
+  <div class="col-md-offset-1 col-md-10">
+    <%= render 'mypage/students/reconfirm/progress', {step: 1} %>
+
+    <div class="card">
+      <div class="card-header">
+        <h1 class="text-center">STEP1 学生適合性確認</h1>
+      </div>
+      <div class="card-body card-padding">
+        <div class="bg-info p-20 m-b-30">
+          <span title="required">*</span> 印は必須入力項目です
+        </div>
+        <%= simple_form_for(@interview, url: mypage_student_reconfirm_interview_path, wrapper: 'horizontal_form', html: {class: 'form-horizontal'}) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :user_id %>
+
+          <div class="mb-50">
+            <%= render 'mypage/students/interviews/form', {f: f, interview: @interview} %>
+          </div>
+
+          <div class="clearfix">
+            <div class="pull-right">
+              <%= f.button :submit, '次へ', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

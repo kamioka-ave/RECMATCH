@@ -1,0 +1,164 @@
+<% content_for(:page_classes) { 'mypage students details' } %>
+
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h2><span><i class="fa fa-wrench" aria-hidden="true"></i> 学生基本情報</span></h2>
+    <ul class="actions">
+      <li>
+        <%= link_to @edit_path do %>
+          <i class="zmdi zmdi-settings"></i>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <tr>
+        <th>氏名</th>
+        <td><%= @student.last_name %><%= @student.first_name %></td>
+      </tr>
+      <tr>
+        <th>氏名（カナ）</th>
+        <td><%= @student.last_name_kana %><%= @student.first_name_kana %></td>
+      </tr>
+      <tr>
+        <th>RECMATCH表示名</th>
+        <td><%= @student.nickname %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.gender') %></th>
+        <td><%= Student.names_with_gender.key(@student.gender) %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.birth_on') %></th>
+        <td><%= l(@student.birth_on) %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.zip_code') %></th>
+        <td><%= @student.zip_code %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.prefecture_id') %></th>
+        <td><%= @student.prefecture.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.city') %></th>
+        <td><%= @student.city %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.student.address1') %></th>
+        <td><%= @student.address1 %></td>
+      </tr>
+      <% if @student.address2.present? %>
+        <tr>
+          <th><%= t('activerecord.attributes.student.address2') %></th>
+          <td><%= @student.address2 %></td>
+        </tr>
+      <% end %>
+      <% if @student.phone.present? %>
+        <tr>
+          <th><%= t('activerecord.attributes.student.phone') %></th>
+          <td><%= @student.phone %></td>
+        </tr>
+      <% end %>
+      <% if @student.phone_mobile.present? %>
+        <tr>
+           <th><%= t('activerecord.attributes.student.phone_mobile') %></th>
+           <td><%= @student.phone_mobile %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <th>大学名</th>
+        <td><%= University.names_with_univ.key(@student.university) %></td>
+      </tr>
+      <tr>
+        <th>卒業年月日</th>
+        <td><%= @student.graduation_year %>年<%= @student.graduation_month %>月</td>
+      </tr>
+      <tr>
+        <th>文系理系</th>
+        <td><%= University.names_with_bunri.key(@student.bunri) %></td>
+      </tr>
+      <tr>
+        <th>学部名/学科・専攻名</th>
+        <td><%= @student.depart %>/<%= @student.depart_detail %></td>
+      </tr>
+      <% if @student.labo.present? %>
+        <tr>
+          <th>ゼミ・研究室</th>
+          <td><%= @student.labo %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<br>
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h2><span><i class="fa fa-wrench" aria-hidden="true"></i> 就活情報・PRポイント</span></h2>
+    <ul class="actions">
+      <li>
+        <%= link_to @edit_path do %>
+          <i class="zmdi zmdi-settings"></i>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <tr>
+        <th>志望業界</th>
+        <td>
+          ①<%= Student.names_with_industry.key(@student.industry_1) %>
+          <% if @student.industry_2.present? %>
+            ②<%= Student.names_with_industry.key(@student.industry_2) %>
+          <% end %>
+          <% if @student.industry_3.present? %>
+            ③<%= Student.names_with_industry.key(@student.industry_3) if @student.industry_3.present? %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th>志望職種</th>
+        <td>
+          ①<%= Student.names_with_occupation.key(@student.occupation_1) %>
+          <% if @student.occupation_2.present? %>
+            ②<%= Student.names_with_occupation.key(@student.occupation_2) if @student.occupation_2.present? %>
+          <% end %>
+          <% if @student.occupation_3.present? %>
+            ③<%= Student.names_with_occupation.key(@student.occupation_3) if @student.occupation_3.present? %>
+          <% end %>
+        </td>
+      </tr>
+      <% if @student.intern_is %>
+        <tr>
+          <th width="260px">インターン歴</th>
+          <td>あり</td>
+        </tr>
+        <tr>
+          <th>インターン先企業</th>
+          <td><%= @student.intern_company %></td>
+        </tr>
+        <tr>
+          <th>インターン業務内容</th>
+          <td><%= @student.intern_detail %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <th>インターン歴</th>
+          <td>なし</td>
+        </tr>
+      <% end %>
+      <tr>
+        <th>TOEICスコア</th>
+        <td><%= @student.toeic_score %></td>
+      </tr>
+      <% if @student.qualifications.present? %>
+        <tr>
+          <th>その他資格など</th>
+          <td><%= @student.qualifications %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

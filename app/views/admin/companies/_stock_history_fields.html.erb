@@ -1,0 +1,13 @@
+<div class="row stock-company-form">
+  <div>
+     <div class="col-md-6">
+      <%= f.input :date, as: :date_time_picker, bs_col: 12, label: '日付' %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :price, type: :number, label: '金額', input_html: { min: '0'} %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :partition_number, type: :number, label: '分割数', input_html: { min: '0'} %>
+    </div>
+  </div>
+</div>

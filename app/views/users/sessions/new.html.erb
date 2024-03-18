@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <h1>
+      <span class="text-center" style="padding:10px;font-size: 25px;">
+        <i class="fa fa-sign-in" aria-hidden="true"></i> ログイン
+      </span>
+      <small class="pull-right">
+        <%= link_to '新規登録の方はこちら', new_user_registration_path, class: 'text-info', style: "color:#2196F3" %>
+      </small>
+    </h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-5">
+    <div class="card">
+      <div class="card-header mb-30">
+        <h2>
+          <span class="text-center" style="border-bottom: solid 5px #000080;padding:10px;">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i> メールアドレスでログイン
+          </span>
+        </h2>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= f.input :email, label: ('<i class="fa fa-envelope-o" aria-hidden="true"></i> メールアドレス').html_safe, autofocus: true, placeholder: 'メールアドレスを入力してください' %>
+          <%= f.input :password, label: ('<i class="fa fa-key" aria-hidden="true"></i> パスワード').html_safe, placeholder: 'パスワードを入力してください' %>
+          <div class="checkbox m-b-15">
+            <label>
+              <%= f.check_box :remember_me if devise_mapping.rememberable? %>
+              <i class="input-helper"></i>
+              ログイン状態を保持
+            </label>
+          </div>
+          <div>
+            <%= f.button :submit, 'ログイン', class: 'btn-lg btn-primary-o' %>
+            <div class="pull-right text-muted">
+              <div><%= link_to 'パスワードをお忘れの方', new_password_path(resource) %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header mb-30">
+        <h2>
+          <span class="text-center" style="border-bottom: solid 5px #000080;padding:10px;">
+            <i class="fa fa-share-square-o" aria-hidden="true"></i> SNSアカウントでログイン
+          </span>
+        </h2>
+      </div>
+      <div class="card-body card-padding">
+        <div class="text-center mb-20">
+          <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block btn-social btn-facebook btn-lg' do %>
+            <i class="fa fa-facebook"></i> Facebook
+          <% end %>
+        </div>
+
+        <div class="text-center mb-20">
+          <%= link_to(user_twitter_omniauth_authorize_path, class: 'btn btn-block btn-social btn-twitter btn-lg') do %>
+            <i class="fa fa-twitter"></i> Twitter
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

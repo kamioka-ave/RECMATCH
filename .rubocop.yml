@@ -1,0 +1,41 @@
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - 'db/migrate/*'
+    - 'vendor/**/*'
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+WordArray:
+  MinSize: 10
+
+SymbolArray:
+  MinSize: 10
+
+ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false

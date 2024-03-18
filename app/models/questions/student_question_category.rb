@@ -1,0 +1,2 @@
+class StudentQuestionCategory < QuestionCategory
+end

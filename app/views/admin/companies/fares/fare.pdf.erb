@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>システム利用料請求</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger', media: 'all' %>
+</head>
+<body>
+  <table width="30%" style="font-size: 8pt; margin-left: auto;">
+    <tr>
+      <td width="40%" align= "right">発行日:</td>
+      <td width="60%" align= "right">
+        <%= Time.now.year %>/<%= Time.now.month %>/<%= Date.new(Time.now.year, Time.now.month, 1).day %>
+      </td>
+    </tr>
+    <tr>
+      <td width="40%" align= "right">請求番号:</td>
+      <td width="60%" align= "right"><%= @fare.priority_no %></td>
+    </tr>
+  </table>
+  <h1 align= "center" style="font-weight: normal; line-height: 170%;">請 求 書</h1>
+  <table width="100%">
+    <tr>
+      <th width="50%" align= "left" style="font-weight: normal;"><%= @company.name %></th>
+      <th width="50%" align= "left" style="font-weight: normal;">株式会社UNCHAIN</th>
+    </tr>
+    <tr class="text-center" style="font-size: 8pt;">
+      <td align="left">
+        <%= @company.prefecture.name %>
+        <%= @company.city %>
+        <%= @company.address1 %>
+        <%= @company.address2 if @company.address2.present? %>
+      </td>
+      <td align="left">東京都品川区東五反田5-25-18</td>
+    </tr>
+    <tr class="text-center" style="font-size: 8pt;">
+      <td align="left" valign="top">
+        代表取締役
+        <%= @company.president_last_name %>
+        <%= @company.president_first_name %></td>
+      <td align="right"><%= wicked_pdf_image_tag 'admin/companies/sign.png', :size => '70x70' %></td>
+      <td align="left"></td>
+    </tr>
+  </table>
+  <br>
+  <br>
+  <div style="font-size: 10pt; line-height: 170%;">件名: RECMATCHシステム及びサポート機能利用料</div>
+  <table border="1" width="100%" style="font-size: 10pt; margin-left: auto;">
+    <tr>
+      <th width="55%" style="font-weight: normal;">内容</th>
+      <th width="13%" style="font-weight: normal;">数量</th>
+      <th width="16%" style="font-weight: normal;">単価</th>
+      <th width="16%" style="font-weight: normal;">税抜金額(JPY)</th>
+    </tr>
+    <tr class="text-center">
+      <td height="25" align= "left">RECMATCHシステム等利用料</td>
+      <td height="25" align= "right">1</td>
+      <td height="25" align= "right">
+        <% if @fare.start_at < Time.zone.now %>
+          <%= number_to_currency(@fare.price) %>
+        <% else %>
+          <%= number_to_currency(0) %>
+        <% end %>
+      </td>
+      <td height="25" align= "right">
+        <% if @fare.start_at < Time.zone.now %>
+          <%= number_to_currency(@fare.price) %>
+        <% else %>
+          <%= number_to_currency(0) %>
+        <% end %>
+      </td>
+    </tr>
+    <% 11.times do %>
+      <tr class="text-center">
+        <td height="25" align= "left"></td>
+        <td height="25" align= "right"></td>
+        <td height="25" align= "right"></td>
+        <td height="25" align= "right"></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <table width="100%">
+    <tr>
+      <td width="50%" height="90" align= "left" valign="top" style="border: solid 1px; font-size: 10pt;">備考</td>
+      <td width="30%" align= "center" valign="top" style="font-size: 13pt;">税抜金額合計:</td>
+      <td width="20%" align= "center" valign="top" style="font-size: 13pt;">
+        <% if @fare.start_at < Time.zone.now %>
+          <%= number_to_currency(@fare.price) %>
+        <% else %>
+          <%= number_to_currency(0) %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <table width="100%">
+    <tr>
+      <td width="20%" align= "left" style="font-size: 10pt;">お支払方法</td>
+      <td width="80%" align= "left" style="font-size: 10pt;">口座振込</td>
+    </tr>
+    <tr>
+      <td width="20%" style="font-size: 10pt;">お支払日</td>
+      <td width="80%" style="font-size: 10pt;">
+        <%= Time.now.year %>/
+        <%= Time.now.month %>/
+        <%= Date.new(Time.now.year, Time.now.month, -1).day %>
+      </td>
+    </tr>
+    <tr>
+      <td width="20%" style="font-size: 10pt;">金融機関</td>
+      <td width="80%" style="font-size: 10pt;">三菱UFJ銀行 0005 五反田支店 537 普通 01 株式会社UNCHAIN 0545426</td>
+    </tr>
+    <tr>
+      <td width="20%" style="font-size: 10pt;"></td>
+      <td width="80%" style="font-size: 10pt;">お振込みの際の手数料はお客様のご負担でお願い申し上げます。</td>
+    </tr>
+  </table>
+</body>
+</html>

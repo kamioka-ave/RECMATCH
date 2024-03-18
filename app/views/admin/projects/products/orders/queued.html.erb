@@ -1,0 +1,17 @@
+<div class="row order-complete">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>キャンセル待ちのお申込みを受け付けました</h1>
+      </div>
+      <div class="card-body card-padding text-center">
+        お申込みいただいた時間から8日間のキャンセル可能期間がございます。
+      </div>
+      <div class="card-body card-padding">
+        <div class="text-center mb-40">
+          <%= link_to "#{@project.name}のページに戻る", @project, class: 'btn btn-lg btn-info' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

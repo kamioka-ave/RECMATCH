@@ -1,0 +1,24 @@
+<div class="card">
+  <ul class="tab-nav tn-justified">
+    <li class="active">
+      <a href="#description" data-toggle="tab">募集概要</a>
+    </li>
+    <li>
+      <a href="#company_info" data-toggle="tab">会社情報</a>
+    </li>
+    <li>
+      <a href="#event_info" data-toggle="tab">会社説明会・イベントなど</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane description active" id="description">
+      <%= render 'mypage/companies/projects/description' %>
+    </div>
+    <div class="tab-pane" id="company_info">
+      <%= render 'mypage/companies/projects/company_info' %>
+    </div>
+    <div class="tab-pane" id="event_info">
+      <%= render 'mypage/companies/projects/event' %>
+    </div>
+  </div>
+</div>

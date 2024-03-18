@@ -1,0 +1,92 @@
+<% content_for(:page_classes) {'questions show' } %>
+<% content_for(:title) {@question.name } %>
+
+<%= render 'header' %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'menu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body card-padding">
+        <div class="clearfix mb-10">
+          <div class="pull-left">
+            <%= link_to :back do %>
+              <i class="fa fa-toggle-left"></i> 戻る
+            <% end %>
+          </div>
+          <div class="pull-right">
+            <small class="text-muted text-right">
+              <ul class="list-inline">
+                <li>No.<%= @question.id %></li>
+                <li>公開日時: <%= l(@question.created_at) %><li>
+                <li>更新日時: <%= l(@question.updated_at) %><li>
+              </ul>
+            </small>
+          </div>
+        </div>
+        <div class="media">
+          <div class="pull-left f-26">
+            <span class="question-box">Q</span>
+          </div>
+          <div class="media-body">
+            <h2><%= @question.name %></h2>
+          </div>
+        </div>
+        <%= @question.asking.html_safe %>
+      </div>
+      <div class="card-body card-padding">
+        <div class="media">
+          <div class="pull-left f-26">
+            <span class="answer-box">A</span>
+          </div>
+          <div class="media-body">
+            <h2>回答</h2>
+          </div>
+          <%= @question.answer.html_safe %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>関連するFAQ</h2>
+      </div>
+      <div class="card-body card-padding">
+        <% if @question.questions.size > 0 %>
+          <ul class="nav nav-pills nav-stacked">
+            <% @question.questions.each do |q| %>
+              <li>
+                <%= link_to q do %>
+                  <i class="fa fa-toggle-right"></i> <%= q.name %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          関連するFAQはありません
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>ご意見をお聞かせください</h2>
+      </div>
+      <div class="card-body card-padding">
+        <%= link_to '解決できた', upvote_question_path(@question), method: :put, remote: true, class: 'btn btn-default' %>
+        <%= link_to '解決しない', downvote_question_path(@question), method: :put, remote: true, class: 'btn btn-default' %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>解決しない場合は</h2>
+      </div>
+      <div class="card-body card-padding">
+        <%= link_to 'お問い合わせフォームへ', contact_path, class: 'btn btn-lg btn-default' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,382 @@
+<% content_for(:page_classes) { 'pages index' } %>
+<% content_for(:title) { 'ミスマッチをゼロに！※学生と企業のマッチングサービス' } %>
+
+<% unless user_signed_in? %>
+
+  <section class="about">
+    <div class="container">
+      <div class="row">
+        <% if request.variant.include? :mobile %>
+          <div class="description col-md-8">
+            <div class="mb-20">
+              <h2>
+                <span style="padding:10px;font-size: 25px;">
+                  <span class="c-primary">企業</span>と<span class="c-primary">学生</span>の双方が100%満足できるマッチングを実現します。
+                </span>
+              </h2>
+              <% unless request.variant.include?(:mobile) %>
+                <div class="mb-20 pt-20">
+                  RECMATCHは学生と企業間の情報の非対称性を解消し、双方のミスマッチを解消するための就活プラットフォームです<br>
+                  双方からお話を伺ったところ、以下の要因によりミスマッチが生じていると我々は考えております
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-1 mb-20">
+                      <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 20px;">
+                        <i class="fa fa-building-o" aria-hidden="true"></i> 企業
+                      </span>
+                    </div>
+                    <div class="col-md-4">
+                      選考過程だけでは学生一人一人の適正を判断する時間が十分に取れない
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-1 mb-20">
+                      <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 20px;">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i> 学生
+                      </span>
+                    </div>
+                    <div class="col-md-4">
+                      企業や仕事内容に関して自分の知りたいことが知れず認識相違が生じてしまう
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-20 pt-20">
+                  これらの課題を解決するためRECMATCHを開始しました。
+                </div>
+              <% end %>
+            </div>
+            <% if request.variant.include?(:mobile) %>
+              <div class="text-center col-md-12 mb-20">
+                <%= link_to '詳しく', about_pages_path, class: 'btn btn-lg btn-primary-o' %>
+                <%= link_to '会員登録', new_user_registration_path, class: 'btn btn-lg btn-danger-o' %>
+              </div>
+            <% else %>
+              <div class="description col-xs-offset-3 col-md-6">
+                <%= link_to 'さらに詳しく', about_pages_path, class: 'btn btn-lg btn-primary-o' %>
+                <%= link_to 'いますぐ会員登録', new_user_registration_path, class: 'btn btn-lg btn-danger-o' %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="description col-xs-offset-2 col-md-9">
+            <div class="mb-20">
+              <h2 style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+                <span>
+                  <span class="c-primary">企業</span>と<span class="c-primary">学生</span>の双方が100%満足できるマッチングを実現します。
+                </span>
+              </h2>
+              <div class="mb-20 pt-20">
+                RECMATCHは学生と企業間の情報の非対称性を解消し、双方のミスマッチを解消するための就活プラットフォームです<br>
+                双方からお話を伺ったところ、以下の要因によりミスマッチが生じていると我々は考えております
+             </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-1">
+                    <i class="fa fa-building-o" aria-hidden="true"></i> 企業
+                  </div>
+                  <div class="col-md-4">
+                    選考過程だけでは学生一人一人の適正を判断する時間が十分に取れない
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-1">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i> 学生
+                  </div>
+                  <div class="col-md-4">
+                    企業や仕事内容に関して自分の知りたいことが知れず認識相違が生じてしまう
+                  </div>
+                </div>
+              </div>
+              <div class="mb-20 pt-20">
+                これらの課題を解決するためRECMATCHを開始しました。
+              </div>
+            </div>
+            <% unless request.variant.include?(:mobile) %>
+              <div class="description col-xs-offset-3 col-md-6">
+                <%= link_to 'さらに詳しく', about_pages_path, class: 'btn btn-lg btn-primary-o' %>
+                <%= link_to 'いますぐ会員登録', new_user_registration_path, class: 'btn btn-lg btn-danger-o' %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="sec02" style="background-image: url('assets/top/q-missmatch.jpg');">
+    <% if request.variant.include? :mobile %>
+      <div class="container">
+        <div class="pt-20">
+          <h1 style="color:#fff;font-size:20px;">なぜミスマッチが発生する？</h1>
+        </div>
+        <div class="row">
+          <div class="col-md-6 circle-man2 entry">
+            <div class="circle-man"></div>
+            <div class="mb-30">
+              <h3 style="font-size:28px"><b>学生</b></h3>
+            </div>
+            <div class="card-body card-padding-sm text-left tile">
+              <div class="row">
+                <div class="col-md-1" style="font-size:15px;">
+                  <div class="mb-20">
+                    <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <b>入社してから会社で得られる経験やキャリアプランに相違があることを知った</b>
+                  </div>
+                  <div class="mb-20">
+                    <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <b>入社前に思っていた社風とは違っており、会社に馴染めなかった</b>
+                  </div>
+                  <div>
+                    <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <b>内定をなかなかもらえず、とにかく採用された会社に行ったが仕事内容に全くやる気が出ない</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 circle-man1 entry">
+            <div class="circle-man"></div>
+            <div class="mb-30">
+              <h3 style="font-size:28px"><b>企業</b></h3>
+            </div>
+            <div class="card-body card-padding-sm text-left tile">
+              <div class="row" style="font-size:15px;">
+                <div class="mb-20">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <b>人材会社より紹介された学生が期待値と異なる<br>
+                    また期待している学生との接触が困難</b>
+                </div>
+                <div class="mb-20">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                  <b>面接や面談だけでは学生の本音やどのような人間性か判断するのが困難</b>
+                </div>
+                <div>
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                  <b>コミット力や主体的行動力など仕事の上で重要な能力を評価するのが難しい</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-30">
+          <%= link_to about_pages_path, class: 'btn btn-lg btn-block btn-yellow-r' do %>
+            <b>RECMATCHが解決します<br>(詳細をみる)</b>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="container">
+        <h1 style="color:#fff">なぜミスマッチが発生する？</h1>
+        <div class="row">
+          <div class="col-md-6 circle-man2 entry">
+            <div class="circle-man"></div>
+            <div class="mb-30">
+              <h3 style="font-size:28px">学生</h3>
+            </div>
+            <div class="card-body card-padding-sm text-left tile">
+              <div class="row">
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  入社してから会社で得られる経験やキャリアプランに相違があることを知った
+                </div>
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  入社前に思っていた社風とは違っており、会社に馴染めなかった
+                </div>
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  内定をなかなかもらえず、とにかく採用された会社に行ったが仕事内容に全くやる気が出ない
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 circle-man1 entry">
+            <div class="circle-man"></div>
+            <div class="mb-30">
+              <h3 style="font-size:28px">企業</h3>
+            </div>
+            <div class="card-body card-padding-sm text-left tile">
+              <div class="row">
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  人材会社より紹介された学生が期待値と異なる<br>
+                  また期待している学生との接触が困難
+                </div>
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  面接や面談だけでは学生の本音やどのような人間性か判断するのが困難
+                </div>
+                <div class="col-md-1">
+                  <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-11 mb-20">
+                  コミット力や主体的行動力など仕事の上で重要な能力を評価するのが難しい
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <%= link_to 'RECMATCHが解決します(詳細をみる)', about_pages_path, class: 'btn btn-lg btn-block btn-yellow-r' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+
+<% end %>
+
+<% if user_signed_in? && current_user.has_role?(:company) %>
+<section class="bg-light pt-20" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1>
+          <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+            <i class="fa fa-building" aria-hidden="true"></i> <span class="c-primary">P</span>ick<span class="c-primary">U</span>p<span class="c-primary">学</span>生
+          </span>
+        </h1>
+        <h3 class="section-subheading text-muted">
+          <%= link_to mypage_company_search_students_path do %>
+            一覧を表示 <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          <% end %>
+        </h3>
+      </div>
+    </div>
+    <div class="containar">
+      <div class="row" style="display: flex;flex-wrap: wrap;">
+        <% @pickup_students.each do |pickup| %>
+          <div class="col-md-3 col-sm-6 portfolio-item">
+            <%= render 'mypage/companies/search_students/thumb', s: pickup %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<% else %>
+<section class="bg-light pt-20" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1>
+          <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+            <i class="fa fa-building" aria-hidden="true"></i> <span class="c-primary">P</span>ick<span class="c-primary">U</span>p<span class="c-primary">企</span>業
+          </span>
+        </h1>
+        <h3 class="section-subheading text-muted">
+          <%= link_to projects_path do %>
+            一覧を表示 <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          <% end %>
+        </h3>
+      </div>
+    </div>
+    <div class="row projects">
+      <% @pickup_projects.each do |pickup| %>
+        <div class="col-md-3 col-sm-6 portfolio-item">
+          <%= render 'projects/thumb', project: pickup %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<section class="bg-light pt-20" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1>
+          <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+            <i class="fa fa-building" aria-hidden="true"></i> <span class="c-primary">P</span>ick<span class="c-primary">U</span>p<span class="c-primary">イ</span>ベント
+          </span>
+        </h1>
+        <h3 class="section-subheading text-muted">
+          <%= link_to events_path do %>
+            一覧を表示 <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          <% end %>
+        </h3>
+      </div>
+    </div>
+    <div class="row projects">
+      <% @pickup_events.each do |pickup| %>
+        <div class="col-md-3 col-sm-6 portfolio-item">
+          <%= render 'events/thumb', event: pickup %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<%= render 'slider' %>
+
+<section class="news container pb-50">
+  <div class="clearfix">
+    <h2>
+      <% unless request.variant.include? :mobile %>
+        <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i> <span class="c-primary">N</span>E<span class="c-primary">W</span>S
+        </span>
+        <span class="pull-right">
+          <%= link_to '企業情報', headlines_path(type: Headline::T_KIGYOU), class: 'btn btn-info-inv' %>
+          <%= link_to 'イベント情報', headlines_path(type: Headline::T_EVENT), class: 'btn btn-deeporange-inv' %>
+          <%= link_to 'システム情報', headlines_path(type: Headline::T_SYSTEM), class: 'btn btn-success-inv' %>
+          <%= link_to 'その他', headlines_path(type: Headline::T_OTHERS), class: 'btn btn-gray-inv' %>
+          <%= link_to '一覧へ', headlines_path, class: 'btn btn-gray ' %>
+        </span>
+      <% end %>
+    </h2>
+  </div>
+
+  <% if request.variant.include? :mobile %>
+      <div class="row pt-20 mb-20 text-center">
+        <div class="description col-md-8">
+          <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+            <i class="fa fa-newspaper-o" aria-hidden="true"></i> <span class="c-primary">N</span>E<span class="c-primary">W</span>S
+          </span>
+        </div>
+      </div>
+      <%= link_to '企業情報', headlines_path(type: Headline::T_KIGYOU), class: 'btn btn-xs btn-info-inv' %>
+      <%= link_to 'イベント情報', headlines_path(type: Headline::T_EVENT), class: 'btn btn-xs btn-deeporange-inv' %>
+      <%= link_to 'システム情報', headlines_path(type: Headline::T_SYSTEM), class: 'btn btn-xs btn-success-inv' %>
+      <%= link_to 'その他', headlines_path(type: Headline::T_OTHERS), class: 'btn btn-xs btn-gray-inv' %>
+      <%= link_to '一覧へ', headlines_path, class: 'btn btn-gray ' %>
+  <% end %>
+
+  <div class="listview pt-30">
+    <div class="lv-body">
+      <% @headlines.each do |headline| %>
+        <%= link_to headline, class: 'lv-item z-depth-1 mb-10' do %>
+          <%= render 'headlines/media', headline: headline %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row visible-xs mt-20">
+    <div class="col-xs-10 col-xs-offset-1 text-center">
+      <%= link_to '一覧へ', headlines_path, class: 'btn btn-lg btn-block btn-info' %>
+    </div>
+  </div>
+</section>
+
+<% if !user_signed_in? && !Rails.env.test? %>
+  <%= jquery_view('views.users.registrations.FormView', turbolinks: true) %>
+<% end %>
+<% if Rails.env.production? && !user_signed_in? %>
+  <script>
+    fbq('track', 'ViewContent', {content_ids:['topRegistrationForm'], content_type:'product'});
+  </script>
+<% end %>

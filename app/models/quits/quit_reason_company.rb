@@ -1,0 +1,2 @@
+class QuitReasonCompany < QuitReason
+end

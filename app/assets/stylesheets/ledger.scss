@@ -1,0 +1,672 @@
+/*
+ *= require normalize.css/normalize.css
+ *= require_self
+ */
+@import "bootstrap/variables";
+@import "common/mixins";
+@import "common/generics";
+@import "bootstrap/grid";
+@import "bootstrap/utilities";
+@import "font-awesome";
+
+.fa-square-o:before {content: ''}
+.fa-check-square-o:before {content: ''}
+.fa-square-o
+{
+  background: url('checkbox-unchecked.svg') no-repeat;
+  height: 7px;
+  width: 7px;
+  display: inline-block;
+  padding: 0;
+}
+
+.fa-check-square-o
+{
+  background: url('checkbox-checked.svg') no-repeat;
+  height: 8px;
+  width: 8px;
+  display: inline-block;
+  padding: 0;
+}
+
+@page { margin: 0 }
+body { margin: 0 }
+.sheet {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+}
+
+/**
+ * 複数行の途中で改ページされたくない時に
+ * <div class="nobreak">
+ * で囲む
+ */
+.nobreak:before { clear:both !important; }
+.nobreak { page-break-inside: avoid !important; }
+
+/**
+ * 改ページするところに
+ * <div class="page-break"></div>
+ * を入れる
+ */
+.page-break {
+  page-break-after:always;
+  &:last-child {
+    page-break-after: avoid;
+  }
+}
+
+/** Paper sizes **/
+//body.A2           .sheet { width: 420mm; height: 594mm }
+body.A2           .sheet { width: 420mm }
+//body.A2.landscape .sheet { width: 594mm; height: 420mm }
+body.A2.landscape .sheet { width: 594mm }
+body.A3           .sheet { width: 297mm; height: 419mm }
+body.A3.landscape .sheet { width: 420mm; height: 296mm }
+body.A4           .sheet { width: 210mm; height: 296mm }
+body.A4.landscape .sheet { width: 297mm; height: 209mm }
+body.A5           .sheet { width: 148mm; height: 209mm }
+body.A5.landscape .sheet { width: 210mm; height: 147mm }
+
+/** Padding area **/
+.sheet.padding-10mm { padding: 10mm }
+.sheet.padding-15mm { padding: 15mm }
+.sheet.padding-20mm { padding: 20mm }
+.sheet.padding-25mm { padding: 25mm }
+
+/**
+ * 中間のPDFで
+ *   .padding-10mm -> .padding-lr10mm
+ * に変える
+ */
+.padding-lr10mm {
+  padding-top: 0mm;
+  padding-bottom: 0mm;
+  padding-right: 10mm;
+  padding-left: 10mm;
+}
+/**
+ * HEADER PDF
+ *   javascript number_pages() ->
+ *              <div class="pull-right">
+ *                Page : <span class="page"></span> / <span class="topage"></span>
+ *   <body class="order-record header-padding-10mm" onload="number_pages()">
+ */
+.header-padding-10mm {
+  padding-top: 10mm;
+  padding-bottom: 0mm;
+  padding-right: 10mm;
+  padding-left: 10mm;
+}
+/**
+ * FOOTER PDF
+ *   <body class="A2 landscape footer-padding-10mm">
+ */
+.footer-padding-10mm {
+  padding-top: 0mm;
+  padding-bottom: 10mm;
+  padding-right: 10mm;
+  padding-left: 10mm;
+}
+
+/** For screen preview **/
+//@media screen {
+//  body { background: #e0e0e0 }
+//  .sheet {
+//    background: white;
+//    box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
+//    margin: 5mm;
+//  }
+//}
+
+/** Fix for Chrome issue #273306 **/
+@media print {
+  body.A2.landscape          { width: 594mm }
+  body.A2, body.A3.landscape { width: 420mm }
+  body.A3, body.A4.landscape { width: 297mm }
+  body.A4, body.A5.landscape { width: 210mm }
+  body.A5                    { width: 148mm }
+}
+
+////
+body.A2.landscape {
+  font-size: 12px;
+}
+
+body.A4 {
+  font-size: 12px;
+}
+
+table {
+  th, td {
+    padding: 3px;
+
+    &.tx-rows {
+      padding: 0;
+
+      .tx-row {
+        padding: 3px;
+
+        &:not(:last-child) {
+          border-bottom: 1px dotted #111;
+        }
+      }
+    }
+  }
+  /* wickedhtmltopdf */
+  tr {
+    page-break-inside: avoid !important;
+  }
+  thead, tfoot {
+    //display: table-row-group; // これを活性化させるとページ最後のrowspanがかろうじて調整される(横線がガタガタだけど)。しかし、theadのページごとの繰り返しができなくなる。
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.text-danger {
+  color: #a94442;
+}
+.text-muted {
+  color: $text-muted;
+}
+
+.contact {
+  width: 400px;
+  height: 120px;
+  font-size: 15px;
+}
+
+.bank {
+  font-size: 15px;
+}
+
+.company-account,
+.daily-report,
+.student-account,
+.order-record,
+.order-report,
+.transaction-balance {
+  font-size: 8px;
+
+  h3 {
+    padding-top: 10px;
+    font-size: 11px;
+  }
+
+  thead {
+    display: table-header-group
+  }
+  tfoot {
+    display: table-row-group
+  }
+  tr {
+    page-break-inside: avoid
+  }
+
+  .note {
+    padding: 8px;
+    border: 1px solid #111;
+    float: left;
+
+    table {
+      th, td {
+        padding: 1px;
+      }
+    }
+  }
+  .recmatch-sign {
+    float: right;
+    min-height: 40px;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: right center;
+  }
+}
+
+.order-report {
+  font-size: 10px;
+
+  .table-md {
+    font-size: 12px;
+
+    th,
+    td {
+      padding: 5px 10px;
+    }
+  }
+
+  .table-lg {
+    font-size: 16px;
+
+    th,
+    td {
+      padding: 8px 16px;
+    }
+  }
+}
+
+.order-record {
+  .wait-order-title {
+    border: 1px solid #000;
+    padding: 0 60px;
+  }
+}
+
+.transaction-balance {
+  .title {
+    float: left;
+  }
+
+  .contact {
+    float: right;
+  }
+
+  table {
+    margin-bottom: 0;
+  }
+}
+
+.heading {
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 4px 32px;
+  float: left;
+  text-align: center;
+  border: 1px solid #000;
+}
+
+.with-border {
+  border: 1px solid #000;
+}
+
+.recmatch {
+  float: right;
+  width: 45%;
+  background-image: image-url('views/mypage/orders/recmatch_stamp.jpg');
+}
+
+.order-lost-report {
+  padding-top: 10mm;
+
+  .recmatch-sign {
+    float: right;
+    min-height: 50px;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    background-position: right center;
+  }
+}
+
+.quota-report {
+  .company-sign {
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: right center;
+  }
+}
+
+.student-card,
+.student-ledger {
+  font-size: 10px;
+
+  table {
+    table-layout: fixed;
+    th, td {
+      padding: 7px 6px 5px 6px;
+      word-wrap: break-word;
+    }
+    th {
+      background-color: #eee;
+    }
+  }
+  .line-height {
+    line-height: 1.3em;
+  }
+}
+
+.angel-contract {
+  font-size: 11px;
+  line-height: 15px;
+
+  dl {
+    margin-top: 0;
+    margin-bottom: $line-height-computed;
+  }
+  dt,
+  dd {
+    line-height: $line-height-base;
+  }
+  dd {
+    margin-left: 0;
+  }
+
+  .dl-section {
+    dt {
+      float: left;
+      clear: left;
+      text-align: right;
+      @include text-overflow;
+    }
+    dd {
+      @include clearfix;
+      margin-left: 16px;
+    }
+  }
+
+  @media (min-width: $dl-horizontal-breakpoint) {
+    dt {
+      float: left;
+      //width: ($dl-horizontal-offset - 20);
+      width: 520px;
+      clear: left;
+      text-align: right;
+      @include text-overflow;
+    }
+    dd {
+      //margin-left: $dl-horizontal-offset;
+      margin-left: 16px;
+    }
+  }
+
+  .dl-sign {
+    dt {
+      float: left;
+      clear: left;
+      text-align: right;
+      @include text-overflow;
+    }
+    dd {
+      @include clearfix;
+      margin-left: 48px;
+    }
+  }
+
+  .sign {
+    float: right;
+    margin-right: 30px;
+
+    .company-sign {
+      //margin-right: 16px;
+      min-height: 60px;
+      background-repeat: no-repeat;
+      background-size: 60px 60px;
+      background-position: right center;
+    }
+
+    .sign-student {
+      margin-right: 16px;
+    }
+  }
+}
+
+.angel-report {
+  font-size: 13px;
+
+
+  table {
+    &.company-sign {
+      background-repeat: no-repeat;
+      background-size: 60px 60px;
+      background-position: right bottom;
+
+      th {
+        text-align: right;
+      }
+    }
+
+    th {
+      font-weight: normal;
+      text-align: left;
+    }
+  }
+}
+
+.identification-record {
+  font-size: 9px;
+  padding-top: 5mm;
+
+  table {
+    th, td {
+      padding: 4px 6px 3px 6px;
+    }
+    th {
+      background-color: #eee;
+    }
+  }
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: -2em;
+    line-height: 16px;
+    list-style-type: none;
+    li:before {
+      content: '・';
+      margin-left: -1em;
+    }
+  }
+}
+
+.peps {
+  font-size: 10px;
+
+  table {
+    th, td {
+      padding: 3px 6px;
+
+    }
+    th {
+      background-color: #eee;
+    }
+  }
+}
+
+.student-notification {
+  .top {
+    padding-top: 20px;
+    padding-bottom: 30px;
+  }
+  .title {
+    text-align: center;
+    .in-title {
+      padding: 2px 10px;
+      border-bottom: double 3px;
+    }
+  }
+  .sub-title {
+    margin-top: 30px;
+    margin-left: 5%;
+  }
+  .numbering {
+    margin: 0;
+    counter-reset: number;
+  }
+  .numbering h3::before {
+    counter-increment: number;
+    content: "(" counter(number) ")";
+    padding-right: 5px;
+  }
+  table {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    tr {
+      td.high {
+        height: 5em;
+      }
+      th.middle {
+        height: 3em;
+      }
+      th.normal {
+        height: 2em;
+      }
+      th {
+        width: 40%;
+      }
+      th:first-child{
+        width: 20%;
+      }
+      th .normal-font {
+        font-weight: normal;
+        font-size: smaller;
+      }
+    }
+    tr.border-bottom {
+      td {
+        border-bottom: 0;
+      }
+    }
+    tr.border-top {
+      td {
+        border-top: 0;
+      }
+    }
+  }
+  .footer-note {
+    float: right;
+    .tyui {
+      p:before {
+        content: '※';
+      }
+    }
+    .main {
+      margin: 30px 0;
+      margin-left: 30px;
+      font-size: larger;
+    }
+    .date {
+      text-align: center;
+      .in-date {
+        padding: 2px 10px;
+        border-bottom: solid 1px;
+      }
+    }
+    .name {
+      margin-top: 50px;
+      font-size: larger;
+      border-bottom: solid 1px;
+    }
+  }
+
+  .footer {
+    width: 94%;
+
+    dl {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    dt,
+    dd {
+      line-height: 20px;
+    }
+    dd {
+      margin-left: 0;
+      text-decoration: underline;
+    }
+
+    .dl-horizontal {
+      dt {
+        float: left;
+        width: 180px;
+        clear: left;
+        text-align: right;
+        @include text-overflow;
+      }
+      dd {
+        @include clearfix;
+        margin-left: 210px;
+      }
+    }
+  }
+}
+
+.contract-before {
+  padding: 5mm;
+  line-height: 1.5em;
+
+  h3 {
+    text-decoration: underline;
+
+    .double-underline {
+      //padding-bottom: 1px;
+      border-bottom: solid 1px $text-color;
+    }
+  }
+
+  ol,
+  ul {
+    li {
+      padding-bottom: 8px;
+    }
+  }
+
+  .cloud-capital {
+    float: right;
+    width: 50%;
+  }
+
+  .frame {
+    border: 1px solid $text-color;
+    padding: 5mm;
+  }
+}
+
+.not-applicable-confirmation {
+  padding: 5mm;
+  line-height: 1.2em;
+
+  h4 {
+    text-decoration: underline;
+  }
+
+  table {
+    tr {
+      td {
+        vertical-align: top;
+      }
+    }
+  }
+
+  .frame {
+    border: 1px solid $text-color;
+    padding: 5mm;
+  }
+
+  .company-address {
+    float: right;
+  }
+}
+
+.stock-movement-statement {
+  padding: 5mm;
+  line-height: 1.2em;
+
+  table.statement {
+    tr {
+      td {
+        padding: 8px;
+      }
+    }
+  }
+
+  .frame {
+    border: 1px solid $text-color;
+    padding: 5mm;
+  }
+
+  .company-address {
+    float: right;
+  }
+}

@@ -1,0 +1,3 @@
+$("#lock_status").html("<%= escape_javascript(render('admin/students/lock_status')) %>");
+$("#edit_lock_reason_modal").modal("hide");
+notify('', 'ロックの理由を更新しました', 'top', 'center', '', 'success', '', '');

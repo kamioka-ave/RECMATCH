@@ -1,0 +1,49 @@
+<section class="content-header">
+  <h1>学生適合性確認変更確認</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">承認依頼中の学生適合性確認内容</h3>
+        </div>
+        <div class="box-body no-padding">
+          <%= render partial: "show", locals: {interview: @draft} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">現在の学生適合性確認内容</h3>
+        </div>
+        <div class="box-body no-padding">
+          <%= render partial: "show", locals: {interview: @interview} %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to "承認する", approve_admin_student_interview_path(@interview, student_id: @student), method: :put, class: "btn btn-primary" %>
+  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reject-modal">却下する</button>
+</section>
+
+<div class="modal" id="reject-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">却下する</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@interview, url: reject_admin_student_interview_path(student_id: @student)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.input :comment, :as => :text, label: "コメント", input_html: {rows: 10} %>
+          <%= f.button :submit, "却下する", class: "btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

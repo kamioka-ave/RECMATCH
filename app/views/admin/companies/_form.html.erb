@@ -1,0 +1,177 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">基本情報</h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.input :name %>
+        <%= f.input :name_kana %>
+        <%= f.input :website, placeholder: '無い場合は「なし」とご記入ください' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :president_last_name %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :president_first_name %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :president_last_name_kana %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :president_first_name_kana %>
+          </div>
+        </div>
+        <%= f.input :president_birth_on, start_year: Date.today.year - 100, end_year: Date.today.year - 15 %>
+        <%= f.input :zip_code, label: t('activerecord.attributes.company.zip_code') %>
+        <%= f.input :prefecture_id, collection: Prefecture.all, label_method: :name, value_method: :id %>
+        <%= f.input :city %>
+        <%= f.input :address1 %>
+        <%= f.input :address2 %>
+        <%= f.input :phone, as: 'string' %>
+        <div class="mt-10">
+          <%= f.label "1株あたりの払込額推移" %>
+          <div id="stock-company-form">
+            <%= f.fields_for :stock_histories do |builder| %>
+              <%= render 'admin/companies/stock_history_fields', f: builder %>
+            <% end %>
+            <%= render 'disable' unless @company.stock_histories.any? %>
+            <button class="btn btn-block btn-default add-stock-button" type="button">
+              <span><i class="fa fa-plus icon-sm mr-5"></i>入力欄を追加</span>
+            </button>
+          </div>
+          <script>
+            new views.admin.companies.StockHistory();
+          </script>
+          <%= hidden_field :company, :id %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <%= f.input :birth_on, as: :date_time_picker %>
+        <%= f.input :capital %>
+        <%= f.input :is_issuing, as: :radio_buttons %>
+        <%= f.input :is_restriction_of_transfer, as: :radio_buttons %>
+        <%= f.input :is_accounting, as: :radio_buttons %>
+        <%= f.input :is_audit, as: :radio_buttons %>
+        <%= f.input :has_board, as: :radio_buttons %>
+        <%= f.input :settlement_month, collection: (1..12).to_a.map { |i| [I18n.t('date.month_names')[i], i] } %>
+        <%= f.input :settlement_day, collection: (1..31).to_a %>
+        <%= f.association :business_type, as: 'radio_buttons' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">詳細情報</h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.input :board_members %>
+        <%= f.input :employees %>
+        <%= f.input :part_timers %>
+        <%= f.input :issuable_stocks %>
+        <%= f.input :issued_stock %>
+        <% if false %>
+          <div class="form-group">
+            <label class="control-label"> 過去１年での増資について</label>
+            <div>
+              <%= f.fields_for :company_capital_increases do |builder| %>
+                <%= render 'admin/companies/company_capital_increase_fields', f: builder %>
+              <% end %>
+              <div class="mb-5"></div>
+              <%= link_to_add_fields '追加', f, :company_capital_increases, 'admin/companies/' %>
+              <p class="help-block">※過去１年分の増資情報を入力してください</p>
+            </div>
+          </div>
+        <% end %>
+        <%= f.input :competitive_difference, input_html: {rows: 5} %>
+        <%= f.input :how_to_exit, collection: Company.names_with_how_to_exit, as: 'radio_buttons' %>
+        <%= f.input :how_to_exit_others, input_html: {rows: 5} %>
+        <%= f.input :target, input_html: {rows: 5} %>
+        <%= f.input :capital_ties, collection: Company.names_with_capital_ties, as: 'radio_buttons' %>
+        <%= f.input :capital_ties_note, input_html: {rows: 5} %>
+      </div>
+
+      <div class="col-md-6">
+        <%= f.input :business_summary %>
+        <%= f.input :hope %>
+        <%= f.input :business_shebang %>
+        <%= f.input :competitive_strength %>
+        <%= f.input :ceo_hopes, input_html: {rows: 5} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">添付情報</h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <%= f.input :image, hint: '拡張子がjpg、jpeg、gif、pngの画像ファイルを選択してください' %>
+    <%= f.hidden_field :image_cache %>
+  </div>
+</div>
+
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">開示設定</h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body no-padding">
+    <table class="table">
+      <tr>
+        <th width="240px"><%= t('activerecord.attributes.company.name') %></th>
+        <td><span class="mr-5"><%= f.check_box :name_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th>代表者氏名</th>
+        <td><span class="mr-5"><%= f.check_box :president_name_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.business_summary') %></th>
+        <td><span class="mr-5"><%= f.check_box :business_summary_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.hope') %></th>
+        <td><span class="mr-5"><%= f.check_box :hope_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.business_shebang') %></th>
+        <td><span class="mr-5"><%= f.check_box :business_shebang_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.competitive_strength') %></th>
+        <td><span class="mr-5"><%= f.check_box :competitive_strength_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.ceo_hopes') %></th>
+        <td><span class="mr-5"><%= f.check_box :ceo_hopes_reveal %></span>開示する</td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.company.image') %></th>
+        <td><span class="mr-5"><%= f.check_box :image_reveal %></span>開示する</td>
+      </tr>
+    </table>
+  </div>
+</div>

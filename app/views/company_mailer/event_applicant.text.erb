@@ -1,0 +1,8 @@
+<%= @company.name %> 様
+
+<%= @applicant.student.nickname %>より"<%= @applicant.event.title %>"への応募がございました。
+以下URLより応募にご返答ください。
+
+https://recmatch.co.jp/mypage/company/event_applicants
+
+<%= render partial: 'layouts/mailer_sign' %>

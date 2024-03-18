@@ -1,0 +1,16 @@
+<div class="card shadow-lg">
+  <div class="card-header">
+    <h2>退会について</h2>
+  </div>
+  <div class="card-body card-padding">
+    いつもrecmatchをご利用頂き、誠にありがとうございます。<br>
+    下記事項をご確認の上、退会手続きを行なって下さい。
+
+    <h2 class="text-danger">TODO:</h2>
+
+    <%= simple_form_for(@profile, url: mypage_leave_path) do |f| %>
+      <%= f.hidden_field :is_leave, value: true %>
+      <%= f.button :submit, "退会申請を行う", class: "btn-primary" %>
+    <% end %>
+  </div>
+</div>

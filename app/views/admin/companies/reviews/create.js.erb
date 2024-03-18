@@ -1,0 +1,3 @@
+$("#reviews").html("<%= escape_javascript(render(partial: 'list', locals: {company: @company, reviews: @reviews})) %>");
+$("#review-modal").modal('hide');
+notify('', '<%= CompanyReview.names_with_review_type.key(@review.review_type) %>をアップロードしました。', 'top', 'center', '', 'success', '', '');

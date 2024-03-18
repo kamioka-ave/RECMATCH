@@ -1,0 +1,85 @@
+<% content_for :title do %>新規登録<% end %>
+
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="text-left">
+          <span class="text-center" style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+            <i class="fa fa-user-plus" aria-hidden="true"></i> <%= @role == Role::R_COMPANY ? '企業ユーザ登録' : '学生ユーザー登録' %>
+          </span>
+        <h1>
+      </div>
+      <div class="card-body card-padding">
+        <div class="bg-info pt-20 mb-30" style="background-color: #fff;">
+          <% if @role == Role::R_COMPANY %>
+            学生の採用、イベント(会社説明会など)応募などRECMATCを利用されたい企業ユーザの登録ページです
+            メールアドレスは、会社でご使用のものをご登録ください。<br>
+            <span title="required">*</span> は入力必須項目です。
+            学生ご希望の方の登録は<%= link_to 'こちら', new_user_registration_path, class: 'text-danger' %>からご登録ください。
+          <% else %>
+            RECMATCHへ<%= @role == Role::R_COMPANY ? '企業ユーザ登録' : '学生ユーザ登録' %>を行います。
+            メールアドレスとパスワードを入力し<b>登録</b>にすすんでください。
+          <% end %>
+        </div>
+
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), wrapper: 'horizontal_form_2', html: {class: 'form-horizontal'}) do |f| %>
+          <div class="mb-30">
+            <%= f.error_notification %>
+            <%= f.hidden_field :role_ids, value: [@role] %>
+            <%= f.simple_fields_for :profile do |p| %>
+              <%= p.hidden_field :name %>
+            <% end %>
+            <div class="col-md-6">
+              <i class="fa fa-envelope-o" aria-hidden="true"> <b>メールアドレス</b></i>
+              <%= content_for(:email_hint) do %>
+                半角英数字で入力してください。<br>
+                ※キャリアメール(@docomo.ne.jpなど)は使用しないでください
+              <% end %>
+              <%= f.input :email, label: false, input_wrapper_html: { class: "col-xs-10" }, hint: content_for(:email_hint) %>
+            </div>
+            <div class="col-md-6">
+            <% if resource.password.present? %>
+              <%= f.hidden_field :password, input_wrapper_html: { class: "col-xs-10" } %>
+              <%= f.hidden_field :password_confirmation %>
+            <% else %>
+              <%= content_for(:password_hint) do %>
+                <div class="checkbox">
+                  <label>
+                    <input id="display_password" type="checkbox">
+                    <i class="input-helper"></i>
+                    パスワードを表示する
+                  </label>
+                </div>
+                <p class="help-block">
+                  半角英数字<%= "#{@minimum_password_length}文字以上で入力してください。" if @minimum_password_length %>
+                </p>
+              <% end %>
+              <i class="fa fa-key" aria-hidden="true"><b>パスワード</b></i> <%= f.input :password, label: false, hint: content_for(:password_hint) %>
+            <% end %>
+            </div>
+
+
+            <%= f.simple_fields_for :profile do |p| %>
+              <%= p.input :receive_notification, wrapper: 'horizontal_boolean_2' %>
+            <% end %>
+            <% if @role == Role::R_COMPANY %>
+              <%= f.input :terms, as: :boolean, label: ('<a href="/kiyaku" target="_blank" id="terms" class="text-info">利用規約</a>に同意します').html_safe, required: true, wrapper: 'horizontal_boolean_2' %>
+            <% else %>
+              <%= f.input :terms, as: :boolean, label: ('<a href="/kiyaku" target="_blank" id="terms" class="text-info">利用規約</a>に同意します').html_safe, required: true, wrapper: 'horizontal_boolean_2' %>
+            <% end %>
+          </div>
+          <div class="row mb-20">
+            <div class="col-md-offset-2 col-md-6">
+              <%= f.button :submit, '登録', class: 'btn-block btn-lg btn-primary-o' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% unless Rails.env.test? %>
+  <%= jquery_view('views.users.registrations.FormView', turbolinks: true) %>
+<% end %>

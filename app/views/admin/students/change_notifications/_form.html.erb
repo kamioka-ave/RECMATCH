@@ -1,0 +1,18 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">変更届の登録</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@change_notification, url: admin_student_change_notifications_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :student_id, value: @student.id %>
+        <%= f.hidden_field :status, value: Student::ChangeNotification::S_CONFIRMED %>
+        <%= f.input :notified_at %>
+        <%= f.input :file %>
+        <%= f.button :submit, '登録する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

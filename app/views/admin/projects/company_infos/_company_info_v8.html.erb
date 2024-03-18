@@ -1,0 +1,137 @@
+<ol>
+  <li>
+    金融商品取引契約の概要<br>
+    株式投資型クラウドファンディング業務として行う非上場有価証券の募集の取扱い<br>
+    ※	詳しくは契約締結前交付書面「ファンディング・プロジェクトについて」をご確認ください。
+  </li>
+  <li>
+    募集株式の発行者の商号及び住所、資本金等<br>
+    <%= @project.company.name %><br>
+    <%= @project.company.address %>
+    <table>
+      <tr>
+        <td>資本金：</td>
+        <td><%= @project.capital.to_s(:delimited) if @project.capital.present? %>円（<%= l(@project.capital_submitted_on) if @project.capital_submitted_on.present? %>現在）</td>
+      </tr>
+      <tr>
+        <td>発行済株式総数：</td>
+        <% if @project.id == 22 %>
+          <td><%= @project.issued_stock.to_s(:delimited) if @project.issued_stock.present? %>株（2018年2月9日現在）</td>
+        <% else %>
+          <td><%= @project.issued_stock.to_s(:delimited) if @project.issued_stock.present? %>株（<%= l(@project.transcript_submitted_on) if @project.transcript_submitted_on.present? %>現在）</td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>発行可能株式総数：</td>
+        <td><%= @project.issuable_stocks.to_s(:delimited) if @project.issuable_stocks.present? %>株</td>
+      </tr>
+      <tr>
+        <td>設立日：</td>
+        <td><%= l(@project.company.birth_on) if @project.company.birth_on.present? %></td>
+      </tr>
+      <tr>
+        <td>決算日：</td>
+        <td><%= "#{@project.company.settlement_month}月#{@project.company.settlement_day}日" if @project.company.settlement_month.present? && @project.company.settlement_day.present? %></td>
+      </tr>
+    </table>
+  </li>
+  <li>
+    募集株式の発行者の代表者<br>
+    <% @project.company_presidents.each do |president| %>
+      <%= "#{president.position} #{president.full_name}" %><br>
+    <% end %>
+  </li>
+  <% if request.fullpath.include?('project_drafts') || (@project.status == Project::S_IN_PROGRESS || @project.status == Project::S_SUCCEEDED) %>
+    <li>
+      募集株式の種類及び数（上限）<br>
+      普通株式　　　　　<%= (@project.solicit_limit / @project.stock_price).to_s(:delimited) %>株
+    </li>
+    <li>
+      募集株式の払込金額<br>
+      １株あたり　　　  <%= @project.stock_price.to_s(:delimited) %>円
+    </li>
+    <li>
+      資金使途<br>
+      <%= @project.how_to_use.html_safe if @project.how_to_use.present? %>
+    </li>
+    <li>
+      投資金額のコースおよび株数<br>
+      <% @project.products.each do |product| %>
+        <%= "#{product.title}    (#{product.stocks}株)" %><br>
+      <% end %>
+    </li>
+    <li>
+      申込期間<br>
+      <%= "#{l(@project.start_on)}〜#{l(@project.finish_at, format: :short)}" %>
+    </li>
+    <li>
+      目標募集額<br>
+      <%= "#{@project.solicit.to_s(:delimited)}円（上限応募額　#{@project.solicit_limit.to_s(:delimited)}円）" %>
+    </li>
+    <li>
+      払込期間<br>
+      <% if @project.deliv_start_changed_on.present? && @project.deliv_end_changed_on.present? %>
+        <%= "#{l(@project.deliv_start_changed_on)}〜#{l(@project.deliv_end_changed_on)}" %><br>
+      <% else %>
+        <%= "#{l(@project.deliv_start_on)}〜#{l(@project.deliv_end_on)}" %><br>
+      <% end %>
+      上記期間は、会社法第199条第1項第4号の払込期間、すなわち、お客様にお振込みいただいて当社がお預かりしている応募代金を、最終的に当社から発行者に払い込む期間の記載です。詳しくは契約締結前交付書面の「ファンディング・プロジェクトの成立日・約定日及びお振込みについて」をご確認ください。
+    </li>
+    <li>
+      増加する資本金及び資本準備金
+      <table>
+        <tr>
+          <td class="pr-10">増加する資本金の額</td>
+          <td class="pr-10">1株あたり</td>
+          <td class="text-right"><%= (@project.stock_price - @project.stock_price_for_reserve).to_s(:delimited) if @project.stock_price_for_reserve.present? %>円</td>
+        </tr>
+        <tr>
+          <td class="pr-10">増加する資本準備金の額</td>
+          <td class="pr-10">1株あたり</td>
+          <td class="text-right"><%= @project.stock_price_for_reserve.to_s(:delimited) if @project.stock_price_for_reserve.present? %>円</td>
+        </tr>
+      </table>
+    </li>
+    <li>
+      募集株式の譲渡制限<br>
+      <%= @project.transfer_restriction %>
+    </li>
+    <li>
+      募集株式の発行者の概況<br>
+      <%= @project.company_summery.html_safe if @project.company_summery.present? %>
+    </li>
+    <li>
+      公認会計士又は監査法人による監査<br>
+      発行者の財務情報について、公認会計士又は監査法人による監査は行われていません。
+    </li>
+    <li>
+      発行者における株主管理に関する事項<br>
+      <%= @project.stockholder_management.html_safe if @project.stockholder_management.present? %><br>
+      【連絡先】<br>
+      電話番号：<%= @project.support_phone if @project.support_phone.present? %><br>
+      メールアドレス：<%= @project.support_email if @project.support_email.present? %>
+    </li>
+    <li>
+      発行者の事業の状況についての定期的な情報の提供方法<br>
+      当社Webサイト上のマイページに情報を掲載します。
+    </li>
+    <% if include_business_plan %>
+      <li>
+        事業計画の内容<br>
+        【当該資金調達によって可能となる事業計画】
+        <div class="mb-10">
+          <%= @project.business_plan.html_safe if @project.business_plan.present? %>
+        </div>
+        なお、売上高成長率の予想は、契約締結前交付書面の別紙1-1、1-2をご参照ください。
+      </li>
+    <% end %>
+  <% else %>
+    <li>
+      発行者における株主管理に関する事項<br>
+      <%= @project.stockholder_management.html_safe if @project.stockholder_management.present? %><br>
+      【連絡先】<br>
+      電話番号：<%= @project.support_phone if @project.support_phone.present? %><br>
+      メールアドレス：<%= @project.support_email if @project.support_email.present? %>
+    </li>
+  <% end %>
+</ol>

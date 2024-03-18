@@ -1,0 +1,176 @@
+<% content_for(:page_classes) { 'mypage companies wizard confirms show' } %>
+
+<div class="my-companies-wizard row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'mypage/companies/wizard/progress', { step: 3 } %>
+      </div>
+      <div class="card-body card-padding z-depth-1">
+        <div class="bg-info p-20 mb-15" style="background-color:#FFFFBB;color:#999999;">
+          以下の内容で企業の登録を行います。<br>
+          内容に誤りがなければ、「完了」ボタンを押して、企業の登録を完了させてください。
+        </div>
+
+        <%= simple_form_for(@company, url: mypage_company_wizard_confirm_path) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :status, value: Company::S_APPLIED %>
+
+          <div class="mb-50 table-responsive">
+            <h3>基本情報</h3>
+            <table class="table">
+              <tr>
+                <th width="300px">
+                  <%= t('activerecord.attributes.company.name') %>
+                </th>
+                <td><%= @company.name %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.name_kana') %></th>
+                <td><%= @company.name_kana %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.website') %></th>
+                <td><%= @company.website %></td>
+              </tr>
+              <tr>
+                <th>
+                  代表者氏名
+                </th>
+                <td><%= @company.president_name %></td>
+              </tr>
+              <tr>
+                <th>代表者氏名（フリガナ）</th>
+                <td><%= @company.president_name_kana %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.president_birth_on') %></th>
+                <td><%= l(@company.president_birth_on) %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.zip_code') %></th>
+                <td><%= @company.zip_code %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.prefecture_id') %></th>
+                <td><%= @company.prefecture.name if @company.prefecture.present? %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.city') %></th>
+                <td><%= @company.city %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.address1') %></th>
+                <td><%= @company.address1 %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.address2') %></th>
+                <td><%= @company.address2 %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.phone') %></th>
+                <td><%= @company.phone %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.birth_on') %></th>
+                <td><%= l(@company.birth_on) if @company.birth_on.present? %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.business_type') %></th>
+                <td><%= @company.business_type.name if @company.business_type.present? %></td>
+              </tr>
+              <tr>
+                <th width="300px">
+                  <%= t('activerecord.attributes.company.image') %>
+                </th>
+                <td>
+                  <% if @company.image.present? %>
+                    <%= image_tag(@company.image.thumb.url, width: 192)  %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+
+            <% if false %>
+            <h3>詳細情報</h3>
+            <table class="table">
+              <tr>
+                <th><%= t('activerecord.attributes.company.employees') %></th>
+                <td><%= "#{@company.employees}名" if @company.employees.present? %></td>
+              </tr>
+              <tr>
+                <th width="300px"><%= t('activerecord.attributes.company.this_year_employments') %>
+                </th>
+                <td><%= "#{@company.this_year_employments}名" %></td>
+              </tr>
+              <tr>
+                <th width="300px"><%= t('activerecord.attributes.company.last_year_employments') %>
+                </th>
+                <td><%= "#{@company.last_year_employments}名" %></td>
+              </tr>
+              <tr>
+                <th>
+                  <%= t('activerecord.attributes.company.business_summary') %>
+                </th>
+                <td><%= @company.business_summary.html_safe %></td>
+              </tr>
+              <tr>
+                <th>
+                  <%= t('activerecord.attributes.company.hope') %>
+                </th>
+                <td><%= @company.hope.html_safe %></td>
+              </tr>
+              <tr>
+                <th>
+                  <%= t('activerecord.attributes.company.business_shebang') %>
+                </th>
+                <td><%= @company.business_shebang.html_safe %></td>
+              </tr>
+              <tr>
+                <th>
+                  <%= t('activerecord.attributes.company.competitive_strength') %>
+                </th>
+                <td><%= simple_format(@company.competitive_strength) %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.competitive_difference') %></th>
+                <td><%= simple_format(@company.competitive_difference) %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.company.target') %></th>
+                <td><%= simple_format(@company.target) %></td>
+              </tr>
+              <tr>
+                <th>
+                  <%= t('activerecord.attributes.company.ceo_hopes') %>
+                </th>
+                <td><%= simple_format(@company.ceo_hopes) if @company.ceo_hopes.present? %></td>
+              </tr>
+            </table>
+            <% end %>
+
+
+
+          </div>
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '前へ', mypage_company_wizard_basic_path, class: 'btn btn-lg btn-info-o' %>
+            </div>
+            <div class="pull-right">
+              <%= f.button :submit, '完了', id: 'reslSubmit', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.companies.wizard.confirms.ShowView',
+    turbolinks: true,
+    displayConfirmationAlert: request.referer == mypage_company_wizard_confirm_url && current_user.confirmed_at.nil?
+  )
+%>

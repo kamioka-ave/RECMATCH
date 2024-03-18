@@ -1,0 +1,40 @@
+<% content_for(:page_classes) { 'mypage companies funding agreements show' } %>
+
+<div class="row">
+  <div class="col-md-offset-3 col-md-6">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1><span><i class="fa fa-plus-square-o" aria-hidden="true"></i> イベント告知ページ作成のお申込み</span></h1>
+      </div>
+
+      <div class="card-body card-padding">
+        <div class="tab-content">
+          <%= simple_form_for(EventAgreement.new, url: mypage_company_eventorder_agreement_path, method: 'patch') do |f| %>
+            <%= f.error_notification %>
+            <div class="mb-30 ml-40">
+              <%= content_for(:agree_with_clause_label) do %>
+                <%= link_to 'RECMATCH利用規約', kiyaku_pages_path, target: '_blank', id: 'agree_with_clause', class: 'text-info' %>の記載内容を確認しました
+              <% end %>
+              <%= f.input :agree_with_clause, label: content_for(:agree_with_clause_label), required: true %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <%= f.button :submit, '同意して申込む', class: 'btn-block btn-lg btn-info' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.companies.funding.agreements.FormView',
+    turbolinks: true,
+    isClauseOpened: @company.errors.size != 0,
+    isReviewOpened: @company.errors.size != 0
+  )
+%>

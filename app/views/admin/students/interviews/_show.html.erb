@@ -1,0 +1,97 @@
+<table class="table">
+  <tr class="bg-warning">
+    <th colspan="2">収入・資産状況</th>
+  </tr>
+  <tr>
+    <th width="260px"><%= t('activerecord.attributes.student_interview.income_resource') %></th>
+    <td class="<%= 'text-danger' if interview.income_resource == StudentInterview::IR_PENSION %>"><%= StudentInterview.names_with_income_resource.key(interview.income_resource) %></td>
+  </tr>
+  <% if interview.income_resource == StudentInterview::IR_OTHER %>
+    <tr>
+      <th width="260px"><%= t('activerecord.attributes.student_interview.income_resource_other') %></th>
+      <td><%= interview.income_resource_other %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.income') %></th>
+    <td class="<%= 'text-danger' if interview.income <= 1 %>"><%= StudentInterview.names_with_income.key(interview.income) %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.assets') %></th>
+    <td class="<%= 'text-danger' if interview.assets == 0 %>"><%= StudentInterview.names_with_assets.key(interview.assets) %></td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr class="bg-warning">
+    <th colspan="2">投資経験</th>
+  </tr>
+  <tr>
+    <th width="260px"><%= t('activerecord.attributes.student_interview.exp_stock') %></th>
+    <td class="<%= 'text-danger' if interview.exp_stock == 0 %>"><%= interview.exp_stock %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_bond') %></th>
+    <td class="<%= 'text-danger' if interview.exp_bond == 0 %>"><%= interview.exp_bond %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_trust_fund') %></th>
+    <td class="<%= 'text-danger' if interview.exp_trust_fund == 0 %>"><%= interview.exp_trust_fund %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_commodity_futures') %></th>
+    <td class="<%= 'text-danger' if interview.exp_commodity_futures == 0 %>"><%= interview.exp_commodity_futures %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_foreign_currency_saving') %></th>
+    <td class="<%= 'text-danger' if interview.exp_foreign_currency_saving == 0 %>"><%= interview.exp_foreign_currency_saving %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_foreign_exchange') %></th>
+    <td class="<%= 'text-danger' if interview.exp_foreign_exchange == 0 %>"><%= interview.exp_foreign_exchange %>年</td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.exp_account') %></th>
+    <td class="<%= 'text-danger' if interview.exp_account == 0 %>"><%= interview.exp_account %>年</td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr class="bg-warning">
+    <th colspan="2">投資に関して</th>
+  </tr>
+  <tr>
+    <th width="260px"><%= t('activerecord.attributes.student_interview.capital_character') %></th>
+    <td class="<%= 'text-danger' if interview.capital_character != StudentInterview::CC_EXTRA %>">
+      <%= StudentInterview.names_with_capital_character.key(interview.capital_character) %>
+    </td>
+  </tr>
+  <% if interview.capital_character == StudentInterview::CC_DETERMINED || interview.capital_character == StudentInterview::CC_OTHERS %>
+    <tr>
+      <th><%= t('activerecord.attributes.student_interview.capital_character_note') %></th>
+      <td><%= simple_format(interview.capital_character_note) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.purpose') %></th>
+    <td><%= StudentInterview.names_with_purpose.key(interview.purpose) %></td>
+  </tr>
+  <% if interview.purpose == StudentInterview::P_OTHERS %>
+    <tr>
+      <th><%= t('activerecord.attributes.student_interview.purpose_note') %></th>
+      <td><%= simple_format(interview.purpose_note) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.student_interests') %></th>
+    <td>
+      <% interview.student_interests.each do |i|  %>
+        <span class="label label-default"><%= i.name %></span>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_interview.how_to_know') %></th>
+    <td><%= StudentInterview.names_with_how_to_know.key(interview.how_to_know) %></td>
+  </tr>
+</table>

@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">学生紹介文を<%= @student.introduce.present? ? '編集' : '登録' %></h4>
+      <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@student, url: admin_student_introduce_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= content_for(:placeholder) do %><%= render 'placeholder' %><% end %>
+        <%= f.input :introduce, label: '本文', input_html: { rows: 10 }, placeholder: content_for(:placeholder) %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

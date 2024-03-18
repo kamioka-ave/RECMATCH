@@ -1,0 +1,71 @@
+<section class="content-header">
+  <h1>採用募集ページ一覧</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= sort_link(@q, :project_id, 'ID') %></th>
+            <th><%= sort_link(@q, :company_name, '会社名') %></th>
+            <th><%= sort_link(@q, :name, 'ページ名') %></th>
+            <th><%= sort_link(@q, :status, '状況') %></th>
+            <th><%= sort_link(@q, :updated_at, '更新日') %></th>
+            <th><%= sort_link(@q, :end_at, '締切日') %></th>
+            <th>イベント</th>
+            <th><%= sort_link(@q, :project_applicants_count, '選考中の学生') %></th>
+            <th><%= sort_link(@q, :project_draft_status, 'ドラフト状況') %></th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @drafts.each do |p| %>
+            <tr>
+              <td><%= p.project.id if p.project.present? %></td>
+              <td><%= link_to p.company.name, admin_company_path(p.company) %></td>
+              <td>
+                <% if p.project.present? %>
+                  <%= link_to p.name.truncate(16), p.project %>
+                <% else %>
+                  <%= p.name.truncate(16) %>
+                <% end %>
+              </td>
+              <td><%= p.project.present? ? Project.names_with_status.key(p.project.status) : Project.names_with_status.key(p.status) %></td>
+              <td><%= show_datetime(p.updated_at) %></td>
+              <td><%= show_datetime(p.end_at, false) if p.end_at.present? %></td>
+              <td>
+                <% Event.where(company_id: p.company).each do |e| %>
+                  <%= link_to e.title, admin_event_path(e) %>
+                <% end %>
+              </td>
+              <td><%= p.project.applicants_count if p.project.present? %></td>
+              <td>
+                <% if p.status == ProjectDraft::S_JUDGE && can?(:approve, ProjectDraft) %>
+                  <%= link_to '承認待ち', confirm_admin_project_draft_path(p), class: 'btn btn-xs btn-warning' %>
+                <% else %>
+                  <%= ProjectDraft.names_with_status.key(p.status) %>
+                <% end %>
+              </td>
+              <td>
+                <% if p.project.present? && !current_admin.has_role?(:ir_checker) %>
+                  <%= link_to 'プレビュー', project_path(p.project), class: 'btn btn-xs btn-info', target: '_blank' %>
+                <% end %>
+                <% if can?(:update, ProjectDraft) %>
+                  <%= link_to '確認', edit_admin_project_draft_path(p), class: 'btn btn-xs btn-warning' %>
+                <% end %>
+                <% if p.project.blank? && can?(:destroy, ProjectDraft) %>
+                  <%= link_to '削除', admin_project_draft_path(p), method: :delete, class: 'btn btn-xs btn-danger', data: {confirm: '削除しますか？' } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= paginate @drafts, theme: 'admin' %>
+    </div>
+  </div>
+</section>

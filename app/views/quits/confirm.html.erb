@@ -1,0 +1,42 @@
+<div class="card <%= request.variant.include?(:mobile) ? '': 'z-depth-1' %>">
+  <div class="card-body text-center pt-20 pb-20">
+    <h4 class="card-title">
+      <span style="border-bottom: solid 5px #000080;padding:10px;font-size:20px;">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>退会申請
+      </span>
+    </h4>
+    <%= simple_form_for(@quit, url: quit_path) do |f| %>
+      <%#= f.hidden_field :quit_reason_ids, value: @quit.quit_reasons.map { |r| r.id.to_s } %>
+      <% @quit.quit_reasons.each do |r| %>
+        <%= f.hidden_field :quit_reason_ids, multiple: true, value: r.id %>
+      <% end %>
+      <%= f.hidden_field :note, value: @quit.note %>
+
+      <div class="pt-20 mb-20">
+        退会を行った時点で、アカウントを復活させることが出来なくなります。<br>
+        退会手続きを実行してよろしいでしょうか？
+      </div>
+
+      <div class="widget pt-10 pb-10" style="background:#FFFFCC">
+        <h5>アンケートの回答内容</h5>
+        <% @quit.quit_reasons.each do |r| %>
+          <b><%= r.name %></b><br>
+        <% end %>
+        <% if @quit.note.present? %>
+          <div class="note">
+            <b><%= simple_format(@quit.note) %></b>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="clearfix">
+        <div class="float-left">
+          <%= link_to 'マイページへ戻る', mypage_root_path, class: 'btn btn-lg btn-light' %>
+        </div>
+        <div class="float-right">
+          <%= f.button :submit, '退会する', class: 'btn-lg btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

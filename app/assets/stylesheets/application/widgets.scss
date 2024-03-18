@@ -1,0 +1,130 @@
+/*
+ * Profile View
+ */
+.profile-view {
+  text-align: center;
+  background-color: #ffffff;
+  .pv-header {
+    position: relative;
+    height: 145px;
+    width: 100%;
+
+    & > .pv-main {
+      border-radius: 50%;
+      width: 130px;
+      position: absolute;
+      height: 130px;
+      bottom: -30px;
+      left: 50%;
+      margin-left: -65px;
+      @include transition(all);
+      @include transition-duration(300ms);
+    }
+  }
+
+  .pv-body {
+    margin-top: 55px;
+    padding: 0 20px 20px;
+
+    & > h2 {
+      margin: 0;
+      line-height: 100%;
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    & > small {
+      display: block;
+      color: #8E8E8E;
+      margin: 10px 0 15px;
+
+      & > span {
+        & > p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    .pv-contact,
+    .pv-follow {
+      padding: 0;
+      list-style: none;
+
+      & > li {
+        display: inline-block;
+      }
+    }
+
+    .pv-follow {
+      margin: 20px -20px;
+      padding: 10px;
+      background-color: #F7F7F7;
+      border-top: 1px solid #EEE;
+      border-bottom: 1px solid #EEE;
+
+      & > li {
+        padding: 0 10px;
+      }
+    }
+
+    .pv-contact {
+      & > li {
+        margin: 0 5px;
+
+        & > .zmdi {
+          line-height: 100%;
+          vertical-align: text-bottom;
+          font-size: 22px;
+        }
+      }
+    }
+
+    .pv-follow-btn {
+      padding: 7px 20px;
+      background: $blue;
+      color: #FFF;
+      border-radius: 3px;
+      text-transform: uppercase;
+      display: block;
+      @include transition(all);
+      @include transition-duration(300ms);
+
+      &:hover {
+        background: darken($cyan, 5%);
+      }
+    }
+  }
+
+  &:hover {
+    .pv-main {
+      @include scale(1.2);
+    }
+  }
+}
+
+/*
+ * Picture List
+ */
+.picture-list {
+  .pl-body {
+    padding: 2px;
+
+    [class*="col-"] {
+      padding: 0;
+      padding: 2px;
+
+      & > a {
+        display: block;
+        @include hover-pop(rgba(0,0,0,0.3));
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    @include clearfix();
+  }
+}
+

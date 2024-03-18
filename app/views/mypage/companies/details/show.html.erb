@@ -1,0 +1,23 @@
+<% content_for(:page_classes) { 'mypage companies details show' } %>
+
+<div class="card z-depth-1">
+  <div class="card-header text-center">
+    <h3><span><i class="fa fa-wrench" aria-hidden="true"></i> 詳細情報の編集</span></h3>
+  </div>
+  <div class="card-body card-padding">
+    <div class="p-20 m-b-30 text-center" style="background-color:#FFFFBB;color:#999999;">
+      <span title="required">*</span> 印は必須入力項目です<br>
+      入力後、更新ボタンを押してください
+    </div>
+    <%= simple_form_for(@company, url: mypage_company_detail_path, wrapper: 'horizontal_form', html: {class: 'form-horizontal'}) do |f| %>
+      <%= f.error_notification %>
+      <%= f.hidden_field :user_id %>
+      <%= render 'form', f: f %>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-5">
+          <%= f.button :submit, class: 'btn-lg btn-info' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

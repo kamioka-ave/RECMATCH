@@ -1,0 +1,210 @@
+<% content_for(:page_classes) { 'projects index' } %>
+<% content_for(:title) { '企業を探す' } %>
+
+<div class="content-wrapper projects">
+  <div class="container">
+    <div class="clearfix mb-10">
+      <div class="pull-left">
+        <h1><span style="border-bottom: solid 3px #000080;"><i class="fa fa-id-card-o" aria-hidden="true"></i> 企業を探す</span></h1>
+      </div>
+      <div class="pull-right ">
+        <small class="text-muted"><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+      </div>
+    </div>
+    <% if !request.variant.include?(:mobile) %>
+      <% if @new_arrivals.present? && !@has_condition %>
+        <div class="mb-45 text-center">
+          <h4><i class="fa fa-link mr-5 mb-20"></i> 注目の新着企業</h4>
+          <div class="row">
+            <% @new_arrivals.each do |new_arrival| %>
+              <div class="col-md-3">
+                <%= render 'projects/thumb', project: new_arrival %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="mb-25"></div>
+      <% end %>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-3 menu">
+        <div class="mb-20 z-depth-1" style="border-radius: 5px 5px 5px 5px;">
+          <%= form_tag(projects_path, method: :get, enforce_utf8: false) do %>
+            <div class="input-group">
+              <input type="text" class="form-control" name="keyword" style="height:40px;" maxlength="50" value="<%= @keyword if @keyword.present? %>" placeholder="キーワード">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" style="height:40px;">
+                  <span class="glyphicon glyphicon-search glyphicon-20"></span>
+                </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% if request.variant.include?(:mobile) %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <button type="button" data-toggle="collapse" data-target="#collapseProject" aria-expanded="false" aria-controls="collapseProject" id="collapseProject-btn">
+            <h2><i class="fa fa-search mr-10"></i>オファー受付期間検索
+              <i class="fa fa-angle-double-down fa-1x" aria-hidden="true"></i>
+            </h2>
+            </button>
+          </div>
+          <div class="card-body collapse" id="collapseProject" aria-expanded="false">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'in_progress' %>">
+                <%= link_to projects_path(order: 'in_progress') do %>
+                  オファー受付中の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'limit' %>">
+                <%= link_to projects_path(order: 'limit') do %>
+                  オファー受付が終了間近の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'new' %>">
+                <%= link_to projects_path(order: 'new') do %>
+                  新着の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% else %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <h2><i class="fa fa-search mr-10"></i>オファー受付期間検索</h2>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'in_progress' %>">
+                <%= link_to projects_path(order: 'in_progress') do %>
+                  オファー受付中の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'limit' %>">
+                <%= link_to projects_path(order: 'limit') do %>
+                  オファー受付が終了間近の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'new' %>">
+                <%= link_to projects_path(order: 'new') do %>
+                  新着の企業 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% end %>
+
+        <% if request.variant.include?(:mobile) %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <button type="button" data-toggle="collapse" data-target="#collapseIndustry" aria-expanded="false" aria-controls="collapseIndustry" id="collapseIndustry-btn">
+            <h2><i class="fa fa-industry mr-10"></i>業界検索
+              <i class="fa fa-angle-double-down fa-1x" aria-hidden="true"></i>
+            </h2>
+            </button>
+          </div>
+          <div class="card-body collapse" id="collapseIndustry" aria-expanded="false">
+            <ul class="nav nav-pills nav-stacked">
+              <% CompanyBusinessType.all.each do |c| %>
+                <li class="<%= 'active' if params.has_key?('category') && params[:category] == c.id.to_s %>">
+                  <%= link_to projects_path(category: c.id) do %>
+                    <%= c.name %> <i class="fa fa-angle-right"></i>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <% else %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <h2><i class="fa fa-industry mr-10"></i>業界検索</h2>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-pills nav-stacked">
+              <% CompanyBusinessType.all.each do |c| %>
+                <li class="<%= 'active' if params.has_key?('category') && params[:category] == c.id.to_s %>">
+                  <%= link_to projects_path(category: c.id) do %>
+                    <%= c.name %> <i class="fa fa-angle-right"></i>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <% if request.variant.include?(:mobile) %>
+        <% if @new_arrivals.present? && !@has_condition %>
+          <div class="pt-20 mb-45 text-center">
+            <h4><i class="fa fa-link mr-5 mb-20"></i> 注目の新着企業</h4>
+            <div class="row">
+              <% @new_arrivals.each do |new_arrival| %>
+                <div class="col-md-3">
+                  <%= render 'projects/thumb', project: new_arrival %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="mb-25"></div>
+        <% end %>
+      <% end %>
+      <div class="col-md-9 text-center">
+        <% if @keyword.present? %>
+          <h4>"<%= @keyword %>"の検索結果<br></h4>
+          <% if @keyword.present? && @projects.blank? %>
+            <h4 class="text-center">０件</h4>
+          <% end %>
+        <% elsif @keyword.nil? && @projects.size > 0 %>
+          <h4>企業一覧<br></h4>
+        <% end %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <% @projects.each.with_index(1) do |project, i| %>
+                <div class="col-md-4">
+                  <%= render 'projects/thumb', project: project %>
+                </div>
+                <% if i%3 == 0 %>
+                  </div>
+                  <div class="row">
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div
+        <div class="text-center">
+          <%= paginate(@projects) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#collapseProject-btn').on('click',function(){
+    var chack = $("#collapseProject").attr("aria-expanded")
+    if( chack == "false" ){
+      $('button#collapseProject-btn i.fa-angle-double-down').addClass('fa-angle-double-up');
+      $('button#collapseProject-btn i.fa-angle-double-down').removeClass('fa-angle-double-down');
+    }else{
+      $('button#collapseProject-btn i.fa-angle-double-up').addClass('fa-angle-double-down');
+      $('button#collapseProject-btn i.fa-angle-double-up').removeClass('fa-angle-double-up');
+    }
+  });
+  $('#collapseIndustry-btn').on('click',function(){
+    var chack = $("#collapseIndustry").attr("aria-expanded")
+    if( chack == "false" ){
+      $('button#collapseIndustry-btn i.fa-angle-double-down').addClass('fa-angle-double-up');
+      $('button#collapseIndustry-btn i.fa-angle-double-down').removeClass('fa-angle-double-down');
+    }else{
+      $('button#collapseIndustry-btn i.fa-angle-double-up').addClass('fa-angle-double-down');
+      $('button#collapseIndustry-btn i.fa-angle-double-up').removeClass('fa-angle-double-up');
+    }
+  });
+</script>

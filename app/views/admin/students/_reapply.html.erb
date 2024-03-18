@@ -1,0 +1,9 @@
+<% if student.status == Student::S_REJECTED %>
+  <% if student.enable_reapply %>
+    <span class="mr-5">　可</span>
+    <%= link_to '切替', disable_reapply_admin_student_path(student), method: :put, remote: true, class: 'btn btn-xs btn-warning' %>
+  <% else %>
+    <span class="mr-5">不可</span>
+    <%= link_to '切替', enable_reapply_admin_student_path(student), method: :put, remote: true, class: 'btn btn-xs btn-warning' %>
+  <% end %>
+<% end %>

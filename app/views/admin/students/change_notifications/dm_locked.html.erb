@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>DM</title>
+  <%= stylesheet_link_tag 'dm', media: 'all' %>
+</head>
+<body class="A4">
+  <section class="sheet">
+    <div class="address">
+      <% if @change_notification.address_modified %>
+        〒<%= @change_notification.zip_code %><br>
+        <%= @change_notification.prefecture.name %><%= @change_notification.city %><%= @change_notification.address1 %><br>
+        <%= @change_notification.address2 %><br>
+      <% else %>
+        〒<%= @student.zip_code %><br>
+        <%= @student.prefecture.name %><%= @student.city %><%= @student.address1 %><br>
+        <%= @student.address2 %><br>
+      <% end %>
+      <div style="text-align: right">
+        <%= @change_notification.name_modified ? @change_notification.full_name : @student.full_name %>様
+      </div>
+    </div>
+
+    <div class="mb-30" style="text-align: right">
+      <div class="mb-20">
+        <%= Date.today.to_era("%O%E年%m月%d日") %>
+      </div>
+      <div>
+        東京都品川区東五反田５－２５－１８<br>
+        ＥＮＺＯ五反田８Ｆ<br>
+        ＴＥＬ03-6721-6691<br>
+        株式会社UNCHAIN<br>
+        RECMATCH
+      </div>
+    </div>
+
+    <div class="row mb-40">
+      <div class="col-md-12">
+        <div class="text-center mb-20">
+          書類送付のご案内
+        </div>
+        <p>
+          拝啓　時下ますますご清栄のこととお慶び申し上げます。お客様の登録内容の変更を受け付けました。つきましては、下記のとおり手続き完了コードをご入力いただきご登録内容変更のお手続きを完了していただきますようお願い申し上げます。      </p>
+        <div class="pull-right">
+          敬具
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mb-30">
+      記
+    </div>
+    <div class="mb-30">
+      <ol>
+        <li>
+          下記URLまたはQRコードからRECMATCHにアクセスする
+          <table style="border: none">
+            <tr>
+              <td style="font-size: 18px; border: none">
+                <%= details_mypage_student_url %>
+              </td>
+              <td style="border: none">
+                <%= image_tag 'admin/students/qrcode.gif', width: 120 %>
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li>ログイン画面上でご登録済のメールアドレスとパスワードを入力してログインする</li>
+        <li>学生申請書のコード入力欄に以下のコードを入力し、完了する。</li>
+        <li>ご登録内容の変更お手続きが完了しました。今後、プロジェクトへのお申込みができます。</li>
+        <li>
+          すでに株主である発行企業様へはお客様が直接住所変更の旨お伝えください。<br>
+          <small>※連絡先はRECMATCHプロジェクト募集ページ「企業情報」に記載しております。</small>
+        </li>
+      </ol>
+    </div>
+    <div>
+      <div class="text-center">
+        <table align="center" class="mb-20">
+          <tr>
+            <th>手続き完了コード</th>
+            <td class="code"><%= @change_notification.confirmation_code %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,2 @@
+$("#charges").html("<%= escape_javascript(render('list', charges: @company.admin_companies)) %>");
+notify('', '担当者を削除しました', 'top', 'center', '', 'success', '', '');

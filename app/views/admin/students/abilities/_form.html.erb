@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">学生能力を<%= @ability.persisted? ? '編集' : '登録' %></h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@ability, url: @ability.persisted? ? admin_student_ability_path(@student) : admin_student_abilities_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :ability_1, label: 'コミュニケーション能力' %>
+        <%= f.input :ability_2, label: 'チャレンジ精神' %>
+        <%= f.input :ability_3, label: 'コミット力' %>
+        <%= f.input :ability_4, label: 'リーダシップ力' %>
+        <%= f.input :ability_5, label: 'チームワーク力' %>
+        <%= f.input :ability_6, label: '論理的思考力' %>
+        <%= f.button :submit, '登録する', class: 'btn-primary', data: { confirm: '登録しますか？' } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

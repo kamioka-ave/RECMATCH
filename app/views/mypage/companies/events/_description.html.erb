@@ -1,0 +1,65 @@
+<style>
+  .md3-text {
+    font-size: 18px;
+    border-left: solid;
+  }
+  h1.recruit-head {
+    color: #2196F3;
+  }
+  h3.box-title{
+    color: #5E5E5E;
+  }
+</style>
+
+<div id="index_view" class="card" style="border: none;">
+  <div class="card-header">
+    <h1 class="recruit-head"><%= @event.title %></h1>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        イベント種類
+      </div>
+      <div class="col-md-9">
+        <%= Event.names_with_event_type.key(@event.event_type) %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        開催日時
+      </div>
+      <div class="col-md-9">
+        <%= l(@event.start) %> - <%= l(@event.end) %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        定員
+      </div>
+      <div class="col-md-9">
+        <%= @event.capacity %>人
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        開催場所
+      </div>
+      <div class="col-md-9">
+        <%= @event.prefecture.name %>　<%= @event.address %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        概要
+      </div>
+      <div class="col-md-9">
+        <%= @event.description.html_safe %>
+      </div>
+    </div>
+    <br>
+    <br>
+  </div>
+</div>

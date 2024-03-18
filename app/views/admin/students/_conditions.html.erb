@@ -1,0 +1,15 @@
+<table class="table">
+  <% if query.conditions.size > 0 %>
+    <% query.conditions.each do |c| %>
+      <tr>
+        <td><%= Ransack::Translate.attribute(c.attributes.first.name, context: c.attributes.first.context) %></td>
+        <td><%= Ransack::Translate.predicate(c.predicate.name) %></td>
+        <td><%= c.values.first.value %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td>なし</td>
+    </tr>
+  <% end %>
+</table>

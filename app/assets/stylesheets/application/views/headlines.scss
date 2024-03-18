@@ -1,0 +1,48 @@
+.headlines {
+  &.index {
+    .tab-nav {
+      box-shadow: inset 0 -2px 0 0 #eee;
+
+      li {
+        & > a {
+          font-size: 13px;
+          color: $text-muted;
+          text-decoration: none;
+
+          @media (min-width: $screen-sm-min) {
+            padding: 12px 10px;
+          }
+        }
+
+        &.active {
+          & > a {
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    .headlines-title {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      padding: 0;
+      margin: 0 0 $line-height-computed;
+      border-bottom: none;
+
+      &:before {
+        content: "\f1ea";
+        font-family: "FontAwesome";
+        padding-right: $line-height-computed / 2;
+        font-size: 26px;
+      }
+    }
+  }
+
+  &.media {
+    .media-body {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<table class="table">
+  <thead>
+    <th>種類</th>
+    <th>状態</th>
+    <th>提出者</th>
+    <th>操作</th>
+    <th>履歴</th>
+  </thead>
+  <tbody>
+    <% CompanyReview.names_with_review_type.each do |k, v| %>
+      <% review = reviews.select {|r| r.review_type == v }.first %>
+      <tr>
+        <td><%= k %></td>
+        <td>
+          <% if review != nil %>
+            <%= CompanyReview.names_with_status.key(review.status) %>
+          <% else %>
+            未提出
+          <% end %>
+        </td>
+        <td>
+          <% if review != nil %>
+            <% if review.admin.present? %>
+              <%= review.admin.name %>
+            <% else %>
+              <%= review.company.name %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <% if review != nil %>
+            <% if can? :read, review %>
+              <%= link_to '表示', review.file.url, target: '_blank', class: 'btn btn-xs btn-info' %>
+            <% end %>
+
+            <% if review.status == CompanyReview::AS_SUBMITTED %>
+              <% if can? :approve, review %>
+                <%= link_to '承認', edit_admin_company_review_approval_path(company, review), remote: true, class: 'btn btn-xs btn-warning' %>
+              <% end %>
+            <% else %>
+              <% if can? :create, review %>
+                <%= link_to '更新', edit_admin_company_review_path(review, company_id: company, review_type: v), remote: true, class: 'btn btn-xs btn-primary' %>
+              <% end %>
+            <% end %>
+
+            <% if can? :destroy, review %>
+              <%= link_to '削除', admin_company_review_path(review, company_id: company), method: :delete, remote: true, data: {confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+            <% end %>
+          <% else %>
+            <% if can? :create, CompanyReview %>
+              <%= link_to '登録', new_admin_company_review_path(company_id: company, review_type: v), remote: true, class: 'btn btn-xs btn-primary' %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '表示', history_admin_company_reviews_path(company_id: company, review_type: v), remote: true, class: 'btn btn-xs btn-info' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if company.reviews_zip.present? && can?(:read, company) %>
+  <div id="reviews_footer" class="box-footer">
+    <%= link_to '一括ダウンロード', company.reviews_zip.url, class: 'pull-right btn btn-sm btn-info' %>
+  </div>
+<% end %>

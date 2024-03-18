@@ -1,0 +1,228 @@
+<% content_for(:page_classes) { 'mypage applicants show' } %>
+
+<% if @project_meet_nobooks.size > 0 %>
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h2>NOTIFICATION</h2>
+    </div>
+    <div class="card-body pb-10">
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a>
+            <span style="color:#7a7a7a">面談日未設定の学生が</span><%= @project_meet_nobooks.size %>人<span style="color:#7a7a7a">います。</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-paper-plane" aria-hidden="true"></i> 【企業から学生】オファー一覧</span></h3>
+    <p class="pt-10">
+      <small>
+        ※以下の学生はオファーした日の翌々月に一覧から自動的に削除されます。<br>
+        ※オファーした学生から承諾された後、当学生とチャットが可能になります。
+      </small>
+    </p>
+  </div>
+  <% if @offers.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table mb-20">
+        <thead>
+        <tr>
+          <th>学生名</th>
+          <th>大学</th>
+          <th>オファータイプ</th>
+          <th>状況</th>
+          <th>面談調整状況</th>
+          <th>面談予定</th>
+          <th>面談設定</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @offers.each do |o| %>
+            <tr>
+              <td>
+                <%= link_to mypage_company_search_student_path(o.student.id), style:"color:#3c8dbc;" do %>
+                  <%= o.student.name %>
+                <% end %>
+              </td>
+              <td><%= University::names_with_univ.key(o.student.university) %></td>
+              <td><%= Offer.names_with_offer_type.key(o.offer_type) %></td>
+              <td><%= Offer.names_with_status.key(o.status) %></td>
+              <td>
+                <% if o.status == Offer::S_APPROVE && o.project_meet.present? %>
+                  <%= ProjectMeet.name_with_status.key(o.project_meet.status) %>
+                  <% if o.project_meet.status == ProjectMeet::S_ADJUST %>
+                    <%= link_to '承諾', approve_mypage_company_applicant_path(o.project_meet), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '面談日程の再調整を承諾しますか？' } %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if o.status == Offer::S_APPROVE %>
+                  <% if o.project_meet.end.present? && o.project_meet.end < Time.zone.now %>
+                    面談終了
+                  <% elsif o.project_meet.start.present? %>
+                    <%= l(o.project_meet.start) %>〜<br><%= l(o.project_meet.end) %><br>
+                  <% else %>
+                    <% if o.project_meet.status == ProjectMeet::S_CANCEL %>
+                      キャンセル
+                    <% else %>
+                      指定日なし
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if o.status == Offer::S_APPROVE %>
+                  <% if o.project_meet.status != ProjectMeet::S_FINISH && o.project_meet.start.present? %>
+                    <%= link_to '面談日編集', new_make_date_mypage_offer_path(o.project_meet), remote: true, class: 'btn btn-xs btn-warning', method: 'post' %>
+                    <% if o.project_meet.status != ProjectMeet::S_CANCEL %>
+                      <%= link_to 'キャンセル', cancel_mypage_offer_path(o.project_meet), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: '面談をキャンセルしますか？' } %>
+                    <% end %>
+                    <%= link_to '面談完了', meet_done_mypage_offer_path(o.project_meet), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '学生と面談を行いましたか？' } %>
+                  <% elsif o.project_meet.status != ProjectMeet::S_FINISH %>
+                    <%= link_to '面談日設定', new_make_date_mypage_offer_path(o.project_meet), remote: true, class: 'btn btn-xs btn-warning', method: 'post' %>
+                  <% elsif o.project_meet.status == ProjectMeet::S_FINISH %>
+                    面談完了
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div id="meet_modal" class="modal fade" tabindex="-1"></div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      企業から学生へのオファーはありません。<br>
+      下記「学生を探す」から気になる学生にオファーを送れます。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="text-center">
+              <%= link_to '広告', mypage_reports_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+              <%= link_to '学生を探す', mypage_company_search_students_path, class: 'btn btn-primary btn-lg btn-info-o' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-paper-plane" aria-hidden="true"></i> 【学生から企業】オファー一覧</span></h3>
+    <p class="pt-10">
+      <small>
+        ※以下の学生はオファーされた日の翌々月に一覧から自動的に削除されます。<br>
+        ※オファーを承諾した場合、当学生とチャットが可能になります。<br>
+        ※面談終了日の月末に面談した学生の人数を集計します。面談のキャンセルが発生した場合は<b style="color:red;">キャンセル</b>ボタンを押下するようお願い致します。
+      </small>
+    </p>
+  </div>
+  <% if @applicants.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table mb-20">
+        <thead>
+        <tr>
+          <th>学生名</th>
+          <th>大学</th>
+          <th>状況</th>
+          <th>オファー受諾</th>
+          <th>面談調整状況</th>
+          <th>面談予定</th>
+          <th>面談設定</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @applicants.each do |p| %>
+            <tr>
+              <td>
+                <%= link_to mypage_company_search_student_path(p.student.id), style:"color:#3c8dbc;" do %>
+                  <%= p.student.name %>
+                <% end %>
+              </td>
+              <td><%= University::names_with_univ.key(p.student.university) %></td>
+              <td>
+                <%= Project::Applicant.name_with_status.key(p.status) %><br>
+              </td>
+              <td>
+                <% if p.status.in?([0,1]) %>
+                  <%= link_to '承諾', mypage_company_applicant_path(p), class: 'btn btn-xs btn-info', method: 'patch', data: { confirm: 'オファーを承諾しますか？'} %>
+                  <%= link_to '却下', finish_mypage_company_applicant_path(p), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: 'オファーを却下しますか？' } %>
+                <% else %>
+                 済
+                <% end %>
+              </td>
+              <td>
+                <% if p.status == Project::Applicant::S_APPROVE && p.project_meet.present? %>
+                  <%= ProjectMeet.name_with_status.key(p.project_meet.status) %>
+                  <% if p.project_meet.status == ProjectMeet::S_ADJUST %>
+                    <%= link_to '承諾', approve_mypage_company_applicant_path(p.project_meet), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '面談日程の再調整を承諾しますか？' } %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if p.status == Project::Applicant::S_APPROVE %>
+                  <% if p.project_meet.end.present? && p.project_meet.end < Time.zone.now %>
+                    面談終了
+                  <% elsif p.project_meet.start.present? %>
+                    <%= l(p.project_meet.start) %>〜<br><%= l(p.project_meet.end) %><br>
+                  <% else %>
+                    <% if p.project_meet.status == ProjectMeet::S_CANCEL %>
+                      キャンセル
+                    <% else %>
+                      指定日なし
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if p.status == Project::Applicant::S_APPROVE %>
+                  <% if p.project_meet.status != ProjectMeet::S_FINISH && p.project_meet.start.present? %>
+                    <%= link_to '面談日編集', new_make_date_mypage_company_applicant_path(p.project_meet), remote: true, class: 'btn btn-xs btn-warning', method: 'post' %>
+                    <% if p.project_meet.status != ProjectMeet::S_CANCEL %>
+                      <%= link_to 'キャンセル', cancel_mypage_company_applicant_path(p.project_meet), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: '面談をキャンセルしますか？' } %>
+                    <% end %>
+                    <%= link_to '面談完了', meet_done_mypage_company_applicant_path(p.project_meet), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '学生と面談を行いましたか？' } %>
+                  <% elsif p.project_meet.status != ProjectMeet::S_FINISH %>
+                    <%= link_to '面談日設定', new_make_date_mypage_company_applicant_path(p.project_meet), remote: true, class: 'btn btn-xs btn-warning', method: 'post' %>
+                  <% elsif p.project_meet.status == ProjectMeet::S_FINISH %>
+                    面談完了
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div id="meet_modal" class="modal fade" tabindex="-1"></div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      学生からの応募はありません。<br>
+      広告の記載、企業様からのオファーもご検討ください。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="text-center">
+              <%= link_to '広告を依頼', mypage_reports_path, class: 'btn btn-primary btn-lg btn-success-o',disabled: true %>
+              <%= link_to 'オファーする', mypage_student_applicants_path, class: 'btn btn-primary btn-lg btn-info-o' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>

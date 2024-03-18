@@ -1,0 +1,74 @@
+<div class="text-center">
+  <h1>ご登録ありがとうございます</h1>
+  <div class="mb-60">
+    本人確認用のメールがあなたのメールアドレスに送られました。<br>
+    メール内のリンクをクリックしてユーザー登録を完了させてください。
+  </div>
+  <%= link_to 'トップに戻る', root_path, class: 'btn btn-lg btn-default' %>
+</div>
+
+<% if session['role'] == Role::R_COMPANY %>
+  <% if Rails.env.production? %>
+    <script type="text/javascript" language="javascript">
+      /* <![CDATA[ */
+      var yahoo_ydn_conv_io = "S54dWCUOLDVdL.Fhq0jE";
+      var yahoo_ydn_conv_label = "W5T3WCJQ5Q6SZFZSLVF326874";
+      var yahoo_ydn_conv_transaction_id = "";
+      var yahoo_ydn_conv_amount = "0";
+      /* ]]> */
+    </script>
+    <script type="text/javascript" language="javascript" charset="UTF-8" src="//b90.yahoo.co.jp/conv.js"></script>
+
+    <!-- Yahoo Code for your Conversion Page -->
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var yahoo_conversion_id = 1000343146;
+      var yahoo_conversion_label = "7lzICO_hp3EQpZuVnwM";
+      var yahoo_conversion_value = 0;
+      /* ]]> */
+    </script>
+    <script type="text/javascript" src="//s.yimg.jp/images/listing/tool/cv/conversion.js">
+    </script>
+    <noscript>
+      <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//b91.yahoo.co.jp/pagead/conversion/1000343146/?value=0&label=7lzICO_hp3EQpZuVnwM&guid=ON&script=0&disvt=true"/>
+      </div>
+    </noscript>
+
+    <!-- Google Code for CV_&#20225;&#26989; Conversion Page -->
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var google_conversion_id = 925126299;
+      var google_conversion_language = "en";
+      var google_conversion_format = "3";
+      var google_conversion_color = "ffffff";
+      var google_conversion_label = "nFDPCLXhjnEQm52RuQM";
+      var google_remarketing_only = false;
+      /* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+      <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/925126299/?label=nFDPCLXhjnEQm52RuQM&amp;guid=ON&amp;script=0"/>
+      </div>
+    </noscript>
+
+    <script type="text/javascript">
+      gtag('event', 'company_email_registration', {
+        'event_category': 'company_registration',
+        'event_label': 'registration',
+        'event_value': 1
+      });
+      fbq(['track', 'CompleteRegistration']);
+    </script>
+  <% elsif Rails.env.staging? %>
+    <script type="text/javascript">
+      gtag('event', 'company_email_registration', {
+        'event_category': 'company_registration',
+        'event_label': 'registration',
+        'event_value': 1
+      });
+    </script>
+  <% end %>
+<% end %>

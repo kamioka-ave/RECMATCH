@@ -1,0 +1,103 @@
+<section class="rec-sl mb-10">
+  <div class="row">
+    <div class="description text-center col-md-8 pt-20 mb-40">
+      <h1>
+        <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="c-primary"><b>I</b></span>NFORMAT<span class="c-primary"><b>I</b></span>ON
+        </span>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <div class="skw-pages">
+        <% @sliders.each_with_index do |slider, i| %>
+          <% if i == 0 %>
+            <div class="skw-page skw-page-<%= i+1 %> active">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content" style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;">オファー受付中</p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.project.company.name %></h2>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;"><%= Event.names_with_event_type.key(slider.event.event_type) %></p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.event.company.name %></h2>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.title %></h2>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% elsif i%2 == 1 && i != 0 %>
+            <div class="skw-page skw-page-<%= i+1 %>">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <h2 class="skw-page__heading" style="position: relative;bottom:70px;right:10px;"><%= slider.project.company.name %></h2>
+                      <p class="skw-page__description" style="position: relative;bottom:60px;right:10px;">オファー受付中</p>
+                      <p style="position: relative;bottom:60px;right:10px;"><%= link_to '詳細', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <h2 class="skw-page__heading" style="position: relative;bottom:70px;right:10px;"><%= slider.event.company.name %></h2>
+                      <p class="skw-page__description" style="position: relative;bottom:60px;right:10px;"><%= Event.names_with_event_type.key(slider.event.event_type) %></p>
+                      <p style="position: relative;bottom:60px;right:10px;"><%= link_to '詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <h2 class="skw-page__heading" style="position: relative;bottom:70px;right:10px;"><%= slider.title %></h2>
+                      <p class="skw-page__description" style="position: relative;bottom:60px;right:10px;"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <p style="position: relative;bottom:60px;right:10px;"><%= link_to '詳細', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content"  style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+            </div>
+          <% elsif i%2 == 0 && i != 0 %>
+            <div class="skw-page skw-page-<%= i+1 %>">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content" style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;">オファー受付中</p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.project.company.name %></h2>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;"><%= Event.names_with_event_type.key(slider.event.event_type) %></p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.event.company.name %></h2>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <p style="position: relative;top:80px;"><%= link_to '詳細', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                      <p class="skw-page__description" style="position: relative;top:80px;"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <h2 class="skw-page__heading" style="position: relative;top:100px;"><%= slider.title %></h2>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+</div>
+</section>
+
+<%= jquery_view('views.pages.SliderView', turbolinks: true) %>

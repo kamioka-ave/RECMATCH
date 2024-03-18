@@ -1,0 +1,52 @@
+<% if current_user.has_role? :student %>
+  <div class="card z-depth-1">
+    <div class="card-body card-padding-sm">
+      <div class="media">
+        <div class="pull-left">
+          <%= profile_image(current_user.profile, width: 80, class: 'img-rounded') %>
+        </div>
+        <div class="media-body pt-15">
+          <h4 class="media-heading pt-4"><%= current_user.profile.name %></h4>
+        </div>
+      </div>
+      <ul class="nav nav-stacked">
+        <li class="dropdown" style="list-style:none;">
+          <a href="#" class="dropdown-toggle profile" data-toggle="dropdown" style="color: #3c8dbc;">
+            <i class="fa fa-cog" aria-hidden="true"></i> アカウント設定
+          </a>
+          <ul class="dropdown-menu">
+            <li class="<%= 'active' if controller.controller_path == 'mypage/students' && controller.action_name == 'details' %>">
+              <%= link_to '登録情報編集', details_mypage_student_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/profiles' %>">
+              <%= link_to 'ユーザー情報編集', edit_mypage_profile_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'users/registrations' && controller.action_name == 'edit' %>">
+              <%= link_to 'パスワードの変更', edit_user_registration_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/emails' %>">
+              <%= link_to 'メールアドレスの変更', edit_mypage_email_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/emails' %>">
+              <%= link_to 'メール設定・退会', delivery_stop_path %>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <% if !user_signed_in? || user_signed_in? && !current_user.has_role?(:company) %>
+        <ul class="nav nav-stacked">
+          <li>
+            <%= link_to projects_path, class: 'hover-fade' do %>
+              <i class="fa fa-building-o"><span class="title" style="color: #2196F3;font-size: 12px;font-weight: 900;"> 企業を探す</span></i>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to events_path, class: 'hover-fade' do %>
+              <i class="fa fa-calendar-check-o"><span class="title" style="color: #2196F3;font-size: 12px;font-weight: 900;"> イベントを探す</span></i>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>

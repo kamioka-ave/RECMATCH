@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <%= simple_form_for(@students_display, url: admin_students_display_path(@students_display)) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">表示設定</h4>
+      </div>
+      <div class="modal-body">
+        <%= f.error_notification %>
+        <%= f.input :identifier %>
+        <%= f.input :full_name %>
+        <%= f.input :birth_on %>
+        <%= f.input :birth_on_ja %>
+        <%= f.input :status %>
+        <%= f.input :student_created_at %>
+        <%= f.input :rejected_at %>
+        <%= f.input :applied_at %>
+        <%= f.input :approved_at %>
+        <%= f.input :waiting_activation_at %>
+        <%= f.input :activated_at %>
+        <%= f.input :created_days %>
+        <%= f.input :applied_days %>
+        <%= f.input :locked_at %>
+        <%= f.input :lock_reason %>
+        <%= f.input :follows_count %>
+        <%= f.input :total_order_price %>
+        <%= f.input :total_investment_price %>
+        <%= f.input :investment_history %>
+        <%= f.input :current_sign_in_at %>
+        <%= f.input :lost_orders %>
+        <%= f.input :identification_note %>
+      </div>
+      <div class="modal-footer">
+        <%= f.button :submit, class: 'btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

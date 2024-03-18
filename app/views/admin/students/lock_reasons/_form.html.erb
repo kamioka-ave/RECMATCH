@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">ロックしている理由</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@student, url: admin_student_lock_reason_path(@student), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :lock_reason, as: 'text', label: false, input_html: { rows: 10 } %>
+        <%= f.button :submit, '更新する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

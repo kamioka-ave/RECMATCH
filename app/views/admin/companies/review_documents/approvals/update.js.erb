@@ -1,0 +1,3 @@
+$('#review_documents').html("<%= escape_javascript(render('admin/companies/review_documents/list', company: @company, documents: @company.review_documents)) %>");
+$('#review_document_modal').modal('hide');
+notify('', '承認状態を更新しました', 'top', 'center', '', 'success', '', '');

@@ -1,0 +1,33 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>変更日</th>
+      <th>DM発送日</th>
+      <th>完了日</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @change_notifications.each do |n| %>
+    <tr>
+      <td><%= l(n.notified_at, format: :short) %></td>
+      <td><%= l(n.confirmation_code_sent_at, format: :short) if n.confirmation_code_sent_at.present? %></td>
+      <td>
+        <% if n.status == Student::ChangeNotification::S_CONFIRMED %>
+          <%= l(n.confirmed_at.nil? ? n.notified_at : n.confirmed_at, format: :short) %>
+        <% else %>
+          <span class="text-muted">完了していません</span>
+        <% end %>
+      </td>
+      <td class="text-right">
+        <% if n.file.present? %>
+          <%= link_to '表示', n.file.url, target: '_blank', class: 'btn btn-xs btn-info' %>
+        <% else %>
+          <%= link_to '表示', admin_student_change_notification_path(@student, n, format: :pdf), target: '_blank', class: 'btn btn-xs btn-info' %>
+        <% end %>
+        <%= link_to '削除', admin_student_change_notification_path(@student, n), method: :delete, data: { confirm: '削除しますか？' }, class: "btn btn-xs btn-danger" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

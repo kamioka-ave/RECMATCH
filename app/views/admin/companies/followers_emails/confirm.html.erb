@@ -1,0 +1,24 @@
+<section class="content-header">
+  <h1>配信内容の確認</h1>
+</section>
+
+<section class="content">
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title"><%= @email.subject %></h3>
+    </div>
+    <div class="box-body">
+      <%= simple_format(@email.plain) %>
+    </div>
+    <div class="box-footer">
+      <%= simple_form_for([:admin, @email]) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :company_id %>
+        <%= f.hidden_field :admin_id %>
+        <%= f.hidden_field :subject %>
+        <%= f.hidden_field :plain %>
+        <%= f.button :submit, 'この内容で配信する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</section>

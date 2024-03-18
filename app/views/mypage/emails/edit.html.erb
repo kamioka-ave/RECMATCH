@@ -1,0 +1,15 @@
+<% content_for(:page_classes) { 'mypage emails edit' } %>
+
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h2><span><i class="fa fa-envelope-o" aria-hidden="true"></i> メールアドレスの変更</span></h2>
+  </div>
+  <div class="card-body card-padding">
+    <%= simple_form_for(@user, url: mypage_email_path) do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :email, hint: false, required: true %>
+      <br>
+      <%= f.button :submit, '更新する', class: 'btn-info' %>
+    <% end %>
+  </div>
+</div>

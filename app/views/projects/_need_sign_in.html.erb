@@ -1,0 +1,33 @@
+<div class="need-sign-in pb-50">
+  <div class="row mb-30">
+    <div class="col-md-10 col-md-offset-1 title">
+      <h3><%= title %>を閲覧するためには学生登録を完了していただく必要があります</h3>
+    </div>
+  </div>
+  <% if user_signed_in? && current_user.has_role?(:student)  %>
+    <div class="text-center">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <%= link_to 'マイページはこちら', mypage_root_path, class: 'btn btn-lg btn-block btn-success' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="text-center mb-30">
+      <p class="text-muted">学生登録がまだの方は下記より登録を完了してください</p>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <%= link_to '学生登録はこちら', new_user_registration_path, class: 'btn btn-lg btn-block btn-lightteal' %>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <p class="text-muted">すでに学生登録が完了されている方は下記よりログインしてください</p>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <%= link_to 'ログインはこちら', new_user_session_path, class: 'btn btn-lg btn-block btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

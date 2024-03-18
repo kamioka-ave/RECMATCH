@@ -1,0 +1,162 @@
+<% content_for(:page_classes) { 'mypage pages student' } %>
+
+<% content_for :extra_content do %>
+
+<% end %>
+
+<div class="documents">
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h3>NOTIFICATION</h3>
+    </div>
+    <div class="card-body pb-10">
+      <ul class="nav nav-pills nav-stacked">
+        <% if @offers.size > 0 %>
+          <li>
+            <%= link_to mypage_offers_path do %>
+              <span style="color:#7a7a7a">オファーが</span><%= @offers.size %>件<span style="color:#7a7a7a">あります。</span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if @project_meets.size > 0 %>
+          <li>
+            <%= link_to mypage_booking_path do %>
+              <span style="color:#7a7a7a">面談の予定が</span><%= @project_meets.size %>件<span style="color:#7a7a7a">あります。</span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if @project_meet_nobooks.size > 0 %>
+          <li>
+            <%= link_to mypage_booking_path do %>
+              <span style="color:#7a7a7a">日程未確定の面談が</span><%= @project_meet_nobooks.size %>件<span style="color:#7a7a7a">あります。</span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if @events.size > 0 %>
+          <li>
+            <%= link_to mypage_booking_path do %>
+              <span style="color:#7a7a7a">参加予定のイベントが</span><%= @events.size %>件<span style="color:#7a7a7a">あります。</span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if Profile.find_by(user_id: current_user.id).image.blank? %>
+          <li>
+            <%= link_to edit_mypage_profile_path do %>
+              <span class="badge" style="background-color:red;">!</span> プロフィール写真を登録してください。
+            <% end %>
+          </li>
+        <% end %>
+        <% if Report.where(user_id: current_user.id).empty? %>
+          <li>
+            <%= link_to mypage_reports_path do %>
+              <span class="badge" style="background-color:red;">!</span> エントリーシートを入力してください。
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if @project_meets.size > 0 %>
+    <% end %>
+    <% if @events.size > 0 %>
+    <% end %>
+  </div>
+
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h3>SCHEDULE
+        <small>
+          予定はこまめに確認し、遅刻や欠席する場合は事前にご連絡いただきますようお願いします。
+        </small>
+        </br>
+      </h3>
+      <div id="calendar"></div>
+      <span class="action">
+        <%= link_to '一覧へ', mypage_booking_path %>
+      </span>
+    </div>
+    <div class="note">
+    </div>
+  </div>
+
+  <% if @headlines.size > 0 %>
+    <div class="card z-depth-1">
+      <div class="card-header small">
+        <h3>NEWS</h3>
+      </div>
+      <div class="card-body pb-10">
+        <ul class="nav nav-pills nav-stacked">
+          <% @headlines.each do |headline| %>
+            <li>
+              <%= link_to headline do %>
+                <%= headline.title %><br>
+                <small class="text-muted mr-10"><%= l(headline.created_at, format: :short_with_0) %></small>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#calendar').fullCalendar({
+      editable: true,
+      navLinks: true,
+      selectable: true,
+      selectHelper: true,
+      timeFormat: 'H:mm',
+      events: [
+        <% if @events.size > 0 %>
+          <% @events.each do |e| %>
+            {
+              title: '<%= e.title %>',
+              start: '<%= e.start.iso8601 %>',
+              end: '<%= e.end.iso8601 %>',
+              id: '<%= e.id %>',
+              type: 'event'
+            },
+          <% end %>
+        <% end %>
+        <% if @project_meets.size > 0 %>
+          <% @project_meets.each do |p| %>
+            {
+              title: '企業面談',
+              start: '<%= p.start.iso8601 %>',
+              end: '<%= p.end.iso8601 %>',
+              id: '<%= p.project.id %>',
+              type: 'project'
+            },
+          <% end %>
+        <% end %>
+      ],
+      eventClick: function(event) {
+        if(event.type == 'event'){
+          if (event.id) {
+            window.open('../../events/'+event.id);
+            return false;
+          }
+        }else if(event.type == 'project'){
+          if (event.id) {
+            window.open('../../projects/'+event.id);
+            return false;
+          }
+        }
+      }
+    });
+    $('.fc-left h2').text("<%= Time.zone.now.year %>年<%= Time.zone.now.month %>月");
+  });
+</script>
+
+<style>
+  .fc-sun {
+    color: red;
+    background-color: #fff0f0;
+}
+.fc-sat {
+    color: blue;
+    background-color: #f0f0ff;
+}
+</style>

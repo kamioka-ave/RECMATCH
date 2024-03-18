@@ -1,0 +1,52 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jquery": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:flowtype/recommended",
+        "plugin:prettier/recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "flowtype"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+        "strict": 0,
+        "no-console": 0,
+        "quotes": [2, "single", "avoid-escape"],
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/jsx-uses-vars": "error",
+        "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }]
+    },
+    "globals": {
+        "document": true,
+        "$": true,
+        "notify": true,
+        "ActionCable": true,
+        "ahoy": true
+    }
+}

@@ -1,0 +1,64 @@
+<section class="content-header">
+  <h1>イベントページ一覧</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= sort_link(@q, :id, 'ID') %></th>
+            <th><%= sort_link(@q, :company_name, '会社名') %></th>
+            <th><%= sort_link(@q, :title, 'イベント名') %></th>
+            <th><%= sort_link(@q, :status, '状態') %></th>
+            <th><%= sort_link(@q, :updated_at, '更新日') %></th>
+            <th><%= sort_link(@q, :end, '締切日') %></th>
+            <th>その他イベント</th>
+            <th><%= sort_link(@q, :status, '承認') %></th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @events.each do |event| %>
+            <tr>
+              <td><%= event.id %></td>
+              <td><%= link_to event.company.name, admin_company_path(event.company) %></td>
+              <td><%= event.title %></td>
+              <td><%= Event.names_with_status.key(event.status) %></td>
+              <td><%= show_datetime(event.updated_at) %></td>
+              <td><%= show_datetime(event.end, false) if event.end.present? %></td>
+              <td>
+                <% Event.where(company_id: event.company).each do |oe| %>
+                  <% if event.id == oe.id %>
+                  <% else %>
+                    <%= link_to oe.title, admin_event_path(oe.id) %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if event.status == Event::E_JUDGE && can?(:approve, Event) %>
+                  <%= link_to '承認待ち', confirm_admin_event_path(event), class: 'btn btn-xs btn-warning' %>
+                <% else %>
+                  <%= Event.names_with_status.key(event.status) %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to '詳細', admin_event_path(event), class: 'btn btn-xs btn-info' %>
+                <% if can?(:update, Event) %>
+                  <%= link_to '確認', edit_admin_event_path(event), class: 'btn btn-xs btn-warning' %>
+                <% end %>
+                <% if can?(:destroy, Event) %>
+                  <%= link_to '削除', admin_event_path(event), method: :delete, class: 'btn btn-xs btn-danger', data: {confirm: '削除しますか？' } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= paginate @events, theme: 'admin' %>
+    </div>
+  </div>
+</section>

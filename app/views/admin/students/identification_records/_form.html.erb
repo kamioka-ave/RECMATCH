@@ -1,0 +1,137 @@
+<%= simple_form_for(@record, url: @record.persisted? ? admin_student_identification_record_path(@student, @record) : admin_student_identification_records_path(@student)) do |f| %>
+  <%= f.error_notification %>
+  <div class="box box-default">
+    <div class="box-body">
+      <%= f.input :identified_on %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.association :identifier %>
+        </div>
+        <div class="col-md-6">
+          <%= f.association :recorder %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :name %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :student_id, readonly: true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.input :zip_code %>
+        </div>
+      </div>
+      <%= f.input :address %>
+      <%= f.input :birth_on %>
+      <%= f.input :reason, as: :radio_buttons, collection: StudentIdentificationRecord.names_with_reason %>
+      <%= f.input :reason_note %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">個人番号確認書類</h3>
+    </div>
+    <div class="box-body">
+      <%= f.association :identification_numbers, as: :check_boxes, label: false %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">本人確認書類</h3>
+    </div>
+    <div class="box-body">
+      <label>A</label>
+      <%= f.association :identification_document_as, as: :check_boxes, label: false %>
+      <label>B</label>
+      <%= f.association :identification_document_bs, as: :check_boxes, label: false %>
+      <%= f.input :document_b_others_note, label: false, placeholder: 'その他の場合のカッコ書き' %>
+      <label>C</label>
+      <%= f.association :identification_document_cs, as: :check_boxes, label: false %>
+      <%= f.input :document_c_others_note, label: false, placeholder: 'その他の場合のカッコ書き' %>
+      <label>D</label>
+      <%= f.association :identification_document_ds, as: :check_boxes, label: false %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">補完書類</h3>
+    </div>
+    <div class="box-body">
+      <%= f.association :identification_complement_documents, as: :check_boxes, label: false %>
+      <%= f.input :complement_document_others_note, label: false, placeholder: 'その他の場合のカッコ書き' %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">本人確認書類補記</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :supplement1_number %>
+          <%= f.input :supplement1_has_number %>
+          <%= f.input :supplement1_issued_on, as: :date_time_picker %>
+          <%= f.input :supplement1_limit_on, as: :date_time_picker %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :supplement2_number %>
+          <%= f.input :supplement2_has_number %>
+          <%= f.input :supplement2_issued_on, as: :date_time_picker %>
+          <%= f.input :supplement2_limit_on, as: :date_time_picker %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">確認方法</h3>
+    </div>
+    <div class="box-body">
+      <%= f.input :supplement_confirm_way, as: :radio_buttons, label: false, collection: StudentIdentificationRecord.names_with_supplement_confirm_way %>
+      <%= f.input :supplement_confirm_way_note %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-header">
+      <h3 class="box-title">補完手続の実施欄</h3>
+    </div>
+    <div class="box-body">
+      <%= f.input :completed_on %>
+      <%= f.input :is_completion_by_mail %>
+      <%= f.input :is_completion_by_others %>
+      <%= f.input :completion_by_others_note %>
+    </div>
+  </div>
+
+  <div class="box box-default">
+    <div class="box-body">
+      <div class="col-md-4">
+        <%= f.association :confirmer %>
+      </div>
+      <div class="col-md-4">
+        <%= f.association :creator %>
+      </div>
+      <div class="col-md-4">
+        <%= f.association :receptor %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>
+
+<%= jquery_view('views.admin.students.identification_records.FormView') %>

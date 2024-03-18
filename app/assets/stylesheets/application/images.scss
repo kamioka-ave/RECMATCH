@@ -1,0 +1,57 @@
+//Image sizes
+.img-sm,
+.img-md,
+.img-lg {
+  float: left;
+}
+
+.img-sm {
+  width: 30px !important;
+  height: 30px !important;
+  + .img-push {
+    margin-left: 40px;
+  }
+}
+
+.img-md {
+  width: 60px;
+  height: 60px;
+  + .img-push {
+    margin-left: 70px;
+  }
+}
+
+.img-lg {
+  width: 100px;
+  height: 100px;
+  + .img-push {
+    margin-left: 110px;
+  }
+}
+
+// Image bordered
+.img-bordered {
+  border: 3px solid $gray;
+  padding: 3px;
+}
+
+.img-bordered-sm {
+  border: 2px solid $gray;
+  padding: 2px;
+}
+
+.img-maxwidth100 {
+  max-width: 100%;
+}
+
+.img-profile {
+  border-radius: 50%;
+  width: 130px;
+  position: absolute;
+  height: 130px;
+  bottom: -30px;
+  left: 50%;
+  margin-left: -65px;
+  @include transition(all);
+  @include transition-duration(300ms);
+}

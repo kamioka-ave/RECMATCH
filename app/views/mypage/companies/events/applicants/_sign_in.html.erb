@@ -1,0 +1,26 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">出資希望を申請するには学生登録を完了させてください</h4>
+    </div>
+    <div class="modal-body">
+      <div class="mb-30">
+        <p class="text-muted">出資希望を申請しても再募集が保証されるわけではありません。また、RECMATCHにご登録されているメールアドレスに出資を希望される発行者に関する情報をお知らせします。</p>
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <%= link_to '学生登録はこちら', new_user_registration_path, class: 'btn btn-lg btn-block btn-lightteal' %>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mb-20">
+        <p class="text-muted">すでに学生登録が完了されている方は下記よりログインしてください</p>
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <%= link_to 'ログインはこちら', new_user_session_path, class: 'btn btn-lg btn-block btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

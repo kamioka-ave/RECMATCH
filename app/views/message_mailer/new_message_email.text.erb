@@ -1,0 +1,9 @@
+こんにちは。<%= Settings.application_name %>です。
+
+<%= @message.sender.profile.name %>さんよりメッセージが届いています。
+
+次のURLからメッセージをチェックしてください。
+
+<%= mypage_message_url(@message.conversation_id) %>
+
+<%= render partial: 'layouts/mailer_sign' %>

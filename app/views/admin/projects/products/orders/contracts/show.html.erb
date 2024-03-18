@@ -1,0 +1,98 @@
+<% content_for(:page_classes) { 'products orders contracts show' } %>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <% if @can_order %>
+      <div class="card">
+        <div class="card-body">
+          <%= render 'projects/products/orders/progress', step: 'contract' %>
+        </div>
+        <div class="card-header text-center">
+          <h1>契約締結前交付書面の確認</h1>
+        </div>
+        <div class="card-body card-padding">
+          <%= simple_form_for(@contract, url: project_product_order_contract_path(@project, @product, type: params[:type])) do |f| %>
+            <%= f.error_notification %>
+            <%= f.hidden_field :type, value: @contract.type %>
+
+            <% if @project.contract_before_type == Project::CONTRACT_BEFORE_TYPE_PDF %>
+              <div class="mb-30">
+                <h3>選択中のコース</h3>
+                <%= render 'projects/products/media', product: @product %>
+              </div>
+
+              <div class="mb-30">
+                <div class="mb-10">
+                  <%= link_to  @product.project.contract_before.url, class: 'pdf text-info f-15', target: '_blank' do %>
+                    <i class="fa fa-file-pdf-o pr-5"></i>契約締結前交付書面を開く
+                  <% end %>
+                </div>
+              </div>
+            <% else %>
+              <div class="mb-30">
+                <p>以下の内容を最後までご確認の上、次へ進んでください。</p>
+                <div class="mb-15">
+                  <%= render "projects/contracts/contract_v#{@project.contract_before_version}" %>
+                  <div class="clearfix">
+                    <small class="pull-right">
+                      <%= link_to notice_project_path(@project, format: 'pdf'), class: 'c-info', target: '_blank' do %>
+                        <i class="fa fa-file-pdf-o pr-5"></i>PDFで表示する
+                      <% end %>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="mb-30">
+              <%= f.input :confirmed, as: :boolean, label: '私は、契約締結前交付書面の内容を十分理解し、また、「募集株式の取得お申し込みの撤回について」の内容を確認してこれを理解した上で、私の判断と責任において店頭有価証券の取引を行います。' %>
+            </div>
+
+            <div class="mb-30">
+              <%= f.input :promise_antisocialists, as: :boolean, label: '私は反社会的勢力に該当していないことを確約するとともに、確約が虚偽であると認められた時は当該有価証券の取得に関わる契約が解除されることに異を唱えません。' %>
+            </div>
+
+            <div class="mb-40">
+              <%= f.input :about_cancel, as: :boolean, label: '私は、私が当該会社（発行者）の株主になった際、貴社が当該会社に私の氏名、住所、メールアドレス、購入（割当）株数を記載した株主名簿を提出する事に同意致します。' %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <%= f.button :submit, '確認した上で次の画面へ', class: 'btn-block btn-lg btn-info' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="alert alert-danger alert-dismissible">
+        同じ企業に対して年間50万円以上のご投資はできません。
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @can_order && @contract.errors.blank? %>
+  <%=
+    jquery_view(
+      'views.products.orders.contracts.ShowView',
+      turbolinks: true,
+      isPdfClicked: @project.contract_before_type == Project::CONTRACT_BEFORE_TYPE_HTML
+    )
+  %>
+<% end %>
+
+<script>
+  gtag('event', 'begin_checkout', {
+    'items': [
+      {
+        'id': '<%= @product.id %>',
+        'name': '<%= @product.name %>',
+        'brand': '<%= @product.project.company.name %>',
+        'category': "<%= @product.project.categories.map(&:name).join('/') %>",
+        'quantity': 1,
+        'price': <%= @product.price %>
+      },
+    ]
+  });
+</script>

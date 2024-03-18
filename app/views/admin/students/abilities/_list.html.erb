@@ -1,0 +1,28 @@
+<% if @student.student_ability.size > 0 %>
+  <div class="box-body no-padding">
+    <table class="table">
+      <tr>
+        <th>コミュニケーション能力</th>
+        <th>チャレンジ精神</th>
+        <th>コミット力</th>
+        <th>リーダーシップ</th>
+        <th>チームワーク力</th>
+        <th>論理的思考力</th>
+      </tr>
+      <% @student.student_ability.each do |r| %>
+        <tr>
+          <td><%= r.ability_1 %></td>
+          <td><%= r.ability_2 %></td>
+          <td><%= r.ability_3 %></td>
+          <td><%= r.ability_4 %></td>
+          <td><%= r.ability_5 %></td>
+          <td><%= r.ability_6 %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% else %>
+  <div class="box-body">
+    能力の登録はありません
+  </div>
+<% end %>

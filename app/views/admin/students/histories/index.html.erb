@@ -1,0 +1,12 @@
+<section class="content-header">
+  <h1>学生申請内容の履歴</h1>
+</section>
+
+<% if @histories.size > 0 %>
+  <%= react_component('views.admin.students.histories.IndexView',
+      {student: @student, history: @histories.last, min: @histories.first.revision, max: @histories.last.revision}) %>
+<% else %>
+  <section class="content">
+    履歴はありません
+  </section>
+<% end %>

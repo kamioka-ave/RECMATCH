@@ -1,0 +1,32 @@
+default: &default
+  application_name: "RECMATCH"
+  app:
+    solicit_max: 100_000_000
+  aws:
+    ses:
+      region: 'us-east-2'
+      sending_limits: 14
+  slack:
+    webhook_url: "https://hooks.slack.com/services/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"
+    channel: "#recmatch-bot"
+  admin:
+    ips: "219.110.68.249,219.110.68.29,203.174.244.109,150.249.159.25"
+  masking:
+    url: "http://recmatch.co.jp/beta1/images:mask"
+    user: "recmatch"
+    password: "password"
+  contract:
+    before_version: 1
+
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

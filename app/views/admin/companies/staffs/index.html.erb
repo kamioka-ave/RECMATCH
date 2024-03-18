@@ -1,0 +1,44 @@
+<section class="content-header">
+  <h1>相談用アカウントを追加する</h1>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <%= react_component('views.admin.group_chat_categories.SelectCompaniesView',
+        {companies: @companies, defaultCompanyId: params[:company_id].to_i, layout: 'Staff'}) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">相談用のアカウント</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body no-padding">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ユーザー名</th>
+                <th>メールアドレス</th>
+                <th class="text-center">対応カテゴリー</th>
+                <th class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: 'staffs', collection: @staffs, as: :staff, locals: { company: @company } %>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-footer">
+          <%= paginate @staffs, theme: 'admin' %>
+          <%= link_to 'アカウントを追加', new_admin_company_staff_path(company_id: @company), class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

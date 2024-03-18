@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>A4</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger' %>
+</head>
+<body class="student-ledger">
+  <h3>顧客台帳</h3>
+
+  <table border="1" width="100%">
+    <tr>
+      <th width="15%">顧客名</th>
+      <td width="85%"><%= @student.last_name %><%= @student.first_name %></td>
+    </tr>
+    <tr>
+      <th width="15%">郵便番号</th>
+      <td width="85%"><%= @student.zip_code %></td>
+    </tr>
+    <tr>
+      <th width="15%">住所</th>
+      <td width="85%"><%= @student.full_address %></td>
+    </tr>
+    <tr>
+      <th width="15%">電話番号</th>
+      <td width="85%"><%= @student.phone %></td>
+    </tr>
+    <tr>
+      <th width="15%">E-Mail</th>
+      <td width="85%"><%= @student.user.email %></td>
+    </tr>
+    <tr>
+      <th width="15%">職業</th>
+      <td width="85%"><%= Student.names_with_job.key(@student.job) %></td>
+    </tr>
+    <tr>
+      <th width="15%">業種</th>
+      <td width="85%"><%= Student.names_with_business.key(@student.business) %></td>
+    </tr>
+    <tr>
+      <th width="15%">備考</th>
+      <td width="85%"><%= @student.email_company %></td>
+    </tr>
+  </table>
+</body>
+</html>

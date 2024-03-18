@@ -1,0 +1,1 @@
+$("#review-modal").html("<%= escape_javascript(render(partial: 'form', locals: {company: @company, review: @review})) %>").modal("show");

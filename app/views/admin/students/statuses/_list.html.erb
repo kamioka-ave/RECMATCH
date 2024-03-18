@@ -1,0 +1,108 @@
+<table class="table">
+  <tr>
+    <th>状態</th>
+    <td>
+      <% if @student.status == Student::S_IN_REVIEW && @student.not_suitable? %>
+        却下
+      <% else %>
+        <% if @student.status == Student::S_IN_REVIEW && @student.is_identification_passed && @student.is_antisocial_check_passed %>
+          仮承認
+        <% else %>
+          <%= Student.names_with_status.key(@student.status) %>
+          <% if @student.status == Student::S_WAITING_ACTIVATION %>
+            （<%= (Date.today - @student.updated_at.to_date).to_i %>日経過）
+          <% end %>
+        <% end %>
+      <% end %>
+    </td>
+    <% if can?(:show_details, Student) %>
+      <td>
+        <% if @student.status == Student::S_IN_REVIEW && !@student.not_suitable? %>
+          <% if @student.is_identification_passed && @student.is_antisocial_check_passed && can?(:approve, Student) %>
+            <%= link_to '承認する', approve_admin_student_status_path(@student), method: :put, class: 'btn btn-xs btn-primary' %>
+          <% end %>
+          <%= link_to '却下する', reject_admin_student_status_path(@student), method: :put, data: {confirm: '却下しますか？'}, class: 'btn btn-xs btn-warning pull-right' %>
+        <% elsif @student.status == Student::S_APPROVED %>
+          <%= link_to 'アクティベートコード発送済みにする',
+                      waiting_activation_admin_student_status_path(@student), method: :put, remote: true, class: 'btn btn-xs btn-primary' %>
+        <% elsif @student.status == Student::S_WAITING_ACTIVATION %>
+          <%= link_to 'アクティベートコード発送待ちに戻す',
+                      waiting_dm_admin_student_status_path(@student), method: :put, remote: true, class: 'btn btn-xs btn-primary' %>
+        <% end %>
+
+        <% if @student.status >= Student::S_APPROVED %>
+          <%= link_to 'DMを表示', dm_admin_student_status_path(@student), class: 'btn btn-xs btn-warning mr-20' %>
+        <% end %>
+
+        <% if @student.status != Student::S_REJECTED&& !(@student.status == Student::S_IN_REVIEW && @student.not_suitable?) %>
+          <div class="btn-group">
+            <button type="button" class="btn btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">
+              却下する
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to '却下する', reject_admin_student_status_path(@student), method: :put, data: {confirm: '却下しますか？'} %></li>
+              <li><%= link_to 'メールを送信せずに却下する', reject_without_mail_admin_student_status_path(@student), method: :put, data: {confirm: 'メールを送信せずに却下しますか？'} %></li>
+            </ul>
+          </div>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+
+  <% if can?(:show_details, Student) %>
+    <tr>
+      <th>本人確認</th>
+      <td>
+        <% if [Student::S_APPROVED, Student::S_WAITING_ACTIVATION, Student::S_ACTIVATED].include?(@student.status) %>
+          OK
+        <% else %>
+          <% if @student.identified_at.present? && !(@student.status == Student::S_IN_REVIEW && @student.not_suitable?) %>
+            <%= @student.is_identification_passed ? 'OK' : 'NG' %>
+          <% else %>
+            未
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <% if @student.status == Student::S_IN_REVIEW && @student.identified_at.blank? && !@student.not_suitable? %>
+          <%= link_to 'OK', approve_admin_student_identification_path(@student), method: :put, class: 'btn btn-xs btn-info' %>
+          <span class="pull-right">
+            <%= link_to 'NG', reject_admin_student_identification_path(@student), method: :put, data: {confirm: '本人確認NGにしますか？'}, class: 'btn btn-xs btn-danger' %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th>反社チェック</th>
+    <td>
+      <% if [Student::S_APPROVED, Student::S_WAITING_ACTIVATION, Student::S_ACTIVATED].include?(@student.status) %>
+        OK
+      <% else %>
+        <% if @student.antisocial_checked_at.present? && !(@student.status == Student::S_IN_REVIEW && @student.not_suitable?) %>
+          <%= @student.is_antisocial_check_passed ? 'OK' : 'NG' %>
+        <% else %>
+          未
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <% if @student.status == Student::S_IN_REVIEW && @student.antisocial_checked_at.nil? && !@student.not_suitable? %>
+        <%= link_to 'OK', approve_admin_student_antisocial_path(@student), method: :put, class: 'btn btn-xs btn-info' %>
+        <span class="pull-right">
+          <%= link_to 'NG', reject_admin_student_antisocial_path(@student), method: :put, data: {confirm: '反社チェックNGにしますか？'}, class: 'btn btn-xs btn-danger' %>
+        </span>
+      <% end %>
+    </td>
+  </tr>
+
+  <% if can?(:show_details, Student) %>
+    <tr>
+      <th>アクティベートコード</th>
+      <td><%= @student.activation_code if @student.activation_code.present? %></td>
+    </tr>
+  <% end %>
+
+</table>

@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'projects/products/orders/progress', step: 'confirm' %>
+      </div>
+      <div class="card-header text-center">
+        <h1><%= 'キャンセル待ち' if @order.type == 'WaitOrder' %>申込み内容の確認</h1>
+      </div>
+      <div class="card-body card-padding">
+        <div class="bg-info p-20 mb-30">
+          <% if @order.type == 'NormalOrder' %>
+            確定ボタンを押した時点での先着順受付のため、お客さまの操作途中で、募集金額が上限に達してしまった場合には、お申込みを受付することができません。何卒ご了承ください。
+          <% elsif @order.type == 'WaitOrder' %>
+            キャンセル待ちのお申込みをいただいてもキャンセルが発生しない場合や、キャンセルがあってもキャンセル待ちの時間優先の原則により、応募の受付ができない場合がございます。
+          <% end %>
+        </div>
+
+        <%= simple_form_for(@order, url: project_product_order_bank_path(@project, @product)) do |f| %>
+          <div class="mb-30">
+            <%= f.error_notification %>
+            <%= f.hidden_field :type %>
+            <%= f.hidden_field :user_id %>
+            <%= f.hidden_field :product_id %>
+            <%= f.hidden_field :contract_confirmed %>
+          </div>
+          <table class="table mb-30">
+            <tr>
+              <th>プロジェクト名</th>
+              <td><%= @project.name %></td>
+            </tr>
+            <tr>
+              <th>発行者名</th>
+              <td><%= @project.company.name %></td>
+            </tr>
+            <tr>
+              <th>コース</th>
+              <td><%= @product.title %></td>
+            </tr>
+            <tr>
+              <th>お支払い方法</th>
+              <td>銀行振込（振込手数料はお客様負担となります）</td>
+            </tr>
+          </table>
+          <div class="row mb-10">
+            <div class="col-md-6 col-md-offset-3">
+              <%= f.button :submit, @order.type == 'WaitOrder' ? 'キャンセル待ちのお申込みを確定' : 'お申込みを確定', class: 'btn-block btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

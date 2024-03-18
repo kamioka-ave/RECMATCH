@@ -1,0 +1,184 @@
+<% content_for(:page_classes) { 'mypage applicants show' } %>
+<%= javascript_include_tag 'cable' %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border text-center">
+    <h3><span><i class="fa fa-comments-o" aria-hidden="true"></i> チャット(<%= Student.find(params[:id]).name %>)</span></h3>
+  </div>
+  <div class="card-body table-responsive pt-20 mb-20" style="height:620px;">
+    <div class="box_srcollbar center-block" id="chat_contents">
+      <% if @contents.size > 0 %>
+        <% @contents.each do |c| %>
+          <% if c.direct == false %>
+            <div class="row row-center pt-10 mb-10 pr-20">
+              <div class="pull-right pt-10" style="max-width: 70%;">
+                <%= image_tag(c.company.image.thumb.url, width: 40, class: 'media-object') if c.company.present? && c.company.image.present? %>
+              </div>
+              <div class="pull-right pr-10" style="max-width:70%;">
+                <div class="popover left show left-balloon">
+                  <div class="arw-right arrow"></div>
+                  <div class="popover-content">
+                    <%= simple_format(c.description) %>
+                  </div>
+                </div>
+              </div>
+              <% if c.kidoku == false %>
+                <small class="pull-right pr-20 pt-30" style="color:#666666;">未読</small>
+              <% elsif c.kidoku == true %>
+                <small class="pull-right pr-20 pt-30" style="color:#666666;">既読</small>
+              <% end %>
+            </div>
+          <% elsif c.direct == true %>
+            <div class="row row-center pt-10 mb-10 pl-20">
+              <div class="pull-left pt-10" style="max-width: 70%;">
+                <%= profile_image(c.student.user.profile, width: 30, class: 'img-rounded') %>
+              </div>
+              <div class="pull-left pl-10" style="max-width: 70%;">
+                <div class="popover right show" style="position:relative; top=-90px; left=100px; max-width:100%; display:inline;">
+                  <div class="arw-left arrow"></div>
+                  <div class="popover-content">
+                    <%= simple_format(c.description) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <form name='chat_param'>
+      <div class="box_sender center-block">
+        <button class="btn btn-md btn-info pull-right" name="button" type="submit" onClick="postChatMessage()">送信</button>
+      </div>
+      <input value="<%= params[:id] %>" type="hidden" name="chat_message[student_id]" id="chat_message_student_id">
+      <input value="<%= current_user.company.id%>" type="hidden" name="chat_message[company_id]" id="chat_message_company_id">
+      <input value="0" type="hidden" name="chat_message[direct]" id="chat_message_direct">
+      <textarea class="box_sender_text text optional center-block" name="chat_message[description]" id="chat_message_description" placeholder="SHIFT + ENTERで送信"></textarea>
+    </form>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $('#chat_contents').animate({scrollTop: $('#chat_contents')[0].scrollHeight}, 'fast');
+  $(window).keydown(function(e){
+    if(event.shiftKey){
+      if(e.keyCode === 13){
+        postChatMessage()
+         return false;
+      }
+    }
+  });
+});
+
+function postChatMessage() {
+  event.preventDefault();
+  var form = document.forms.chat_param;
+  var student_id = $('input[name="chat_message[student_id]"]').val();
+  var company_id = $('input[name="chat_message[company_id]"]').val();
+  var direct = $('input[name="chat_message[direct]"]').val();
+  var description = $('textarea[name="chat_message[description]"]').val();
+  if (!description) {
+    notify('','メッセージが入力されていません', 'top', 'center', '', 'danger', '', '');
+  }else{
+    App.chat_room.speak(student_id, company_id, direct, description);
+  }
+  var student_id = '';
+  var company_id = '';
+  var direct = '';
+  var description = '';
+  $('textarea').val("");
+  $('#chat_contents').animate({scrollTop: $('#chat_contents')[0].scrollHeight}, 'fast');
+}
+
+function getChatMessage(data) {
+  if( data.s_id == <%= @student_id %> && data.c_id == <%= @company_id %> ) {
+    if( data.dir == true ) {
+      <% @student = Student.find(@student_id) %>
+      var content = '<div class="row row-center pt-10 mb-10 pl-20"><div class="pull-left pt-10" style="max-width: 70%;"><%= profile_image(@student.user.profile, width: 30, class: 'img-rounded') %></div><div class="pull-left pl-10" style="max-width: 70%;"><div class="popover right show" style="position:relative; top=-90px; left=100px; max-width:100%; display:inline;"><div class="arw-left arrow"></div><div class="popover-content"><p>'+ data.desc.replace(/\r\n|\r|\n/g, '<br>'); +'</p></div></div></div></div>'
+      $("#chat_contents").append(content)
+      $('#chat_contents').animate({scrollTop: $('#chat_contents')[0].scrollHeight}, 'fast');
+    }
+    else if( data.dir == false ){
+      <% @company = Company.find(@company_id) %>
+      var content = '<div class="row row-center pt-10 mb-10 pr-20"><div class="pull-right pt-10" style="max-width: 70%;"><%= image_tag(@company.image.thumb.url, width: 40, class: 'media-object') if @company.present? && @company.image.present? %></div><div class="pull-right pr-10" style="max-width:70%;"><div class="popover left show left-balloon"><div class="arw-right arrow"></div><div class="popover-content"><p style="color:#fff;">'+ data.desc.replace(/\r\n|\r|\n/g, '<br>'); +'</p></div></div></div><small class="pull-right pr-20 pt-30" style="color:#666666;">未読</small></div>'
+      $("#chat_contents").append(content)
+      $('#chat_contents').animate({scrollTop: $('#chat_contents')[0].scrollHeight}, 'fast');
+    }
+  };
+}
+
+</script>
+
+<style type="text/css">
+    p {
+      color: #fff;
+    }
+    .box_srcollbar {
+      border-radius: 5px 5px 0px 0px;
+      overflow:auto;
+      width:70%;
+      height:420px;
+      padding:5px;
+      border:1px solid #C0C0C0;
+      background-color:#F9F9F9;
+      color:#000;
+      font-size:12px;
+    }
+    .box_sender{
+      padding:5px;
+      width:70%;
+      height:45px;
+      border-left:1px solid #C0C0C0;
+      border-right:1px solid #C0C0C0;
+    }
+    .box_sender_text{
+      border-radius: 0px 0px 5px 5px;
+      border:1px solid #C0C0C0;
+      padding:5px;
+      width:70%;
+      height:120px;
+      font-weight:bold;
+      font-size:14px;
+      background-color:#fff;
+      color:#555555;
+    }
+    ::placeholder {
+      color: #eee;
+    }
+    .popover {
+      z-index: 1;
+    }
+    .popover.left > .arrow:after {
+      border-left-color: #3366FF;
+    }
+    .popover.left > .arw-right{
+      position: relative;
+      left: 100%;
+      top: 26px;
+    }
+    .popover.right > .arw-left{
+      position: relative;
+      left: -12px;
+      top: 26px;
+    }
+    .left-balloon{
+      background-color:#3366FF;
+      position:relative;
+      top=-90px;
+      left=90px;
+      display:inline;
+      max-width:500px;
+    }
+    @media screen and (max-device-width: 480px) {
+      .box_srcollbar {
+        width:100%;
+      }
+      .box_sender{
+        width:100%;
+      }
+      .box_sender_text{
+        width:100%;
+      }
+    }
+</style>

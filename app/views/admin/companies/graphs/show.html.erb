@@ -1,0 +1,17 @@
+<section class="content-header">
+  <h1><%= @graph.name %>データの編集</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <% if @graph.company_graph_data.size > 0 %>
+        <div id="data">
+          <%= render 'admin/companies/graphs/data/list' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= link_to 'データを登録する', new_admin_company_graph_datum_path(@company, @graph), remote: true, class: 'btn btn-primary' %>
+  <div id="data-modal" class="modal" tabindex="-1"></div>
+</section>

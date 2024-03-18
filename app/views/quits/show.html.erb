@@ -1,0 +1,75 @@
+<div class="card <%= request.variant.include?(:mobile) ? '': 'z-depth-1' %>">
+  <div class="card-header">
+    <h4 class="card-title text-center">
+      <span style="border-bottom: solid 5px #000080;padding:10px;font-size:20px;">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>退会申請
+      </span>
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-9 col-md-offset-3">
+        <div class="mb-4 pb-20">
+          RECMATCHをご利用ありがとうございます。
+          下記事項をご確認の上、退会手続きを行ってください。
+        </div>
+        <%= simple_form_for(@quit, url: confirm_quit_path) do |f| %>
+          <div class="widget">
+            <h5>◆退会すると利用できなくなるサービス</h5>
+            <div class="row pt-20 pb-20">
+              <div class="col-md-9 col-md-offset-1 col-xs-offset-1">
+                <ul>
+                  <li>ログインおよびログインが必要なページの閲覧</li>
+                  <li>マイページの閲覧</li>
+                  <li>学生・企業へのオファー</li>
+                  <li>チャット機能</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="widget">
+            <h5>◆注意事項</h5>
+            <div class="row pt-20 pb-20">
+              <div class="col-md-9 col-md-offset-1 col-xs-offset-1">
+                <ul>
+                  <li>退会後はアカウントを復活させることはできません</li>
+                  <li>退会後、同じメールアドレスで新規アカウント登録することはできません。</li>
+                  <li>チャットやマッチング機能の履歴を消すことはできません</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="widget mb-40">
+            <h5>◆退会のアンケートにご協力ください（複数選択可）</h5>
+            <div class="row pb-20">
+              <div class="col-md-9 col-md-offset-1 col-xs-offset-1">
+                <%= f.association :quit_reasons, required: false, as: :check_boxes, label: false,
+                  collection: current_user.has_role?(:student) ? QuitReason.student_reasons : QuitReason.company_reasons %>
+              </div>
+            </div>
+            <div class="row pt-20 pb-20">
+              <div class="col-md-8">
+                <%= f.input :note, label: false, input_html: { rows: 6 } %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-30">
+            <div class="col-md-4 col-md-offset-2">
+              <%= f.button :submit, '退会手続きへ', class: 'btn-block btn-lg btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.my.quits.FormView',
+    turbolinks: true,
+    others: @quit.reasons_have_others?
+  )
+%>

@@ -1,0 +1,22 @@
+<% comments.each do |comment| %>
+  <div class="media">
+    <%= link_to comment.user.profile, class: 'pull-left' do %>
+      <%= profile_image(comment.user.profile, class: 'lv-img-sm') %>
+    <% end %>
+    <div class="media-body">
+      <%= link_to comment.user.name, comment.user.profile, class: 'a-title' %>
+      <small class="c-gray ml-10"><i class="fa fa-clock-o"></i> <%= show_datetime(comment.created_at) %></small>
+      <% if comment.get_likes.size > 0 %>
+        <i class="fa fa-thumbs-o-up pr-5"></i><%= comment.get_likes.size %>
+      <% end %>
+      <p class="mt-5 mb-0">
+        <%= simple_format(comment.comment) %>
+      </p>
+      <% if user_signed_in? && current_user.use_social? && current_user.has_role?(:student) %>
+        <p class="like">
+          <%= link_to 'いいね！', like_project_comment_path(project_id: project, id: comment), method: :put, remote: true, class: 'ml-10 c-info' %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

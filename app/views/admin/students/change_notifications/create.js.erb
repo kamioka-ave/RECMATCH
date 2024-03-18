@@ -1,0 +1,3 @@
+$("#new_change_notification_modal").modal('hide');
+$("#change_notifications").html("<%= escape_javascript(render('list')) %>");
+notify('', '変更届を登録しました', 'top', 'center', '', 'success', '', '');

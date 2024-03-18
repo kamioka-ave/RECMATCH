@@ -1,0 +1,186 @@
+<% content_for(:page_classes) { 'mypage offers show' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-paper-plane" aria-hidden="true"></i> オファー一覧</span></h3>
+    <p class="pt-10"><small>※オファーはオファーされた日の翌々月に自動的に削除されます。</small></p>
+  </div>
+  <% if @offers.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>企業名</th>
+          <th>回答</th>
+          <th>状況</th>
+          <th>タイプ</th>
+          <th>内容</th>
+          <th>承諾締切</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @offers.each do |o|%>
+            <tr>
+              <td><%= link_to project_path(o.company.project) do %><%= o.company.name %><% end %></td>
+              <td>
+                <% if o.closing_date.end_of_day < Time.zone.now %>
+                  回答期限切れ
+                <% else %>
+                  <%= simple_form_for(o, url:  mypage_offer_path(o), method: 'patch') do |f| %>
+                    <% if o.status == Offer::S_NEW %>
+                      <%= button_tag '承諾', name: 'submit', class: 'btn btn-xs btn-info-o open', data: { confirm: "オファーを承諾しますか？"} %><br>
+                      <%= button_tag '断る', name: 'reject', class: 'btn btn-xs btn-danger-o open', data: { confirm: "オファーを拒否しますか？"} %>
+                    <% end %>
+                  <% end %>
+                  <% if o.project_meet.present? %>
+                    <% if o.project_meet.status == ProjectMeet::S_CONTACT %>
+                      <button type="button" class="btn btn-xs btn-info-o open" data-toggle="modal" data-target="#meet-modal">面談の依頼があります</button>
+                      <div class="modal fade" id="meet-modal" tabindex="-1">
+                        <div class="modal-dialog dialog-meet-modal">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h5><%= o.project_meet.start.strftime('%Y/%m/%d %H:%M') %>〜<%= o.project_meet.end.strftime('%Y/%m/%d %H:%M') %>に面談の依頼があります。</h5>
+                            </div>
+                            <div class="modal-body">
+                              <div class="text-center pt-10">
+                                  <%= link_to '承諾', approve_mypage_student_project_applicant_path(o.project_meet), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '面談を承諾しますか？' } %>
+                                  <%= link_to '再調整依頼', mypage_booking_path, class: 'btn btn-xs btn-warning', data: { confirm: '面談日の再調整は予定タブから登録してください' } %>
+                                  <%= link_to '却下', finish_mypage_student_project_applicant_path(o.project_meet), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: '面談を却下しますか？' } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% elsif o.project_meet.status == ProjectMeet::S_APPROVE %>
+                      <button type="button" class="btn btn-xs btn-info-o open" data-toggle="modal" data-target="#appoint-modal">面談承諾</button>
+                      <div class="modal fade" id="appoint-modal" tabindex="-1">
+                        <div class="modal-dialog dialog-meet-modal">
+                          <div class="modal-content">
+                            <div class="modal-header text-center">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h5>面談日</h5>
+                            </div>
+                            <div class="modal-body">
+                              <div class="text-center">
+                                <%= o.project_meet.start.strftime('%Y/%m/%d %H:%M') %>〜<%= o.project_meet.end.strftime('%Y/%m/%d %H:%M') %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% else %>
+                      回答済
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td><%= Offer.names_with_status.key(o.status) %></td>
+              <td><%= Offer.names_with_offer_type.key(o.offer_type) %></td>
+              <td>
+                <button type="button" class="btn btn-xs btn-primary open" data-toggle="modal" data-target="#offer-modal">内容を表示</button>
+              </td>
+              <td><%= l(o.closing_date) %></td>
+            </tr>
+            <div class="modal fade" id="offer-modal" tabindex="-1">
+              <div class="modal-dialog dialog-offer-modal">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5><b><%= o.company.name %></b>からのオファー内容</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-center">
+                      <%= o.description %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      企業からオファーはありません<br>
+      エントリーシートの登録を行うことで、企業の選考を受ける可能性が大幅に向上します。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="text-center">
+              <%= link_to 'エントリーシートを入力する', mypage_reports_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+            </div>
+            <% if false %>
+            <div class="col-md-4">
+              <%= link_to '面談を予約する', mypage_student_applicants_path, class: 'btn btn-primary btn-lg btn-info-o' %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-paper-plane" aria-hidden="true"></i> オファー中の企業一覧</span></h3>
+    <p class="pt-10"><small>※オファー中の企業はオファーした日の翌々月に自動的に削除されます。</small></p>
+  </div>
+  <% if @projects.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table mb-10">
+        <thead>
+        <tr>
+          <th>企業名</th>
+          <th>状況</th>
+          <th>表示</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |p| %>
+            <tr>
+              <td><%= link_to project_path(p.project) do %><%= p.project.company.name %><% end %></td>
+              <td><%= Project::Applicant.name_with_status.key(p.status) %></td>
+              <td>
+                <%= link_to '表示', project_path(p.project), class: 'btn btn-xs btn-info' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      企業へのオファーはありません。<br>
+      オファー受付中の企業を検索してオファーを送ることができます。
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row text-center">
+            <%= link_to 'オファー受付中の企業を検索', projects_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<style>
+a {
+  color: #3c8dbc;
+}
+a:hover,
+a:active,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #72afd2;
+}
+</style>

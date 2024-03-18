@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-6">
+    <%= simple_form_for([:admin, @executed_project]) do |f| %>
+      <%= f.error_notification %>
+      <%= f.association :project, as: :collection_select, collection: Project.where(status: Project::S_EXECUTED) %>
+      <%= f.input :rank %>
+      <%= f.button :submit, class: 'btn-primary' %>
+    <% end %>
+  </div>
+</div>

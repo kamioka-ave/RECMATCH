@@ -1,0 +1,116 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: 'メールアドレスの確認を行いました'
+      send_instructions: '登録方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: 'もしあなたのEメールアドレスが見つかった場合、本人確認についてのメールが数分以内に送られます。'
+    failure:
+      already_authenticated: '既にログインしています。'
+      inactive: 'アカウントがアクティベートされていません。'
+      invalid: 'メールアドレスかパスワードが違います。'
+      invalid_token: '認証キーが不正です。'
+      locked: 'あなたのアカウントはロックされています。'
+      last_attempt: '後1回パスワードを間違えるとアカウントがロックされます'
+      not_found_in_database: 'メールアドレスかパスワードが違います。'
+      timeout: 'セッションがタイムアウトしました。もう一度ログインしてください。'
+      unauthenticated: 'ログインしてください。'
+      unconfirmed: 'ユーザー登録が完了しておりません。RECMATCHから送信されたメールをご確認ください。'
+    mailer:
+      confirmation_on_create_instructions:
+        subject: '[RECMATCH] 登録メールアドレス認証確認'
+      confirmation_instructions:
+        subject: '[RECMATCH] メールアドレスの再設定'
+      reset_password_instructions:
+        subject: '[RECMATCH] パスワードの再設定'
+      unlock_instructions:
+        subject: '[RECMATCH] アカウントのロック解除'
+    omniauth_callbacks:
+      success: '%{kind} アカウントによる個人認証に成功しました。'
+      failure: '%{kind} アカウントによる個人認証に失敗しました（%{reason}）。'
+    passwords:
+      no_token: "このページにはアクセスできません。パスワード復元メールのリンクをコピーした場合には、正しい URL かどうかをお確かめください。"
+      send_instructions: 'パスワードのリセット方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: "もしあなたのEメールアドレスが見つかった場合、パスワード復元用のメールが数分以内に送られます。"
+      updated: 'パスワードを変更しました。'
+      updated_not_active: 'パスワードが正しく変更されました。'
+    registrations:
+      destroyed: 'アカウントを削除しました。またのご利用をお待ちしております。'
+      signed_up: 'ようこそ！ アカウント登録を受け付けました。'
+      signed_up_but_inactive: 'アカウント登録を受け付けました。しかしまだ有効化されておらず、ログインできません。'
+      signed_up_but_locked: 'アカウント登録を受け付けました。しかし、アカウントがロックされているためログインできません。'
+      signed_up_but_unconfirmed: '本人確認用のメールがあなたのEメールアドレスに送られました。メール内のリンクをクリックしてユーザー登録を完了させてください。'
+      updated: 'アカウント情報を変更しました。'
+      update_needs_confirmation: 'アカウント情報を変更しましたが、Eメールアドレスの本人確認用Eメールをお送りしましたので、中のリンクをクリックして証明してください。'
+      duplicated_email: 'このメールアドレスは使用できません。'
+      failure: '確認のメールを送信できませんでした。メールアドレスをご確認ください。'
+    sessions:
+      signed_in: 'ログインしました。'
+      signed_out: 'ログアウトしました。'
+      user:
+        already_signed_out: 'すでにログアウトしています'
+      admin:
+        already_signed_out: 'すでにログアウトしています'
+    unlocks:
+      send_instructions: 'アカウントのロック解除方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: 'アカウントが見つかった場合、アカウントのロック解除方法を数分以内にメールでご連絡します。'
+      unlocked: 'アカウントロックを解除しました。'
+  admin:
+    confirmations:
+      confirmed: 'アカウントを登録しました。'
+      send_instructions: '登録方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: 'もしあなたのEメールアドレスが見つかった場合、本人確認についてのメールが数分以内に送られます。'
+    failure:
+      already_authenticated: '既にログインしています。'
+      inactive: 'アカウントがアクティベートされていません。'
+      invalid: 'メールアドレスかパスワードが違います。'
+      invalid_token: '認証キーが不正です。'
+      locked: 'あなたのアカウントはロックされています。'
+      not_found_in_database: 'メールアドレスかパスワードが違います。'
+      timeout: 'セッションがタイムアウトしました。もう一度ログインしてください。'
+      unauthenticated: 'ログインしてください。'
+      unconfirmed: '本登録を行ってください。'
+    mailer:
+      confirmation_instructions:
+        subject: '[RECMATCH] 登録の確認'
+      reset_password_instructions:
+        subject: '[RECMATCH] パスワードの再設定'
+      unlock_instructions:
+        subject: '[RECMATCH] アカウントのロック解除'
+    omniauth_callbacks:
+      success: '%{kind} アカウントによる個人認証に成功しました。'
+      failure: '%{kind} アカウントによる個人認証に失敗しました（%{reason}）。'
+    passwords:
+      no_token: "このページにはアクセスできません。パスワード復元メールのリンクをコピーした場合には、正しい URL かどうかをお確かめください。"
+      send_instructions: 'パスワードのリセット方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: "もしあなたのEメールアドレスが見つかった場合、パスワード復元用のメールが数分以内に送られます。"
+      updated: 'パスワードを変更しました。'
+      updated_not_active: 'パスワードが正しく変更されました。'
+    registrations:
+      destroyed: 'アカウントを削除しました。またのご利用をお待ちしております。'
+      signed_up: 'ようこそ！ アカウント登録を受け付けました。'
+      signed_up_but_inactive: 'アカウント登録を受け付けました。しかしまだ有効化されておらず、ログインできません。'
+      signed_up_but_locked: 'アカウント登録を受け付けました。しかし、アカウントがロックされているためログインできません。'
+      signed_up_but_unconfirmed: 'ご登録ありがとうございます。本人確認用のメールがあなたのメールアドレスに送られました。メール内のリンクをクリックしてユーザー登録を完了させてください。'
+      updated: 'アカウント情報を変更しました。'
+      update_needs_confirmation: "アカウント情報を変更しましたが、Eメールアドレスの本人確認用Eメールをお送りしましたので、中のリンクをクリックして証明してください。"
+    sessions:
+      signed_in: 'ログインしました。'
+      signed_out: 'ログアウトしました。'
+      user:
+        already_signed_out: 'すでにログアウトしています'
+      admin:
+        already_signed_out: 'すでにログアウトしています'
+    unlocks:
+      send_instructions: 'アカウントのロック解除方法を数分以内にメールでご連絡します。'
+      send_paranoid_instructions: 'アカウントが見つかった場合、アカウントのロック解除方法を数分以内にメールでご連絡します。'
+      unlocked: 'アカウントロックを解除しました。ログインしています。'
+  errors:
+    messages:
+      already_confirmed: "は既に登録済みですのでログインしてください"
+      confirmation_period_expired: "の確認期限が切れました。%{period}以内に確認する必要があります。 新しくリクエストしてください"
+      expired: "の期限が切れましたので、新しくリクエストしてください"
+      not_found: "は見つかりませんでした"
+      not_locked: "はロックされていません"
+      not_saved:
+        one: "1 つのエラーにより %{resource} は保存されませんでした:"
+        other: "%{count} つのエラーにより %{resource} は保存されませんでした:"

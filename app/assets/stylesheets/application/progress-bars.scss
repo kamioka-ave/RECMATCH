@@ -1,0 +1,64 @@
+@import "bootstrap/progress-bars";
+
+// Outer container
+.progress {
+  @media (min-width: $screen-sm-min) {
+    height: 28px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    height: 28px;
+    margin-bottom: 4px;
+  }
+
+  &.p-vote {
+    height: 25px;
+    margin-bottom: 4px;
+  }
+}
+
+// Bar of progress
+.progress-bar {
+  text-align: left;
+  box-shadow: none;
+
+  @media (min-width: $screen-sm-min) {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    font-size: 13px;
+    padding: 3px 8px;
+  }
+
+  &.small {
+    @media (min-width: $screen-sm-min) {
+      font-size: 12px;
+      padding: 3px 8px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      font-size: 12px;
+      padding: 3px 8px;
+    }
+  }
+
+  &.pb-vote {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
+.progress-bar-default {
+  @include progress-bar-variant($gray);
+}
+
+.progress-bar-like {
+  @include progress-bar-variant($pink);
+}
+
+.progress-bar-unlike {
+  @include progress-bar-variant($blue);
+}

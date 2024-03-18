@@ -1,0 +1,365 @@
+<style>
+  .md3-text {
+    font-size: 18px;
+    border-left: solid;
+  }
+  h1.recruit-head {
+    color: #2196F3;
+  }
+  h3.box-title{
+    color: #5E5E5E;
+  }
+</style>
+
+<div id="index_view" class="card" style="border: none;">
+  <div class="card-header">
+    <h1 class="recruit-head">募集要項</h1>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        概要
+      </div>
+      <div class="col-md-9">
+        <%= @project.short_description %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        採用人数
+      </div>
+      <div class="col-md-9">
+        <%= @project.number_hired %>人
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        選考過程
+      </div>
+      <div class="col-md-9">
+        <%= @project.process_selection.html_safe %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        給与例
+      </div>
+      <div class="col-md-9">
+        <%= @project.salary.html_safe %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        応募条件
+      </div>
+      <div class="col-md-9">
+        <%= @project.selection_condition.html_safe %>
+      </div>
+    </div>
+    <br>
+    <h1 class="recruit-head">募集要項詳細</h1>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        求める人物像
+      </div>
+      <div class="col-md-9">
+        <%= @project.student_assumption.html_safe %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        募集職種
+      </div>
+      <div class="col-md-9">
+        <%= @project.recruit_kind.html_safe %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        勤務地
+      </div>
+      <div class="col-md-9">
+        <%= @project.duty_station.html_safe %>
+      </div>
+    </div>
+    <br>
+    <h1 class="recruit-head">給与・待遇・福利厚生</h1>
+    <br>
+    <% if @project.new_salary.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        給与
+      </div>
+      <div class="col-md-9">
+        <%= @project.new_salary.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.raise_salary.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        昇給
+      </div>
+      <div class="col-md-9">
+        <%= @project.raise_salary.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.reward.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        賞与
+      </div>
+      <div class="col-md-9">
+        <%= @project.reward.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.holiday.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        休暇
+      </div>
+      <div class="col-md-9">
+        <%= @project.holiday.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.insurance.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        保険
+      </div>
+      <div class="col-md-9">
+        <%= @project.insurance.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        福利厚生
+      </div>
+      <div class="col-md-9">
+        <%= @project.welfare_program.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% if @project.company_event.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        社内イベント
+      </div>
+      <div class="col-md-9">
+        <%= @project.company_event.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.trial_period.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        試用期間
+      </div>
+      <div class="col-md-9">
+        <%= @project.trial_period.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.other_welfare.present? %>
+    <div class="row">
+      <div class="col-md-3 md3-text">
+        その他
+      </div>
+      <div class="col-md-9">
+        <%= @project.other_welfare.html_safe %>
+      </div>
+    </div>
+    <br>
+    <% end %>
+    <% if @project.sex_ratio.present? || @project.retired_ratio.present? || @project.sex_ratio_hired.present? || @project.continuous.present? || @project.old.present? || @project.training.present? || @project.vacation.present? ||@project.childcare.present? %>
+      <h1 class="recruit-head">職場情報</h1>
+      <br>
+      <% if @project.sex_ratio.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            社員の男女比
+          </div>
+          <div class="col-md-6">
+            <div id="gender_chart_view" class="box">
+              <div class="box-header with-border">
+                <div class="box-tools pull-right">
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="gender_chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.retired_ratio.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            過去3年間の離職率
+          </div>
+          <div class="col-md-6">
+            <div id="retire_chart_view" class="box">
+              <div class="box-header with-border">
+                <div class="box-tools pull-right"></div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="retire_chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.sex_ratio_hired.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            過去3年間の男女別新卒採用者数
+          </div>
+          <div class="col-md-6">
+            <div id="hire_gender_chart_view" class="box">
+              <div class="box-header with-border">
+                <div class="box-tools pull-right"></div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="hire_gender_chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.continuous.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            平均勤続年数
+          </div>
+          <div class="col-md-9">
+            <%= @project.continuous %>年
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.old.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            平均年齢
+          </div>
+            <div class="col-md-9">
+              <%= @project.old %>歳
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.training.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            研修
+          </div>
+          <div class="col-md-9">
+            <%= @project.training.html_safe %>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.vacation.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            有給休暇消化率
+          </div>
+          <div class="col-md-9">
+            <%= @project.vacation.html_safe %>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.childcare.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            育児休暇取得人数
+          </div>
+          <div class="col-md-9">
+            <%= @project.childcare.html_safe %>
+          </div>
+        </div>
+        <br>
+      <% end %>
+    <% end %>
+    <% if @project.recruit_univ.present? || @project.univ_depart.present? %>
+      <h1 class="recruit-head">採用実績</h1>
+      <br>
+      <% if @project.recruit_univ.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            採用実績校
+          </div>
+          <div class="col-md-9">
+            <%= @project.recruit_univ %>
+          </div>
+        </div>
+        <br>
+        <% end %>
+        <% if @project.univ_depart.present? %>
+        <div class="row">
+          <div class="col-md-3 md3-text">
+            採用実績学部
+          </div>
+          <div class="col-md-9">
+            <%= @project.univ_depart %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<%=
+  if @project.sex_ratio.present?
+    jquery_view(
+      'views.mypage.companies.chart.GenderChartView',
+      male: 100 - @project.sex_ratio,
+      female: @project.sex_ratio
+    )
+  end
+%>
+<%=
+  if @project.sex_ratio_hired.present?
+    jquery_view(
+      'views.mypage.companies.chart.HiredGenderChartView',
+      male: 100 - @project.sex_ratio_hired,
+      female: @project.sex_ratio_hired
+    )
+  end
+%>
+<%=
+  if @project.retired_ratio.present?
+    jquery_view(
+      'views.mypage.companies.chart.RetireChartView',
+      employee: 100 - @project.retired_ratio,
+      retired: @project.retired_ratio
+    )
+  end
+%>

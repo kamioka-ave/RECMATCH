@@ -1,0 +1,105 @@
+<ol>
+  <li>
+    金融商品取引契約の概要<br>
+    株式投資型クラウドファンディング業務として行う非上場有価証券の募集の取扱い<br>
+    ※	詳しくは契約締結前交付書面「ファンディング・プロジェクトについて」をご確認ください。
+  </li>
+  <li>
+    募集株式の発行者の商号及び住所、資本金等<br>
+    <%= @project.company.name %><br>
+    <%= @project.company.address %>
+    <table>
+      <tr>
+        <td>資本金：</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td>発行可能株式総数：</td>
+        <td>aaa</td>
+      </tr>
+      <tr>
+        <td>設立日：</td>
+        <td><%= l(@project.company.birth_on) if @project.company.birth_on.present? %></td>
+      </tr>
+      <tr>
+        <td>決算日：</td>
+        <td>bbbb</td>
+      </tr>
+    </table>
+  </li>
+  <li>
+    募集株式の発行者の代表者<br>
+    <% @project.company_presidents.each do |president| %>
+      <%= "#{president.position} #{president.full_name}" %><br>
+    <% end %>
+  </li>
+    <li>
+      募集株式の種類及び数（上限）<br>
+      普通株式　　　　　aa株
+    </li>
+    <li>
+      募集株式の払込金額<br>
+      １株あたり　　　  123円
+    </li>
+    <li>
+      資金使途<br>
+      aaa
+    </li>
+    <li>
+      投資金額のコースおよび株数<br>
+      aaa
+    </li>
+    <li>
+      申込期間<br>
+      <%= "#{l(@project.start_at)}〜#{l(@project.end_at, format: :short)}" %>
+    </li>
+    <li>
+      目標募集額<br>
+      aaa
+    </li>
+      増加する資本金及び資本準備金
+      <table>
+        <tr>
+          <td class="pr-10">増加する資本金の額</td>
+          <td class="pr-10">1株あたり</td>
+          <td class="text-right">100円</td>
+        </tr>
+        <tr>
+          <td class="pr-10">増加する資本準備金の額</td>
+          <td class="pr-10">1株あたり</td>
+          <td class="text-right">200円</td>
+        </tr>
+      </table>
+    </li>
+    <li>
+      募集株式の譲渡制限<br>
+      ooo
+    </li>
+    <li>
+      発行者における株主管理に関する事項<br>
+      aaa<br>
+      【連絡先】<br>
+      電話番号：03-3384-3948<br>
+      メールアドレス：test.com
+    </li>
+    <li>
+      発行者の事業の状況についての定期的な情報の提供方法<br>
+      当社Webサイト上のマイページに情報を掲載します。
+    </li>
+      <li>
+        事業計画の内容<br>
+        【当該資金調達によって可能となる事業計画】
+        <div class="mb-10">
+         aaa
+        </div>
+        なお、売上高成長率の予想は、契約締結前交付書面の別紙1-1、1-2をご参照ください。
+      </li>
+
+    <li>
+      発行者における株主管理に関する事項<br>
+      aaa<br>
+      【連絡先】<br>
+      電話番号：047-8492-2938<br>
+      メールアドレス：test.com
+    </li>
+</ol>

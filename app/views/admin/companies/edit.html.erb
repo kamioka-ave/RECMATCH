@@ -1,0 +1,22 @@
+<% content_for(:page_classes) { 'companies edit' } %>
+
+<section class="content-header">
+  <h1>企業情報の編集</h1>
+</section>
+
+<section class="content">
+  <div id="edit_company_view">
+    <%= simple_form_for([:admin, @company]) do |f| %>
+      <%= f.error_notification %>
+      <%= render 'form', f: f %>
+      <%= f.button :submit, class: 'btn-primary' %>
+    <% end %>
+  </div>
+</section>
+
+<%=
+  jquery_view(
+    'views.admin.companies.EditCompanyView',
+    image: @company.image.present? ? @company.image.url : nil
+  )
+%>

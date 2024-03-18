@@ -1,0 +1,103 @@
+<section class="rec-sl mb-10">
+  <div class="row">
+    <div class="description col-xs-offset-6 col-md-8">
+      <h1>
+        <span style="border-bottom: solid 5px #000080;padding:10px;font-size: 25px;">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="c-primary"><b>I</b></span>NFORMAT<span class="c-primary"><b>I</b></span>ON
+        </span>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-offset-2 col-md-11">
+      <div class="skw-pages">
+        <% @sliders.each_with_index do |slider, i| %>
+          <% if i == 0 %>
+            <div class="skw-page skw-page-<%= i+1 %> active">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content" style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <h2 class="skw-page__heading"><%= slider.project.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.project.name %></p>
+                      <p><%= link_to '企業ページへ', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <h2 class="skw-page__heading"><%= slider.event.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.event.title %></p>
+                      <p><%= link_to 'イベント詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <h2 class="skw-page__heading"><%= slider.title %></h2>
+                      <p class="skw-page__description"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <p><%= link_to '詳細をみる', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% elsif i%2 == 1 && i != 0 %>
+            <div class="skw-page skw-page-<%= i+1 %>">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <h2 class="skw-page__heading"><%= slider.project.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.project.name %></p>
+                      <p><%= link_to '企業ページへ', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <h2 class="skw-page__heading"><%= slider.event.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.event.title %></p>
+                      <p><%= link_to 'イベント詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <h2 class="skw-page__heading"><%= slider.title %></h2>
+                      <p class="skw-page__description"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <p><%= link_to '詳細をみる', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content"  style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+            </div>
+          <% elsif i%2 == 0 && i != 0 %>
+            <div class="skw-page skw-page-<%= i+1 %>">
+              <div class="skw-page__half skw-page__half--left">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content" style="background-image:url(<%= slider.bg_image.present? ? slider.bg_image.url : image_path('views/pages/slider-5.jpg') %>)"></div>
+                </div>
+              </div>
+              <div class="skw-page__half skw-page__half--right">
+                <div class="skw-page__skewed">
+                  <div class="skw-page__content">
+                    <% if slider.slider_type == 'Project' %>
+                      <h2 class="skw-page__heading"><%= slider.project.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.project.name %></p>
+                      <p><%= link_to '企業ページへ', project_path(slider.project), class: 'btn btn-block btn-lg btn-blue-c' %></p>
+                    <% elsif slider.slider_type == 'Event' %>
+                      <h2 class="skw-page__heading"><%= slider.event.company.name %></h2>
+                      <p class="skw-page__description"><%= slider.event.title %></p>
+                      <p><%= link_to 'イベント詳細', event_path(slider.event), class: 'btn btn-block btn-lg btn-yellow-c' %></p>
+                    <% elsif slider.slider_type == 'Headline' %>
+                      <h2 class="skw-page__heading"><%= slider.title %></h2>
+                      <p class="skw-page__description"><%= Headline.names_with_headline_type.key(slider.headline.headline_type) %></p>
+                      <p><%= link_to '詳細をみる', headline_path(slider.headline), class: 'btn btn-block btn-lg btn-grey-c' %></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= jquery_view('views.pages.SliderView', turbolinks: true) %>

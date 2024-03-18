@@ -1,0 +1,473 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">承認依頼中のプロジェクト</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.name') %></dt>
+            <dd><%= @draft.name %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.company') %></dt>
+            <dd><%= @draft.company.name %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.short_description') %></dt>
+            <dd><%= @draft.short_description %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">公開中のプロジェクト</h2>
+        </div>
+        <div class="box-body">
+          <% if @draft.project.present? %>
+            <dl>
+              <dt><%= t('activerecord.attributes.project_draft.name') %></dt>
+              <dd><%= @draft.project.name %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.company') %></dt>
+              <dd><%= @draft.project.company.name %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.short_description') %></dt>
+              <dd><%= @draft.project.short_description %></dd>
+            </dl>
+          <% else %>
+            プロジェクトは公開されていません
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">基本情報</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.solicit') %></dt>
+            <dd><%= number_to_currency(@draft.solicit) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.solicit_limit') %></dt>
+            <dd><%= number_to_currency(@draft.solicit_limit) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.stock_price') %></dt>
+            <dd><%= number_to_currency(@draft.stock_price) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.start_at') %></dt>
+            <dd><%= l(@draft.start_at) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.finish_at') %></dt>
+            <dd><%= l(@draft.finish_at) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.start_on') %></dt>
+            <dd><%= l(@draft.start_on) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.shareholder_meeting_on') %></dt>
+            <dd><%= l(@draft.shareholder_meeting_on) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.is_temporarily_shareholder_meeting') %></dt>
+            <dd><%= @draft.is_temporarily_shareholder_meeting ? 'はい' : 'いいえ' %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.board_meeting_on') %></dt>
+            <dd><%= l(@draft.board_meeting_on) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.agreement_on') %></dt>
+            <dd><%= l(@draft.agreement_on) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.deliv_start_on') %></dt>
+            <dd><%= l(@draft.deliv_start_on) if @draft.deliv_start_on.present? %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.deliv_end_on') %></dt>
+            <dd><%= l(@draft.deliv_end_on) if @draft.deliv_end_on.present? %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.deliv_start_changed_on') %></dt>
+            <dd><%= l(@draft.deliv_start_changed_on) if @draft.deliv_start_changed_on.present? %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.deliv_end_changed_on') %></dt>
+            <dd><%= l(@draft.deliv_end_changed_on) if @draft.deliv_end_changed_on.present? %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.president_name') %></dt>
+            <dd><%= @draft.president_name %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.president_description') %></dt>
+            <dd><%= simple_format(@draft.president_description) if @draft.president_description.present? %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.contract_before_type') %></dt>
+            <dd><%= Project.names_with_contract_before_type.key(@draft.contract_before_type) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.contract_before') %></dt>
+            <dd><%= link_to '表示', @draft.contract_before.url %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.law_notification') %></dt>
+            <dd><%= link_to '表示', @draft.law_notification.url %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.image') %></dt>
+            <dd><%= image_tag @draft.image.thumb.url, width: 192 %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.president_image') %></dt>
+            <dd><%= image_tag(@draft.president_image.present? ? @draft.president_image.thumb.url : 'img_300.jpg', width: 192) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.stamp') %></dt>
+            <dd><%= image_tag @draft.stamp.thumb.url, width: 192 %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.categories') %></dt>
+            <dd>
+              <% @draft.categories.each do |c| %>
+                  <span class="label label-default"><%= c.name %></span>
+              <% end %>
+            </dd>
+            <dt><%= t('activerecord.attributes.project_draft.angel_type') %></dt>
+            <dd><%= Project.names_with_angel_type.key(@draft.angel_type) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.angel_download_start_on') %></dt>
+            <dd><%= @draft.angel_download_start_on.present? ? l(@draft.angel_download_start_on) : '&nbsp;'.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.angel_download_end_on') %></dt>
+            <dd><%= @draft.angel_download_end_on.present? ? l(@draft.angel_download_end_on) : '&nbsp;'.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.angel_arrival_deadline_on') %></dt>
+            <dd><%= @draft.angel_arrival_deadline_on.present? ? l(@draft.angel_arrival_deadline_on) : '&nbsp;'.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.shareholder_benefit') %></dt>
+            <dd><%= @draft.shareholder_benefit ? 'あり' : 'なし' %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.stockholder_management') %></dt>
+            <dd><%= @draft.stockholder_management.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.interview_movie') %></dt>
+            <dd><%= @draft.interview_movie if @draft.interview_movie.present? %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <% if @draft.project.present? %>
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">基本情報</h2>
+          </div>
+          <div class="box-body">
+            <dl>
+              <dt><%= t('activerecord.attributes.project_draft.solicit') %></dt>
+              <dd><%= number_to_currency(@draft.project.solicit) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.solicit_limit') %></dt>
+              <dd><%= number_to_currency(@draft.project.solicit_limit) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.stock_price') %></dt>
+              <dd><%= number_to_currency(@draft.project.stock_price) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.start_at') %></dt>
+              <dd><%= l(@draft.project.start_at) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.finish_at') %></dt>
+              <dd><%= l(@draft.project.finish_at) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.start_on') %></dt>
+              <dd><%= l(@draft.project.start_on) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.shareholder_meeting_on') %></dt>
+              <dd><%= l(@draft.project.shareholder_meeting_on) if @draft.project.shareholder_meeting_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.is_temporarily_shareholder_meeting') %></dt>
+              <dd><%= @draft.project.is_temporarily_shareholder_meeting ? 'はい' : 'いいえ' %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.board_meeting_on') %></dt>
+              <dd><%= l(@draft.project.board_meeting_on) if @draft.project.board_meeting_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.agreement_on') %></dt>
+              <dd><%= l(@draft.project.agreement_on) if @draft.project.agreement_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.deliv_start_on') %></dt>
+              <dd><%= l(@draft.project.deliv_start_on) if @draft.project.deliv_start_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.deliv_end_on') %></dt>
+              <dd><%= l(@draft.project.deliv_end_on) if @draft.project.deliv_end_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.deliv_start_changed_on') %></dt>
+              <dd><%= l(@draft.project.deliv_start_changed_on) if @draft.project.deliv_start_changed_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.deliv_end_changed_on') %></dt>
+              <dd><%= l(@draft.project.deliv_end_changed_on) if @draft.project.deliv_end_changed_on.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.president_name') %></dt>
+              <dd><%= @draft.project.president_name %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.president_description') %></dt>
+              <dd><%= simple_format(@draft.project.president_description) if @draft.project.president_description.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.contract_before_type') %></dt>
+              <dd><%= Project.names_with_contract_before_type.key(@draft.project.contract_before_type) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.contract_before') %></dt>
+              <dd><%= link_to '表示', @draft.project.contract_before.url %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.law_notification') %></dt>
+              <dd><%= link_to '表示', @draft.project.law_notification.url %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.image') %></dt>
+              <dd><%= image_tag @draft.project.image.thumb.url, width: 192 %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.president_image') %></dt>
+              <dd><%= image_tag(@draft.project.president_image.present? ? @draft.project.president_image.thumb.url : 'img_300.jpg', width: 192) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.stamp') %></dt>
+              <dd><%= image_tag(@draft.project.stamp.thumb.url, width: 192)  if @draft.project.stamp.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.categories') %></dt>
+              <dd>
+                <% @draft.project.categories.each do |c| %>
+                  <span class="label label-default"><%= c.name %></span>
+                <% end %>
+              </dd>
+              <dt><%= t('activerecord.attributes.project_draft.angel_type') %></dt>
+              <dd><%= Project.names_with_angel_type.key(@draft.project.angel_type) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.angel_download_start_on') %></dt>
+              <dd><%= @draft.project.angel_download_start_on.present? ? l(@draft.project.angel_download_start_on) : '&nbsp;'.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.angel_download_end_on') %></dt>
+              <dd><%= @draft.project.angel_download_end_on.present? ? l(@draft.project.angel_download_end_on) : '&nbsp;'.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.angel_arrival_deadline_on') %></dt>
+              <dd><%= @draft.project.angel_arrival_deadline_on.present? ? l(@draft.project.angel_arrival_deadline_on) : '&nbsp;'.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project.shareholder_benefit') %></dt>
+              <dd><%= @draft.project.shareholder_benefit ? 'あり' : 'なし' %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.stockholder_management') %></dt>
+              <dd><%= @draft.project.stockholder_management.html_safe if @draft.project.stockholder_management.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.interview_movie') %></dt>
+              <dd><%= @draft.project.interview_movie if @draft.project.interview_movie.present? %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @draft.contract_before_type == ProjectDraft::CONTRACT_BEFORE_TYPE_HTML %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">契約締結前交付書面に必要な情報</h2>
+          </div>
+          <div class="box-body">
+            <dl>
+              <dt><%= t('activerecord.attributes.project_draft.capital') %></dt>
+              <dd><%= @draft.capital.to_s(:delimited) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.capital_submitted_on') %></dt>
+              <dd><%= l(@draft.capital_submitted_on) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.issued_stock') %></dt>
+              <dd><%= @draft.issued_stock.to_s(:delimited) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.transcript_submitted_on') %></dt>
+              <dd><%= l(@draft.transcript_submitted_on) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.issuable_stocks') %></dt>
+              <dd><%= @draft.issuable_stocks.to_s(:delimited) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.stock_price_for_reserve') %></dt>
+              <dd><%= @draft.stock_price_for_reserve.to_s(:delimited) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.support_phone') %></dt>
+              <dd><%= @draft.support_phone %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.support_email') %></dt>
+              <dd><%= @draft.support_email %></dd>
+
+              <% @draft.company_presidents.each.with_index(1) do |president, i| %>
+                <dt><%= "代表者#{i}" %></dt>
+                <dd><%= "#{president.position} #{president.full_name}（#{president.full_name_kana}）" %></dd>
+              <% end %>
+
+              <dt><%= @draft.company.name %>に投資するにあたってのリスク</dt>
+              <dd><%= @draft.risk_summery.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.how_to_use') %></dt>
+              <dd><%= @draft.how_to_use.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.transfer_restriction') %></dt>
+              <dd><%= simple_format(@draft.transfer_restriction) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.company_summery') %></dt>
+              <dd><%= simple_format(@draft.company_summery) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.business_plan') %></dt>
+              <dd><%= simple_format(@draft.business_plan) %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.finance_condition') %></dt>
+              <dd><%= @draft.finance_condition.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.business_plan_validity') %></dt>
+              <dd><%= @draft.business_plan_validity.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.company_eligibility') %></dt>
+              <dd><%= simple_format(@draft.company_eligibility) if @draft.company_eligibility.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.stake') %></dt>
+              <dd><%= simple_format(@draft.stake) if @draft.stake.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.governance_system') %></dt>
+              <dd><%= @draft.governance_system.html_safe %></dd>
+              <% @draft.contract_images.each.with_index(1) do |image, i| %>
+                <dt><%= "画像#{i}" %></dt>
+                <dd><%= image_tag image.image.url, width: '100%' %></dd>
+              <% end %>
+              <dt><%= t('activerecord.attributes.project_draft.contract_attachment') %></dt>
+              <dd>
+                <% if @draft.contract_attachment.present? %>
+                  <%= link_to '表示', @draft.contract_attachment.url %>
+                <% else %>
+                  なし
+                <% end %>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <% if @draft.project.present? %>
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h2 class="box-title">契約締結前交付書面に必要な情報</h2>
+            </div>
+            <div class="box-body">
+              <dl>
+                <dt><%= t('activerecord.attributes.project.capital') %></dt>
+                <dd><%= @draft.project.capital.to_s(:delimited) if @draft.project.capital.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.capital_submitted_on') %></dt>
+                <dd><%= l(@draft.project.transcript_submitted_on) if @draft.project.capital_submitted_on.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.issued_stock') %></dt>
+                <dd><%= @draft.project.issued_stock.to_s(:delimited) if @draft.project.issued_stock.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.transcript_submitted_on') %></dt>
+                <dd><%= l(@draft.project.transcript_submitted_on) if @draft.project.transcript_submitted_on.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.issuable_stocks') %></dt>
+                <dd><%= @draft.project.issuable_stocks.to_s(:delimited) if @draft.project.issuable_stocks.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.stock_price_for_reserve') %></dt>
+                <dd><%= @draft.project.stock_price_for_reserve.to_s(:delimited) if @draft.project.stock_price_for_reserve.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.support_phone') %></dt>
+                <dd><%= @draft.project.support_phone if @draft.project.support_phone.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.support_email') %></dt>
+                <dd><%= @draft.project.support_email if @draft.project.support_email.present? %></dd>
+
+                <% @draft.project.company_presidents.each.with_index(1) do |president, i| %>
+                  <dt><%= "代表者#{i}" %></dt>
+                  <dd><%= "#{president.position} #{president.full_name}（#{president.full_name_kana}）" %></dd>
+                <% end %>
+
+                <dt><%= @draft.project.company.name %>に投資するにあたってのリスク</dt>
+                <dd><%= @draft.project.risk_summery.html_safe if @draft.project.risk_summery.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.how_to_use') %></dt>
+                <dd><%= @draft.project.how_to_use.html_safe if @draft.project.how_to_use.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.transfer_restriction') %></dt>
+                <dd><%= simple_format(@draft.project.transfer_restriction) if @draft.project.transfer_restriction.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.company_summery') %></dt>
+                <dd><%= simple_format(@draft.project.company_summery) if @draft.project.company_summery.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.business_plan') %></dt>
+                <dd><%= simple_format(@draft.project.business_plan) if @draft.project.business_plan.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.finance_condition') %></dt>
+                <dd><%= @draft.project.finance_condition.html_safe if @draft.project.finance_condition.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.business_plan_validity') %></dt>
+                <dd><%= @draft.project.business_plan_validity.html_safe if @draft.project.business_plan_validity.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.company_eligibility') %></dt>
+                <dd><%= simple_format(@draft.project.company_eligibility) if @draft.project.company_eligibility.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.stake') %></dt>
+                <dd><%= @draft.project.stake.html_safe if @draft.project.stake.present? %></dd>
+                <dt><%= t('activerecord.attributes.project.governance_system') %></dt>
+                <dd><%= @draft.project.governance_system.html_safe if @draft.project.governance_system.present? %></dd>
+                <% @draft.project.contract_images.each.with_index(1) do |image, i| %>
+                  <dt><%= "画像#{i}" %></dt>
+                  <dd><%= image_tag image.image.url, width: '100%' %></dd>
+                <% end %>
+                <dt><%= t('activerecord.attributes.project.contract_attachment') %></dt>
+                <dd>
+                  <% if @draft.project.contract_attachment.present? %>
+                    <%= link_to '表示', @draft.project.contract_attachment.url %>
+                  <% else %>
+                    なし
+                  <% end %>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">募集ページにおけるタブの内容</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.description') %></dt>
+            <dd><%= @draft.description.html_safe %></dd>
+
+            <% if @draft.contract_before_type == ProjectDraft::CONTRACT_BEFORE_TYPE_PDF %>
+              <dt><%= t('activerecord.attributes.project_draft.company_info') %></dt>
+              <dd><%= @draft.company_info.html_safe %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.solicit_info') %></dt>
+              <dd><%= @draft.solicit_info.html_safe %></dd>
+            <% end %>
+
+            <dt><%= t('activerecord.attributes.project_draft.risk_info') %></dt>
+            <dd><%= @draft.risk_info.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.financial_info') %></dt>
+            <dd><%= @draft.financial_info.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.review_result') %></dt>
+            <dd><%= @draft.review_result.html_safe %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <% if @draft.project.present? %>
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">募集ページにおけるタブの内容</h2>
+          </div>
+          <div class="box-body">
+            <dl>
+              <dt><%= t('activerecord.attributes.project_draft.description') %></dt>
+              <dd><%= @draft.project.description.html_safe %></dd>
+
+              <% if @draft.contract_before_type == ProjectDraft::CONTRACT_BEFORE_TYPE_PDF %>
+                <dt><%= t('activerecord.attributes.project_draft.company_info') %></dt>
+                <dd><%= @draft.project.company_info.html_safe if @draft.project.company_info.present? %></dd>
+                <dt><%= t('activerecord.attributes.project_draft.solicit_info') %></dt>
+                <dd><%= @draft.project.solicit_info.html_safe if @draft.project.solicit_info.present? %></dd>
+              <% end %>
+
+              <dt><%= t('activerecord.attributes.project_draft.risk_info') %></dt>
+              <dd><%= @draft.project.risk_info.html_safe if @draft.project.risk_info.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.financial_info') %></dt>
+              <dd><%= @draft.project.financial_info.html_safe if @draft.project.financial_info.present? %></dd>
+              <dt><%= t('activerecord.attributes.project_draft.review_result') %></dt>
+              <dd><%= @draft.project.review_result.html_safe if @draft.project.review_result.present? %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table">
+            <tr>
+              <td>状態</td>
+              <td><%= ProjectDraft.names_with_status.key(@draft.status) %></td>
+            </tr>
+            <tr>
+              <td>作成者</td>
+              <td><%= @draft.user.present? ? @draft.user.name : @draft.admin.name %></td>
+            </tr>
+            <tr>
+              <td>承認者</td>
+              <td><%= @draft.authorizer.name if @draft.authorizer.present? %></td>
+            </tr>
+            <tr>
+              <td>更新日</td>
+              <td><%= l(@draft.updated_at) %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="box-footer">
+          <% if @draft.status == ProjectDraft::DS_SUBMITTED %>
+            <% if can?(:admit, ProjectDraft) %>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">承認する</button>
+            <% end %>
+            <% if can?(:deny, ProjectDraft) %>
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reject-modal">差戻す</button>
+            <% end %>
+            <%= link_to 'プレビュー', preview_admin_project_draft_path(@draft), class: 'btn btn-info', target: '_blank' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="approve-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">承認する</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@draft, url: approve_admin_project_draft_path(@draft)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: ProjectDraft::DS_APPROVED %>
+          <%= f.hidden_field :authorizer_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '承認', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reject-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">差戻す</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@draft, url: reject_admin_project_draft_path(@draft)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: ProjectDraft::DS_REJECTED %>
+          <%= f.hidden_field :authorizer_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '差戻す', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

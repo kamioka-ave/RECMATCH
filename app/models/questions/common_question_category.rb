@@ -1,0 +1,2 @@
+class CommonQuestionCategory < QuestionCategory
+end

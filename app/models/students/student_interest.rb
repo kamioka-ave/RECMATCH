@@ -1,0 +1,3 @@
+class StudentInterest < ApplicationRecord
+
+end

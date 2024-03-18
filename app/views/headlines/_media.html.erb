@@ -1,0 +1,17 @@
+<div class="headlines media">
+  <div class="pull-left">
+    <small class="text-muted pr-10"><%= headline.published_at.strftime('%Y年%m月%d日') %></small>
+  </div>
+  <div class="media-body">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-xs btn-block <%= button_by_headline_type(headline.headline_type) %>">
+          <%= Headline.names_with_headline_type.key(headline.headline_type) %>
+        </button>
+      </div>
+      <div class="col-md-10">
+        <%= headline.title %>
+      </div>
+    </div>
+  </div>
+</div>

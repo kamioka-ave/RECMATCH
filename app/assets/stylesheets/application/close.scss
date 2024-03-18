@@ -1,0 +1,12 @@
+@import "bootstrap/close";
+
+.close {
+  @include opacity(0.5);
+  font-weight: normal;
+  text-shadow: none;
+
+  &:hover {
+    color: inherit;
+    @include opacity(1);
+  }
+}

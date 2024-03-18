@@ -1,0 +1,51 @@
+<section class="content-header">
+  <h1>よくある質問</h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+        <tr>
+          <th><%= sort_link(@q, :question_category_type, t('activerecord.attributes.question_category.type')) %></th>
+          <th><%= sort_link(@q, :question_category_name, t('activerecord.attributes.question_category.name')) %></th>
+          <th><%= sort_link(@q, :name, t('activerecord.attributes.question_draft.name')) %></th>
+          <th><%= sort_link(@q, :question_rank, t('activerecord.attributes.question.rank')) %></th>
+          <th><%= sort_link(@q, :question_impressions_count, '閲覧数') %></th>
+          <th><%= sort_link(@q, :question_cached_vote_up, '解決できた') %></th>
+          <th><%= sort_link(@q, :question_cached_vote_down, '解決しない') %></th>
+          <th><%= sort_link(@q, :status, t('activerecord.attributes.question_draft.status')) %></th>
+          <th><%= sort_link(@q, :question_updated_at, '更新日時') %></th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @question_drafts.each do |q| %>
+          <tr>
+            <td><%= QuestionCategory.names_with_type.key(q.question_category.type) %></td>
+            <td><%= q.question_category.name %></td>
+            <td><%= q.question.present? ? link_to(q.name.truncate(12), q.question) : q.name %></td>
+            <td><%= q.question.rank if q.question.present? %></td>
+            <td><%= q.question.impressions_count if q.question.present? %></td>
+            <td><%= q.question.cached_votes_up if q.question.present? %></td>
+            <td><%= q.question.cached_votes_down if q.question.present? %></td>
+            <td><%= QuestionDraft.names_with_status.key(q.status) %></td>
+            <td><%= l(q.question.updated_at) if q.question.present? %></td>
+            <td>
+              <% if can?(:create, Question) %>
+                <%= link_to '編集', edit_admin_question_draft_path(q), class: 'btn btn-xs btn-warning' %>
+                <%= link_to '削除', admin_question_draft_path(q), method: :delete, class: 'btn btn-xs btn-danger', data: {confirm: '削除しますか？' } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= paginate @question_drafts, theme: 'admin' %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+<div>
+  <small class="text-muted pr-10"><%= headline.published_at.strftime('%Y年%m月%d日') %></small>
+  <span class="label <%= label_by_headline_type(headline.headline_type) %>">
+    <%= Headline.names_with_headline_type.key(headline.headline_type) %>
+  </span>
+</div>
+<%= headline.title %>

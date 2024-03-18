@@ -1,0 +1,121 @@
+.timeline {
+  padding: 0;
+  list-style: none;
+  position: relative;
+
+  &:before {
+    top: 0;
+    bottom: 0;
+    left: 7%;
+    width: 4px;
+    content: '';
+    background: #f3f3f3;
+    position: absolute;
+    margin-left: -14px;
+  }
+
+
+  > li {
+    position: relative;
+
+    .cbp_tmlabel {
+      padding: 20px 20px 20px;
+      background: #f3f3f3;
+      line-height: 1.4;
+      clear: both;
+      position: relative;
+      margin: 0 0 40px 10%;
+    }
+
+    .cbp_tmlabel li {
+      padding: 0;
+    }
+
+    .cbp_tmlabel h2 {
+      margin-top: 0px;
+      font-size: 21px;
+      padding: 0 0 5px;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cbp_tmlabel .text-left {
+      float: left;
+    }
+
+    .cbp_tmlabel:after {
+      right: 100%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-right-color: #f3f3f3;
+      border-width: 10px;
+      top: 18px;
+    }
+
+    .cbp_tmicon {
+      top: 22px;
+      left: 7%;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      background: $brand-info;
+      margin: 0 0 0 -17px;
+      box-shadow: 0 0 0 4px #f3f3f3;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .cbp_tmlabel.equal-height-column {
+      height: auto !important;
+    }
+  }
+
+  @media screen and (max-width: 65.375em) {
+    > li .cbp_tmtime span:last-child {
+      font-size: 1.5em;
+    }
+  }
+
+  @media screen and (max-width: 47.2em) {
+    &:before {
+      display: none;
+    }
+
+    > li {
+      .cbp_tmtime {
+        width: 100%;
+        position: relative;
+        padding: 0 0 20px 0;
+      }
+
+      .cbp_tmtime span {
+        text-align: left;
+      }
+
+      .cbp_tmlabel {
+        padding: 1em;
+        font-weight: 400;
+        margin: 0 0 30px 0;
+      }
+
+      .cbp_tmlabel:after {
+        left: 20px;
+        top: -20px;
+        right: auto;
+        border-bottom-color: #f3f3f3;
+        border-right-color: transparent;
+      }
+
+      .cbp_tmicon {
+        left: auto;
+        float: right;
+        position: relative;
+        margin: -55px 5px 0 0px;
+      }
+    }
+  }
+}

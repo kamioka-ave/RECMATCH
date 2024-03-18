@@ -1,0 +1,254 @@
+
+<% content_for(:page_classes) { 'pages about_company' } %>
+<% content_for(:title) { '初めての方へ' } %>
+
+<h1 class="clearfix">
+  初めての方へ
+  <div class="pull-right">
+    <%= link_to '学生はこちら', about_pages_path, class: 'pull-right btn btn-primary mb-20 mr-5' %>
+  </div>
+</h1>
+
+<div class="container mb-40">
+  <section class="mb-80">
+    <h2 class="mb-20">RECMATCH Q&amp;A</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row mb-10">
+          <div class="col-md-1">
+            <%= image_tag 'about/recmatch_col.png', :class => "" %>
+          </div>
+          <div class="text-block col-md-11 ml-4">
+            <strong>RECMATCHとは？</strong>
+            <p class="mt-5 mb-5">ミスマッチZEROの就活を提供するための就活プラットフォームです。
+学生さんと企業がお互いを深く理解し、気軽にコミュニケーションを取ることで
+ミスマッチを解消しようと考えております。
+また登録いただいた学生さんには元外資系コンサル会社リクルーターによる
+就活支援を無料でご利用いただけます。
+</p>
+          </div>
+        </div>
+        <div class="row mb-10">
+          <div class="col-md-1">
+            <%= image_tag  'about/recmatch_col_2.png' %>
+          </div>
+          <div class="text-block col-md-11">
+            <strong>何か書く何か書く何か書く？</strong>
+            <div class="mt-5 mb-5">何か書く</div>
+          </div>
+        </div>
+        <div class="row mb-10">
+          <div class="col-md-1">
+            <%= image_tag  'about/recmatch_col_3.png' %>
+          </div>
+          <div class="text-block col-md-11">
+            <strong>何か書く何か書く何か書く？</strong>
+            <div class="mt-5 mb-5">何か書く</div>
+          </div>
+        </div>
+        <div class="row mb-10">
+          <div class="col-md-1">
+            <%= image_tag  'about/recmatch_col_4.png' %>
+          </div>
+          <div class="text-block col-md-11">
+            <strong>何か書く何か書く何か書く何か書く</strong>
+            <div>
+              何か書く何か書く何か書く
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <%= image_tag 'about/about_qa.png', width: '100%' %>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-80">
+    <h2>RECMATCHの機能について</h2>
+    <div>
+      <%= image_tag  "about/about_function.png", :width => "100%" %>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-20">
+        <div class="about-func">
+          <%= image_tag  "about/about_function_icon.png" %>
+          <div class="row">
+            <div class="col mb-30">
+              <h3>Marketing効果</h3>
+            </div>
+            <div class="col">
+              <p>学生のコメントや応援が自動的にSNS上に拡散されるためMarketing効果を得ることが出来ます。
+                何か書く何か書く何か書く何か書く何か書く何か書く何か書く
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-20">
+        <div class="about-func">
+          <%= image_tag  "about/about_function_icon_2.png" %>
+          <div class="row">
+            <div class="col mb-30">
+              <h3>企業間ネットワーク構築</h3>
+            </div>
+            <div class="col">
+              <p>何か書く何か書く何か書く何か書く何か書く何か書く何か書く何か書く何か書く
+              何か書く何か書く何か書く何か書く何か書く何か書く何か書く
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-80">
+    <h2>RECMATCHのメリットとデメリット</h2>
+    <% unless request.variant.include? :mobile %>
+      <div class="container mb-40">
+        <div class="about-md row row-eq-height mb-20">
+          <div class="col-md-5">
+            <h3>マーケティング効果</h3>
+            <p>・RECMATCHを通じて多くの学生に事業内容を紹介できます。<br>
+              ・学生サポーターのコメントや応援が自動的にSNS上に拡散されるためMarketing効果を得ることが可能です。
+            <p>
+          </div>
+          <div class="col-md-3">
+            <%= image_tag  "about/merit_demerit_col.png", :width => "100%" %>
+          </div>
+          <div class="col-md-3">
+            <h3>何か書く</h3>
+            <p>・何か書く</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if request.variant.include? :mobile %>
+      <%= image_tag "about/mb_about_merit.png", width: '100%' %>
+    <% end %>
+  </section>
+
+  <section class="mb-80">
+    <h2>RECMATCHでの採用募集ページ開設から採用までの流れ</h2>
+    <div class="mb-20">
+      <%= image_tag 'about/about_flow.png', width: '100%' %>
+    </div>
+    <ul class="asterisk">
+      <li>何か書く</li>
+    </ul>
+  </section>
+
+  <section class="mb-80">
+    <h2>
+      データ分析<br>
+      <small>
+        ※ RECMATCHに、2016年12月5日〜<%= l(Date.today) %>までに学生登録のお申し込みをいただいたユーザーが入力したデータに基づき集計したものです。
+        学生の興味のある分野は重複回答の集計となっています。
+      </small>
+    </h2>
+    <div id="student_interests_chart_view">
+      <div class="card">
+        <div class="card-header">
+          <h3>学生の興味のある分野</h3>
+        </div>
+        <div class="card-body card-padding">
+          <canvas id="student_interests_chart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div id="student_assets_chart_view" class="card">
+          <div class="card-header">
+            <h3>学生の男女比</h3>
+          </div>
+          <div class="card-body card-padding">
+            <canvas id="student_assets_chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id="student_gender_chart_view" class="card">
+          <div class="card-header">
+            <h3>学生の年代</h3>
+          </div>
+          <div class="card-body card-padding">
+            <canvas id="student_age_chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-80">
+    <div class="about-risks">
+      <h3 class="mb-40">何か書く</h3>
+      <ol>
+        <li>
+          何か書く
+        </li>
+        <li>
+          何か書く
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <% unless user_signed_in? %>
+    <section class="row mb-80">
+      <div class="col-md-4 col-md-offset-4">
+        <a class="btn btn-lg btn-block btn-info" href="/users/sign_up?as=company">お申込みはこちら（企業）</a>
+      </div>
+    </section>
+  <% end %>
+
+  <section class="new-service mb-80">
+    <h2>外部サービス</h2>
+    <div class="ctnt">
+      <h3>RECMATCH-niconico</h3>
+      <p><em>[何か書く]</em>RECMATCH
+      </p>
+      <p class="text-center text-muted">（2022年リリース予定）</p>
+    </div>
+    <div class="listview lv-lg">
+      <div class="lv-body">
+        <a class="lv-item" href="http://recmatch.niconico.com/" target="_blank">
+          <div class="headlines media">
+            <div class="pull-left"><%= image_tag 'top/logo_paid.png', alt: 'Paid' %></div>
+            <div class="media-body">
+              <h4>ニコニコ的なやつ</h4>
+              議論できるで
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%=
+  jquery_view(
+    'views.pages.StudentAgeChartView',
+    turbolinks: true,
+    age20: @students.select { |i| i.age >= 20 && i.age < 30 }.count,
+    age30: @students.select { |i| i.age >= 30 && i.age < 40 }.count,
+    age40: @students.select { |i| i.age >= 40 && i.age < 50 }.count,
+    age50: @students.select { |i| i.age >= 50 && i.age < 60 }.count,
+    age60: @students.select { |i| i.age >= 60 && i.age < 70 }.count,
+    age70: @students.select { |i| i.age >= 70 && i.age < 80 }.count
+  )
+%>
+<%=
+  jquery_view(
+    'views.pages.BarChartView',
+    turbolinks: true,
+    el: '#student_interests_chart_view',
+    canvas: '#student_interests_chart',
+    interests: @student_interests.map do |i|
+      {
+        name: i.name,
+      }
+    end
+  )
+%>

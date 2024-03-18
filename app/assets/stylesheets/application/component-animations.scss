@@ -1,0 +1,9 @@
+@import "bootstrap/component-animations";
+
+.fade {
+  opacity: 1;
+  @include transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}

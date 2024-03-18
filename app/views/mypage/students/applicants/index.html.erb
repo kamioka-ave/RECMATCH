@@ -1,0 +1,59 @@
+<% content_for(:page_classes) {'mypage students applicants'} %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-bookmark-o" aria-hidden="true"></i> 面談予約の内容</span></h3>
+  </div>
+  <% if !@applicant.nil? %>
+    <div class="card-body table-responsive">
+      <table class="table">
+      <thead>
+      <tr>
+        <th>面談方法</th>
+        <th>希望順位</th>
+        <th>面談予約日時</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= Student::Applicant.names_with_meet_type.key(@applicant.meet_type) %></td>
+          <td>第1希望</td>
+          <td><%= @applicant.book1_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>第2希望</td>
+          <td><%= @applicant.book2_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>第3希望</td>
+          <td><%= @applicant.book3_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+        </tr>
+      </tbody>
+      </table>
+      <div class="row pt-20 mb-20">
+        <div class="col-md-12">
+          <div class="text-center">
+            <%= link_to '変更する', edit_mypage_student_applicant_path(@applicant.id), class: 'btn btn-primary btn-lg btn-success-o' %>
+            <%= link_to 'キャンセル', mypage_student_applicant_path(@applicant.id), method: :delete, data: { confirm: '予約をキャンセルしますか？' }, class: 'btn btn-primary btn-lg btn-danger-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+  <div class="card-body pt-20 card-padding">
+    予約済みの面談はありません
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-center">
+          <%= link_to '面談を予約する', new_mypage_student_applicant_path, class: 'btn btn-primary btn-lg btn-info-o' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <% end %>
+</div>

@@ -1,0 +1,85 @@
+<section class="content-header">
+  <h1>
+    企業一覧
+    <span class="pull-right">
+      <%= search_form_for(@q, url: admin_companies_path, class: 'form-inline', html: { novalidate: true }) do |f| %>
+        <div class="input-group">
+          <%= f.input :id_string_or_name_or_name_kana_or_user_email_cont, required: false, label: false, placeholder: '検索',
+                      input_html: { value: params.key?(:q) && params[:q].key?(:id_string_or_name_or_name_kana_or_user_email_cont) ? params[:q][:id_string_or_name_or_name_kana_or_user_email_cont] : '' } %>
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-search glyphicon-20"></span>
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </span>
+  </h1>
+</section>
+
+<section class="content">
+  <div class="box">
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+        <tr>
+          <th><%= sort_link(@q, :id, 'ID') %></th>
+          <th><%= sort_link(@q, :issuer_id, '企業ID') %></th>
+          <th><%= sort_link(@q, :name, t('activerecord.attributes.company.name')) %></th>
+          <th>担当者</th>
+          <th>一次対応</th>
+          <th>対応済</th>
+          <th><%= sort_link(@q, :creator_id, '登録者') %></th>
+          <th><%= sort_link(@q, :president_name, '代表者氏名') %></th>
+          <th><%= sort_link(@q, :agree_with_pre_judge, '採用募集ページ') %></th>
+          <th>イベント</th>
+          <th><%= sort_link(@q, :status, '状態') %></th>
+          <th><%= sort_link(@q, :updated_at, '更新日時') %></th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @companies.each do |c| %>
+            <% if can? :read, c %>
+              <tr>
+                <td><%= c.id %></td>
+                <td><%= c.issuer_id if c.issuer_id.present? %></td>
+                <td><%= link_to c.name, admin_company_path(c) %></td>
+				<td>
+				<% c.admin_companies.each do |cn| %>
+                <%= cn.admin.name %><br>
+                <% end %>
+                </td>
+                <td id="primary_support_<%= c.id %>">
+                  <%= render 'primary_support', company: c %>
+                </td>
+                <td id="all_support_<%= c.id %>">
+                  <%= render 'all_support', company: c %>
+                </td>
+                <td><%= c.creator.present? ? c.creator.name : '企業' %></td>
+                <td><%= c.president_last_name + c.president_first_name %></td>
+                <td><%= '作成済' if c.agree_with_pre_judge %></td>
+                <td>
+                  <% c.events.each do |p| %>
+                    <div>
+                      <%= link_to p.name.truncate(24), admin_project_path(p) %>
+                    </div>
+                  <% end %>
+                </td>
+                <td><%= Company.names_with_status.key(c.status) %></td>
+                <td><%= l(c.updated_at) %></td>
+                <td>
+                  <%= link_to '詳細', admin_company_path(c), class: 'btn btn-xs btn-info' %>
+                  <%= link_to '編集', edit_admin_company_path(c), class: 'btn btn-xs btn-warning' %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <%= paginate @companies, theme: 'admin' %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+<% if documents.size > 0 %>
+  <div class="box-body no-padding">
+    <table class="table">
+      <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.company/other_document.name') %></th>
+        <th>登録者</th>
+        <th>登録日時</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% documents.each do |d| %>
+        <tr>
+          <td><%= d.name %></td>
+          <td><%= d.uploader.present? ? d.uploader.name : '企業' %></td>
+          <td><%= l(d.created_at) %></td>
+          <td>
+            <%= link_to '表示', d.file.url, class: 'btn btn-xs btn-info' %>
+            <%= link_to '削除', admin_company_other_document_path(@company, d), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="box-body">
+    その他の資料は登録されていません
+  </div>
+<% end %>

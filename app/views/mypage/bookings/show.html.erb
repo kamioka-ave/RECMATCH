@@ -1,0 +1,117 @@
+<% content_for(:page_classes) { 'mypage applicants show' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i> イベント予定一覧</span></h3>
+    <p class="pt-10"><small>※予定はイベント終了日の翌日に自動的に削除されます。</small></p>
+  </div>
+  <% if @events.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>企業名</th>
+          <th>状況</th>
+          <th>イベント</th>
+          <th>日時</th>
+        </tr>
+        </thead>
+        <% @events.each do |e| %>
+          <tbody>
+            <tr>
+              <td><%= link_to project_path(e.event.company.project) do %><%= e.event.company.name %><% end %></td>
+              <td><%= EventApplicant.name_with_status.key(e.status) %></td>
+              <td><%= Event.names_with_event_type.key(e.event.event_type) %></td>
+              <td>
+                <%= e.event.start.strftime('%Y/%m/%d %H:%M') %>〜<%= e.event.end.strftime('%Y/%m/%d %H:%M') %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      参加予定のイベントはありません。<br>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row text-center">
+            <%= link_to 'イベントを検索', events_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border">
+    <h3><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i> 面談予定一覧</span></h3>
+    <p class="pt-10"><small>※予定は面談終了日の翌日に自動的に削除されます。</small></p>
+  </div>
+  <% if @meets.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table mb-20">
+        <thead>
+        <tr>
+          <th>企業名</th>
+          <th>面談可否</th>
+          <th>状況</th>
+          <th>日時</th>
+        </tr>
+        </thead>
+          <% @meets.each do |m|%>
+          <tbody>
+            <tr>
+              <td><%= link_to project_path(m.project) do %><%= m.project.company.name %><% end %></td>
+              <td>
+                <% if m.status == ProjectMeet::S_CONTACT %>
+                  <%= link_to '承諾', approve_mypage_student_project_applicant_path(m), class: 'btn btn-xs btn-primary', method: 'post', data: { confirm: '面談を承諾しますか？' } %><br>
+                  <%= link_to '再調整依頼', new_make_date_mypage_student_project_applicant_path(m), class: 'btn btn-xs btn-warning', remote: true, method: 'post' %><br>
+                  <%= link_to '却下', finish_mypage_student_project_applicant_path(m), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: '面談を却下しますか？' } %>
+                <% elsif m.status == ProjectMeet::S_FINISH %>
+                <% else %>
+                  <%= link_to '再調整依頼', new_make_date_mypage_student_project_applicant_path(m), class: 'btn btn-xs btn-warning', remote: true, method: 'post' %><br>
+                  <%= link_to '却下', finish_mypage_student_project_applicant_path(m), class: 'btn btn-xs btn-danger', method: 'post', data: { confirm: '面談を却下しますか？' } %>
+                <% end %>
+              </td>
+              <td><%= ProjectMeet.name_with_status.key(m.status) %></td>
+              <td><%= m.start.strftime('%Y/%m/%d %H:%M') %>〜<br><%= m.end.strftime('%Y/%m/%d %H:%M') %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+    <div id="meet_modal" class="modal fade" tabindex="-1"></div>
+  <% else %>
+    <div class="card-body pt-20 card-padding">
+      面談の予定はありません。<br>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row text-center">
+            <%= link_to '企業を検索', projects_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
+
+<style>
+a {
+  color: #3c8dbc;
+}
+a:hover,
+a:active,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #72afd2;
+}
+</style>

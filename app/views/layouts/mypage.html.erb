@@ -1,0 +1,50 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="ja"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="ja"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja"> <!--<![endif]-->
+<%= render 'layouts/head' %>
+<body class="<%= yield(:page_classes) %>">
+<div id="sb-site">
+  <%= render 'layouts/header' %>
+  <div class="content-wrapper">
+    <% unless request.variant.include? :mobile %>
+      <div class="menu-wrapper">
+        <div class="container">
+          <ul class="tab-nav">
+            <li>
+              <%= link_to '←戻る', mypage_root_path %>
+            </li>
+            <li class="<%= 'active' if controller.controller_path == 'mypage/students' && controller.action_name == 'details' %>">
+              <%= link_to '登録情報編集', details_mypage_student_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/profiles' %>">
+              <%= link_to 'ユーザー情報編集', edit_mypage_profile_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'users/registrations' && controller.action_name == 'edit' %>">
+              <%= link_to 'パスワードの変更', edit_user_registration_path %>
+            </li>
+            <li class="<%= 'active' if controller_path == 'mypage/emails' %>">
+              <%= link_to 'メールアドレスの変更', edit_mypage_email_path %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'mypage/profiles/thumb' %>
+          </div>
+          <div class="col-md-9">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'layouts/footer' %>
+</div>
+</body>
+</html>

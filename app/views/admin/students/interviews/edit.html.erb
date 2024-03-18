@@ -1,0 +1,68 @@
+<section class="content-header">
+  <h1>学生適合性確認の編集</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for(@interview, url: admin_student_interview_path(student_id: @student), wrapper: 'horizontal_form', html: {class: 'form-horizontal'}) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">収入・資産状況</h2>
+          </div>
+          <div class="box-body">
+            <%= f.input :income_resource, required: true, collection: StudentInterview.names_with_income_resource %>
+            <%= f.input :income_resource_other, as: :string, required: true, maxlength: true %>
+            <%= f.input :income, required: true, collection: StudentInterview.names_with_income %>
+            <%= f.input :assets, required: true, collection: StudentInterview.names_with_assets %>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">投資に関して</h2>
+          </div>
+          <div class="box-body">
+            <%= f.input :capital_character, collection: StudentInterview.names_with_capital_character %>
+            <%= f.input :capital_character_note, wrapper: 'horizontal_form_full' %>
+            <%= f.input :purpose, collection: StudentInterview.names_with_purpose %>
+            <%= f.input :purpose_note, wrapper: 'horizontal_form_full' %>
+            <%= f.association :student_interests, as: 'check_boxes', wrapper: 'horizontal_radio_and_checkboxes' %>
+            <%= f.input :how_to_know, collection: StudentInterview.names_with_how_to_know %>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">投資経験（年）</h2>
+          </div>
+          <div class="box-body">
+            <%= f.input :has_experience, as: :radio_buttons, collection: StudentInterview.names_with_has_experience, required: true, wrapper: 'horizontal_radio_and_checkboxes' %>
+            <%= f.input :exp_stock, required: true %>
+            <%= f.input :exp_bond, required: true %>
+            <%= f.input :exp_trust_fund, required: true %>
+            <%= f.input :exp_commodity_futures, required: true %>
+            <%= f.input :exp_foreign_currency_saving, required: true %>
+            <%= f.input :exp_foreign_exchange, required: true %>
+            <%= f.input :exp_account, required: true %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">メニュー</h2>
+          </div>
+          <div class="box-footer">
+            <%= f.button :submit, class: 'btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<%= jquery_view('views.admin.students.interviews.FormView') %>

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>申し訳ございません</h1>
+      </div>
+      <div class="card-body card-padding">
+        <% if @products.size > 0 %>
+          <div class="mb-20">
+            <p class="lead">ご選択いただいたコースは募集上限金額をオーバーしてしまうため、お客さまのお申込みは受付できませんでした。</p>
+            <i class="fa fa-lightbulb-o"></i> 次のコースはまだお申込みできますので、ご検討ください。
+          </div>
+          <div class="row">
+            <% @products.each do |product| %>
+              <div class="col-md-6">
+                <%= render 'projects/products/thumb', project: @project, product: product %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="lead">募集金額が上限に達したため、お客さまのお申込みは受付できませんでした。</p>
+        <% end %>
+        <%= link_to "#{@project.name}のページに戻る", @project, class: 'btn btn-lg btn-block btn-default' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<table class="table">
+  <tr class="bg-warning">
+    <th colspan="2">基本情報</th>
+  </tr>
+  <tr>
+    <th width="260px">氏名</th>
+    <td><%= student.full_name %></td>
+  </tr>
+  <tr>
+    <th>氏名（カナ）</th>
+    <td><%= student.full_name_kana %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.gender') %></th>
+    <td><%= Student.names_with_gender.key(student.gender) %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.birth_on') %></th>
+    <td><%= l(student.birth_on) %></td>
+  </tr>
+  <tr>
+    <th>生年月日の和暦</th>
+    <td><%= student.birth_on.to_era('%O%E年%-m月%-d日') %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.zip_code') %></th>
+    <td><%= student.zip_code %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.prefecture_id') %></th>
+    <td><%= student.prefecture.name %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.city') %></th>
+    <td><%= student.city %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.address1') %></th>
+    <td><%= student.address1 %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.address2') %></th>
+    <td><%= student.address2 %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.phone') %></th>
+    <% if student.same_phones.size > 0 %>
+      <td class="text-danger">
+        <%= student.phone %><br>
+        次の学生と電話番号が同じです。<br>
+        <% student.same_phones.each do |i| %>
+          <%= link_to i.id, admin_student_path(i) %>
+        <% end %>
+      </td>
+    <% else %>
+      <td><%= student.phone %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student.phone_mobile') %></th>
+    <% if student.same_mobile_phones.size > 0 %>
+      <td class="text-danger">
+        <%= student.phone_mobile %><br>
+        次の学生と電話番号が同じです。<br>
+        <% student.same_mobile_phones.each do |i| %>
+          <%= link_to i.id, admin_student_path(i) %>
+        <% end %>
+      </td>
+    <% else %>
+      <td><%= student.phone_mobile %></td>
+    <% end %>
+  </tr>
+  <tr class="bg-warning">
+    <th colspan="2">勤務先情報</th>
+  </tr>
+</table>

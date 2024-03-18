@@ -1,0 +1,5 @@
+@import "bootstrap/wells";
+
+.well {
+  @include box-shadow(none);
+}

@@ -1,0 +1,70 @@
+<div id="form_view" class="mb-50">
+  <%= f.input :name, required: true %>
+  <%= f.input :name_kana, required: true %>
+  <%= f.input :website, placeholder: 'http://www.sample.com' %>
+
+  <div class="form-group">
+    <div class="col-sm-3">
+      <label class="string required control-label">
+        <span title="required">*</span> 代表者氏名（漢字）
+      </label>
+    </div>
+    <div class="col-sm-9">
+      <%= f.input :president_last_name, label: false, placeholder: '姓', wrapper: 'horizontal_inline' %>
+      <%= f.input :president_first_name, label: false, placeholder: '名', wrapper: 'horizontal_inline' %>
+      <p class="help-block">全角漢字・ひらがなのみ入力可能です。</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-3">
+      <label class="string required control-label">
+        <span title="required">*</span> 代表者氏名（カナ）
+      </label>
+    </div>
+    <div class="col-sm-9">
+      <%= f.input :president_last_name_kana, label: false, placeholder: 'セイ', wrapper: 'horizontal_inline' %>
+      <%= f.input :president_first_name_kana, label: false, placeholder: 'メイ', wrapper: 'horizontal_inline' %>
+      <p class="help-block">全角カタカナのみ入力可能です。</p>
+    </div>
+  </div>
+  <%= f.input :president_birth_on, start_year: Date.today.year - 100, end_year: Date.today.year - 15, wrapper: :horizontal_date %>
+
+  <div class="form-group">
+    <div class="col-sm-3">
+      <label class="string required control-label"><span title="required">*</span> 本社所在地</label>
+    </div>
+    <div class="col-sm-6">
+      <%= f.input :zip_code, label: false, placeholder: '郵便番号', hint: '例）141-0002', wrapper: 'horizontal_form_with_hint' %>
+      <%= f.input :prefecture_id, label: false, placeholder: '都道府県', collection: Prefecture.all, label_method: :name, value_method: :id, hint: '例）東京都', wrapper: 'horizontal_form_with_hint' %>
+      <%= f.input :city, label: false, placeholder: '市区町村', hint: '例）品川区', wrapper: 'horizontal_form_with_hint' %>
+      <%= content_for(:address1_hint) do %>
+        例）東五反田1-2-3<br>
+        町名番地以降は直接ご入力ください。
+      <% end %>
+      <%= f.input :address1, label: false, placeholder: '住所', hint: content_for(:address1_hint), wrapper: 'horizontal_form_with_hint' %>
+      <%= f.input :address2, label: false, placeholder: '建物名', hint: '例）○○ビル ○○F', wrapper: 'horizontal_form_with_hint' %>
+    </div>
+  </div>
+  <%= f.input :phone, required: true, as: 'string', hint: 'ハイフンを入れて入力してください' %>
+  <%= f.input :birth_on, as: :date_time_picker %>
+  <%= f.input :employees, required: true %>
+  <%= f.input :capital, required: true %>
+  <%= f.input :sales_profit, required: true %>
+  <%= f.association :business_type, required: true, as: 'radio_buttons', wrapper: 'horizontal_radio_and_checkboxes' %>
+  <%= f.input :image, required: true, wrapper: 'horizontal_file_input', hint: '拡張子がjpg、jpeg、gif、pngの画像ファイルを選択してください' %>
+  <%= f.hidden_field :image_cache %>
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-3">
+      <span id="preview_image" class="preview" style="display: none"></span>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.companies.basics.FormView',
+    turbolinks: true,
+    image: @company.image.present? ? @company.image.url : ''
+  )
+%>

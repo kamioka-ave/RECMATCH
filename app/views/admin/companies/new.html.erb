@@ -1,0 +1,43 @@
+<% content_for(:page_classes) { 'companies new' } %>
+
+<section class="content-header">
+  <h1>企業の登録</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for(@user, url: admin_companies_path) do |f| %>
+    <%= f.error_notification %>
+    <%= f.hidden_field :role_ids, value: [Role::R_COMPANY] %>
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ユーザー情報</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :email, required: true %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.simple_fields_for :company do |c| %>
+      <%= render 'form', f: c %>
+    <% end %>
+    <%= f.button :submit, class: 'btn-primary' %>
+  <% end %>
+</section>
+
+<%=
+  jquery_view(
+    'views.admin.companies.NewCompanyView',
+    image: @company.image.present? ? @company.image.url : nil
+  )
+%>

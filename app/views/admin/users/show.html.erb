@@ -1,0 +1,68 @@
+<section class="content-header">
+  <h1>ユーザー詳細</h1>
+</section>
+
+<% if @user.profile.is_leave %>
+  <div class="callout callout-danger m-10">
+    <h4>退会申請が行われています</h4>
+    <p>このユーザーからは退会申請が行われています。関係するプロジェクトなどを確認して、このユーザーを削除してください。</p>
+    <%= link_to '削除', admin_user_path(@user), method: :delete, data: {confirm: '削除しますか？' }, class: "btn btn-success" %>
+  </div>
+<% end %>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">基本情報</h3>
+          <div class="box-tools pull-right">
+            <%= link_to edit_admin_user_path(@user), class: 'btn btn-box-tool' do %>
+              <i class="fa fa-wrench"></i>
+            <% end %>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt>ロール</dt>
+            <dd>
+              <% @user.roles.each do |role| %>
+                <% if role.id == 1 %>
+                  <span class="label label-default p-r-10">
+                    <%= link_to Role.names.key(role.id), admin_company_path(@user) %>
+                  </span>
+                <% elsif role.id == 2 %>
+                  <% if @user.student.present? %>
+                    <span class="label label-default p-r-10">
+                      <%= link_to Role.names.key(role.id), admin_student_path(@user.student) %>
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="label label-default p-r-10"><%= Role.names.key(role.id) %></span>
+                <% end %>
+              <% end %>
+            </dd>
+            <dt>ニックネーム</dt>
+            <dd><%= @user.name %></dd>
+            <dt>電子メールの受け取り</dt>
+            <dd><%= @user.profile.receive_notification ? '受け取る' : '受け取らない' %></dd>
+            <dt>他の学生からのフォロー</dt>
+            <dd><%= @user.profile.use_social ? '許可する' : '許可しない' %></dd>
+            <dt><%= t('activerecord.attributes.profile.image') %></dt>
+            <dd>
+              <% if @user.profile.image.present? %>
+                <%= image_tag(@user.profile.image.thumb.url, width: 192) %>
+              <% else %>
+                未入力
+              <% end %>
+            </dd>
+            <dt><%= t('activerecord.attributes.profile.description') %></dt>
+            <dd><%= simple_format(@user.profile.description) if @user.profile.description.present? %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<table class="table">
+  <tr>
+    <th width="260px"><%= t('activerecord.attributes.student_pep.country') %></th>
+    <td class="<%= 'text-danger' if pep.country != 0 %>"><%= StudentPep.names_with_country.key(pep.country) %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.peps') %></th>
+    <td class="<%= 'text-danger' if pep.peps %>"><%= pep.peps ? '該当する' : '該当しない' %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.fatca') %></th>
+    <td class="<%= 'text-danger' if pep.fatca %>"><%= pep.fatca ? '該当する' : '該当しない' %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.applied_at') %></th>
+    <td><%= l(pep.applied_at, format: :short) %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.received_at') %></th>
+    <td><%= l(pep.received_at, format: :short) if pep.received_at.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.receiver') %></th>
+    <td><%= pep.receiver.name if pep.receiver.present? %></td>
+  </tr>
+  <tr>
+    <th><%= t('activerecord.attributes.student_pep.approver') %></th>
+    <td><%= pep.approver.name if pep.approver.present? %></td>
+  </tr>
+</table>

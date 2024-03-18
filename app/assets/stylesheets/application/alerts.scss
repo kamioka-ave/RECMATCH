@@ -1,0 +1,45 @@
+@import "bootstrap/alerts";
+
+.alert {
+  padding-left: 30px;
+  font-size: 13px;
+
+  span {
+    cursor: pointer;
+  }
+
+  &:not(.alert-dismissible) {
+    padding-right: 30px;
+  }
+
+  &.alert-dismissable {
+    padding-right: 44px;
+  }
+}
+
+.alert-unconfirmed {
+  @include alert-variant($blue, transparent, #fff);
+  margin-bottom: 0;
+}
+
+.alert-inside-well {
+  @include alert-variant(#fff, #aaa, $text-color);
+}
+
+.growl-animated {
+  &.alert-info {
+    box-shadow: 0 0 5px fade($alert-info-bg, 50%);
+  }
+
+  &.alert-success {
+    box-shadow: 0 0 5px fade($alert-success-bg, 50%);
+  }
+
+  &.alert-warning {
+    box-shadow: 0 0 5px fade($alert-warning-bg, 50%);
+  }
+
+  &.alert-danger {
+    box-shadow: 0 0 5px fade($alert-danger-bg, 50%);
+  }
+}

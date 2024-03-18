@@ -1,0 +1,3 @@
+$("#transaction-record-modal").modal('hide');
+$("#transaction-records").html("<%= escape_javascript(render('list')) %>");
+notify('', '学生能力を登録しました', 'top', 'center', '', 'success', '', '');

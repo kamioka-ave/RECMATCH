@@ -1,0 +1,12 @@
+<%= simple_form_for(@balance_sheet, url: @balance_sheet.persisted? ? admin_company_balance_sheet_path(@company, @balance_sheet) : admin_company_balance_sheets_path(@company)) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :date %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :name %>
+    </div>
+  </div>
+  <%= f.input :file, label: false %>
+  <%= f.hidden_field :file_cache if @balance_sheet.file.cached? %>
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>

@@ -1,0 +1,113 @@
+<section class="content-header">
+  <h1>学生申請内容の編集</h1>
+</section>
+
+<section class="content">
+  <%= simple_form_for([:admin, @student]) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">お客様情報</h2>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :last_name, required: true %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :first_name, required: true %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :last_name_kana, required: true %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :first_name_kana, required: true %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :gender, as: :radio_buttons, collection: Student.names_with_gender, required: true %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :birth_on, required: true, start_year: Date.today.year - 80, end_year: Date.today.year - 20 %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :zip_code, required: true %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :prefecture_id, collection: Prefecture.all, label_method: :name, value_method: :id, required: true %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :city, required: true %>
+              </div>
+            </div>
+            <%= f.input :address1, required: true %>
+            <%= f.input :address2 %>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">勤務先情報</h2>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :phone, as: 'string' %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :phone_mobile, as: 'string' %>
+              </div>
+            </div>
+            <%= f.input :job, collection: Student.val_with_job, required: true %>
+            <%= f.input :job_details %>
+            <%= f.input :business, collection: Student.names_with_business %>
+            <%= f.input :business_details %>
+            <%= f.input :company, required: true %>
+            <%= f.input :phone_company, as: 'string', required: true %>
+            <%= f.input :email_company %>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">振込口座</h2>
+          </div>
+          <div class="box-body">
+            <%=
+              react_component(
+                'views.admin.students.BankView',
+                bank: @student.bank,
+                branch: @student.bank_branch,
+                errors: @student.errors
+              )
+            %>
+            <%= f.input :bank_account_type, collection: Student.names_with_bank_account_type, as: 'radio_buttons' %>
+            <%= f.input :bank_account_number %>
+            <%= f.input :bank_account_name %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="box">
+          <div class="box-header with-border">
+            <h2 class="box-title">メニュー</h2>
+          </div>
+          <div class="box-footer">
+            <%= f.button :submit, class: 'btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>

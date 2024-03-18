@@ -1,0 +1,3 @@
+$("#status").html("<%= escape_javascript(render('admin/companies/status')) %>");
+$("#reject_modal").modal("hide");
+notify('', '却下しました', 'top', 'center', '', 'success', '', '');

@@ -1,0 +1,60 @@
+.my.company.staffs {
+  .pagination {
+    margin: 10px 10px 0px 0px;
+  }
+  .form-header {
+    background: $mint-tulip;
+    height: 52px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  .form-content {
+    padding-left: 10px;
+    margin-left: inherit;
+
+    &__staff {
+      padding: 20px;
+    }
+    .alert {
+      padding: 15px;
+    }
+  }
+
+  .btn-min {
+    min-width: 70px;
+  }
+
+  @media (max-width: 768px) {
+   .staff.table-responsive > .table > tbody > tr td {
+      display: table-cell;
+      width: auto;
+    }
+
+    .btn-min {
+      min-width: 80px;
+    }
+  }
+
+  .min-w-80 {
+    min-width: 80px;
+  }
+
+  .min-w-100 {
+    min-width: 100px;
+  }
+
+  @media (min-width: 768px) {
+    .title {
+      overflow-wrap: break-word;
+      overflow: -webkit-paged-x;
+
+      &--max-w-200 {
+        max-width: 200px;
+      }
+
+      &--max-w-150 {
+        max-width: 150px;
+      }
+    }
+  }
+}

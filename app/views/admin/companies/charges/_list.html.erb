@@ -1,0 +1,24 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>担当者名</th>
+      <th>権限</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% charges.each do |c| %>
+      <tr>
+        <td><%= c.admin.name %></td>
+        <td>
+          <% c.admin.roles.each do |role| %>
+            <%= AdminRole.names.key(role.id) %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '削除', admin_company_charge_path(@company, c), method: :delete, remote: true, data: {confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,28 @@
+<% content_for(:page_classes) { 'mypage students edit_wizard pages show'} %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <h1>学生登録内容の変更について</h1>
+      </div>
+      <div class="card-body card-padding">
+        <p>
+          <span class="text-danger f-16 f-700">ご氏名又はご住所を変更された場合</span><span class="text-danger">は、現在お住まいのご住所に本人確認用の手続き完了通知書を郵送いたします。</span><br>
+          郵便到着後、10日間以内にお受け取りいただけない場合は一時的にアカウントをロックさせていただく場合がございますのでご注意ください。
+          また、住所変更等の手続きをお申し出いただき、当該手続きにかかる不備等についてご対応いただけなかった場合は、アカウントをロックさせていただく場合がございますのでご注意ください。
+        </p>
+      </div>
+      <div class="card-footer card-padding pt-0">
+        <div class="clearfix">
+          <div class="pull-left">
+            <%= link_to 'キャンセル', details_mypage_student_path, class: 'btn btn-lg btn-info-o' %>
+          </div>
+          <div class="pull-right">
+            <%= link_to '次へ', mypage_student_edit_wizard_student_path, class: 'btn btn-lg btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

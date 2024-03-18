@@ -1,0 +1,282 @@
+@import "bootstrap/buttons";
+
+$bs-height-base: ($line-height-computed + $padding-base-vertical * 2) !default;
+$bs-height-lg:   (floor($font-size-large * $line-height-base) + $padding-large-vertical * 2) !default;
+$bs-height-sm:   (floor($font-size-small * 1.5) + $padding-small-vertical * 2) !default;
+$bs-height-xs:   (floor($font-size-small * 1.2) + $padding-small-vertical + 1) !default;
+
+.btn {
+  white-space: normal;
+
+  &:hover,
+  &:focus,
+  &.focus {
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    transition: all 300ms;
+    opacity: 0.6;
+  }
+}
+
+.btn-float {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px !important;
+
+  &:not(.m-btn) {
+    position: absolute !important;
+  }
+
+  i {
+    font-size: 23px;
+    @include transition(all);
+    @include transition-duration(500ms);
+  }
+
+  &:hover {
+    i {
+      @include rotate(360deg);
+    }
+  }
+
+  &:not(.bgm-white):not(.bgm-gray) {
+    & > i {
+      color: #fff;
+    }
+  }
+
+  &:not(.bgm-white):not(.bgm-gray) {
+    & > i {
+      color: #fff;
+    }
+  }
+
+  &.bgm-white,
+  &.bgm-gray {
+    & > i {
+      color: #333;
+    }
+  }
+}
+
+.btn-yellow-r {
+  @include button-variant(#fff, rgba(187,204,0,0.8), rgba(187,204,0,0));
+}
+
+.btn-yellow-c {
+  @include button-variant(#fff, rgba(255,235,59,0.8), rgba(255,235,59,0));
+}
+
+.btn-grey-c {
+  @include button-variant(#fff, rgba(238,238,238,0.8), rgba(238,238,238,0));
+}
+
+.btn-blue-c {
+  @include button-variant(#fff, rgba(51,122,183,0.8), rgba(51,122,183,0));
+}
+
+.btn-accent {
+  @include button-variant($btn-accent-color, $btn-accent-bg, $btn-accent-bg);
+}
+
+.btn-lightgreen {
+  @include button-variant(#fff, $lightgreen, $lightgreen);
+}
+
+.btn-primary-o {
+  @include button-variant($brand-primary, #fff, $brand-primary);
+}
+
+.btn-info-o {
+  @include button-variant($brand-info, #fff, $brand-info);
+}
+
+.btn-info-inv {
+  @include button-variant($brand-info, #fff, #fff);
+}
+
+.btn-success-inv {
+  @include button-variant($brand-success, #fff, #fff);
+}
+
+.btn-warning-inv {
+  @include button-variant($brand-warning, #fff, #fff);
+}
+
+.btn-warning-r {
+  @include button-variant(#FFFAFA, $yellow, $yellow);
+}
+
+.btn-danger-o {
+  @include button-variant($brand-danger, #fff, $brand-danger);
+}
+
+.btn-success-o {
+  @include button-variant($brand-success, #fff, $brand-success);
+}
+
+.btn-deeporange {
+  @include button-variant(#fff, $deeporange, $deeporange);
+}
+
+.btn-deeporange-inv {
+  @include button-variant($deeporange, #fff, #fff);
+}
+
+.btn-lightyellow {
+  @include button-variant(#484848, $lightyellow, $lightyellow);
+}
+
+.btn-lightteal {
+  @include button-variant(#fff, $lightteal, $lightteal);
+}
+
+.btn-teal-o {
+  @include button-variant($blue, #fff, $blue);
+}
+
+.btn-pink {
+  @include button-variant(#fff, $pink, $pink);
+}
+
+.btn-pink-o {
+  @include button-variant($pink, #fff, $pink);
+}
+
+.btn-popover {
+  color: $brand-info;
+  background-color: #fff;
+  border-color: #fff;
+  font-size: 18px;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.btn-gray {
+  @include button-variant(#999, #eee, #eee);
+}
+
+.btn-gray-inv {
+  @include button-variant(#bdbdbd, #fff, #fff);
+}
+
+.input-group-btn {
+  .btn-gray {
+    @include button-variant(#999, #eee, $input-border);
+  }
+}
+
+.btn-white {
+  @include button-variant(#666, #eee, #eee);
+}
+
+.btn-transparent {
+  @include button-variant($text-muted, transparent, transparent);
+}
+
+.btn-social {
+  position: relative;
+  padding-left: ($bs-height-base + $padding-base-horizontal);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  > :first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: $bs-height-base;
+    line-height: ($bs-height-base + 2);
+    font-size: 1.6em;
+    text-align: center;
+    //border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  &.btn-lg {
+    padding-left: ($bs-height-lg + $padding-large-horizontal);
+    > :first-child {
+      line-height: $bs-height-lg;
+      width: $bs-height-lg;
+      font-size: 1.8em;
+    }
+  }
+  &.btn-sm {
+    padding-left: ($bs-height-sm + $padding-small-horizontal);
+    > :first-child {
+      line-height: $bs-height-sm;
+      width: $bs-height-sm;
+      font-size: 1.4em;
+    }
+  }
+  &.btn-xs {
+    padding-left: ($bs-height-xs + $padding-small-horizontal);
+    > :first-child {
+      line-height: $bs-height-xs;
+      width: $bs-height-xs;
+      font-size: 1.2em;
+    }
+  }
+}
+
+.btn-social-icon {
+  @extend .btn-social;
+  height: ($bs-height-base + 2);
+  width: ($bs-height-base + 2);
+  padding: 0;
+  > :first-child {
+    border: none;
+    text-align: center;
+    width: 100%!important;
+  }
+  &.btn-lg {
+    height: $bs-height-lg;
+    width: $bs-height-lg;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  &.btn-sm {
+    height: ($bs-height-sm + 2);
+    width: ($bs-height-sm + 2);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  &.btn-xs {
+    height: ($bs-height-xs + 2);
+    width: ($bs-height-xs + 2);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@mixin btn-social($color-bg, $color: #fff) {
+  background-color: $color-bg;
+  //@include button-variant($color, $color-bg, rgba(0,0,0,.2));
+  @include button-variant($color, $color-bg, $color-bg);
+}
+
+
+.btn-adn           { @include btn-social(#d87a68); }
+.btn-bitbucket     { @include btn-social(#205081); }
+.btn-dropbox       { @include btn-social(#1087dd); }
+.btn-facebook      { @include btn-social(#3b5998); }
+.btn-flickr        { @include btn-social(#ff0084); }
+.btn-foursquare    { @include btn-social(#f94877); }
+.btn-github        { @include btn-social(#444444); }
+.btn-google        { @include btn-social(#dd4b39); }
+.btn-instagram     { @include btn-social(#3f729b); }
+.btn-linkedin      { @include btn-social(#007bb6); }
+.btn-microsoft     { @include btn-social(#2672ec); }
+.btn-odnoklassniki { @include btn-social(#f4731c); }
+.btn-openid        { @include btn-social(#f7931e); }
+.btn-pinterest     { @include btn-social(#cb2027); }
+.btn-reddit        { @include btn-social(#eff7ff, #000); }
+.btn-soundcloud    { @include btn-social(#ff5500); }
+.btn-tumblr        { @include btn-social(#2c4762); }
+.btn-twitter       { @include btn-social(#55acee); }
+.btn-vimeo         { @include btn-social(#1ab7ea); }
+.btn-vk            { @include btn-social(#587ea3); }
+.btn-yahoo         { @include btn-social(#720e9e); }
+

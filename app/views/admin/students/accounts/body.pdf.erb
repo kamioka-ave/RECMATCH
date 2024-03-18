@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>顧客勘定元帳</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger', media: 'all' %>
+</head>
+<body class="student-account" onload="number_pages()">
+  <table border="1" width="100%">
+    <thead>
+    <tr>
+      <th>申込日</th>
+      <th>約定日</th>
+      <th>数量</th>
+      <th>単価</th>
+      <th>約定金額</th>
+      <th>受渡年月日</th>
+      <th>銘柄名</th>
+      <th>当初の振込期間</th>
+      <th>振込入金日（又は振込出金日）</th>
+      <th>取引種類</th>
+      <th>内訳</th>
+      <th>借方金額</th>
+      <th>貸方金額</th>
+      <th>残高</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @student_transactions.each do |t| %>
+      <tr class="text-center">
+        <td>
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= l(t.order.created_at, format: :short) %>
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= l(t.order.execution_at, format: :short) if t.order.execution_at.present? %>
+          <% end %>
+        </td>
+
+        <!-- 数量 -->
+        <td class="text-right">
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <% if t.transaction_type == StudentTransactionRecord::TR_INVESTOR_CANCEL %>
+              <%= (t.credit / t.order.unit_price).to_s(:delimited) %><span> c</span>
+            <% else %>
+              <%= t.order.amount.to_s(:delimited) %><span style="margin-left: 6px"></span>
+            <% end %>
+          <% end %>
+        </td>
+
+        <!-- 単価 -->
+        <td class="text-right">
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= t.order.unit_price.to_s(:delimited) %>
+          <% end %>
+        </td>
+
+        <!-- 約定金額 -->
+        <td class="text-right">
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <% if t.transaction_type == StudentTransactionRecord::TR_INVESTOR_CANCEL %>
+              <%= t.credit.to_s(:delimited) %><span> c</span>
+            <% else %>
+              <%= t.order.price.to_s(:delimited) %><span style="margin-left: 6px"></span>
+            <% end %>
+          <% end %>
+        </td>
+
+        <td>
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= t.order.project.deliv_at.present? ? l(t.order.project.deliv_at, format: :short) : 'xxxx年x月x日' %>
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= t.order.project.company.name %> 普通株式
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type != StudentTransactionRecord::TR_PAYMENT && t.transaction_type != StudentTransactionRecord::TR_WIRE && t.transaction_type != StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= "#{l(t.order.project.payment_start_on)}〜#{l(t.order.project.payment_at, format: :short)}" if t.order.project.payment_at.present? %>
+          <% end %>
+        </td>
+        <td>
+          <% if t.transaction_type == StudentTransactionRecord::TR_PAYMENT || t.transaction_type == StudentTransactionRecord::TR_WIRE || t.transaction_type == StudentTransactionRecord::TR_WIRE_COMMISSION %>
+            <%= l(t.transaction_at.to_date, format: :long) if t.transaction_at.present? %>
+          <% end %>
+        </td>
+        <td><%= StudentTransactionRecord.names_with_transaction_type.key(t.transaction_type) %></td>
+        <td><%= t.breakdown %></td>
+
+        <!-- 借方金額 -->
+        <td class="text-right">
+          <% if t.transaction_type != StudentTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.depository.to_s(:delimited) if t.depository != 0 %><span style="margin-left: 6px"></span>
+          <% else %>
+            <%= t.credit.to_s(:delimited) %><span> c</span>
+          <% end %>
+        </td>
+
+        <!-- 貸方金額 -->
+        <td class="text-right">
+          <% if t.transaction_type != StudentTransactionRecord::TR_INVESTOR_CANCEL %>
+            <%= t.credit.to_s(:delimited) if t.credit != 0 %><span style="margin-left: 6px"></span>
+          <% end %>
+        </td>
+
+        <td class="text-right"><%= t.balance.to_s(:delimited) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</body>
+</html>

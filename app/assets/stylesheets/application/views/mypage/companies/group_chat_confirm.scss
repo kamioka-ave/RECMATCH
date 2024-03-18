@@ -1,0 +1,29 @@
+@import 'application/variables';
+
+.my.companies.group_chat_confirm {
+
+  .form-title {
+    font-weight: bold;
+  }
+
+  .form-content, .alert {
+    @media (min-width: 1025px) {
+      margin-left: 20%;
+      margin-right: 20%;
+    }
+  }
+
+  .form-content {
+    background: $jumbotron-bg;
+    padding: 5%;
+
+    .confirm-label {
+      float: right;
+    }
+  }
+
+  .form-checkbox {
+    max-width: fit-content;
+    margin: 15px auto;
+  }
+}

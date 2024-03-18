@@ -1,0 +1,344 @@
+<% content_for(:page_classes) { 'projects index' } %>
+<% content_for(:title) { '学生詳細情報' } %>
+
+<div class="mb-20">
+  <div class="container">
+    <div class="clearfix">
+      <div class="pull-left">
+        <h1><span style="border-bottom: solid 3px #000080;"><i class="fa fa-info-circle" aria-hidden="true"></i> 学生詳細情報</span></h1>
+      </div>
+      <div class="pull-right ">
+        <small class="text-muted"><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card z-depth-1">
+      <div class="card-header">
+        <h3 class="text-center">
+          <span><i class="fa fa-registered" aria-hidden="true"></i> 学生プロフィール</span>
+        </h3>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+          <div class="row">
+            <div class="col-md-4">
+              <%= profile_image(@student.profile, width: '100%', alt: @student.profile.name) %>
+              <div class="f-17 clearfix ml-10" style="border-radius: 5px 5px 5px 5px;background-color:#5bc0de;">
+                <div class="text-muted-type text-center">
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                  <small class="f-12 text-muted-type">卒業予定</small>
+                </div>
+                <div class="text-center">
+                  <small class="f-12 text-muted-type"><b><%= @student.graduation_year %>年<%= @student.graduation_month %>月</b></small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body card-padding">
+                <table class="table">
+                  <tbody>
+                  <tr>
+                    <td><b>ユーザ名</b></td>
+                    <td><%= @student.nickname %></td>
+                  </tr>
+                  <tr>
+                    <td><b>お住まい</b></td>
+                    <td><%= @student.prefecture.name %></td>
+                  </tr>
+                  <tr>
+                    <td><b>性別</b></td>
+                    <td><%= Student.names_with_gender.key(@student.gender) %></td>
+                  </tr>
+                  <tr>
+                    <td><b>大学</b></td>
+                    <td>
+                      <% if @student.university == 791 %>
+                        <%= @student.university_name %>
+                      <% else %>
+                        <%= University.names_with_univ.key(@student.university) %>
+                      <% end %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>文系理系</b></td>
+                    <td><%= University.names_with_bunri.key(@student.bunri) %></td>
+                  </tr>
+                  <tr>
+                    <td><b>専攻</b></td>
+                    <td><%= @student.depart %><br><%= @student.depart_detail %></td>
+                  </tr>
+                  <tr>
+                    <td><b>TOEICスコア</b></td>
+                    <td><%= @student.toeic_score %></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row ml-10">
+            <div class="col-md-5 mb-10">
+              <% if Favorite.find_by("company_id = ? AND student_id = ?", current_user.company.id, @student.id).present? %>
+                <%= link_to 'お気に入りから外す', cancel_mypage_company_search_student_path(@student), class: 'btn btn-lg btn-warning open', method: 'delete' %>
+              <% else %>
+                <%= link_to 'お気に入り', favorite_mypage_company_search_student_path(@student), class: 'btn btn-lg btn-warning open', method: 'post' %>
+              <% end %>
+            </div>
+            <div class="col-md-7">
+              <% if Project.find_by(company_id: current_user.company.id).nil? %>
+                <button type="button" class="btn btn-lg btn-gray open" disabled="true">オファー</button>
+                <div><span style="font-size:10px;">※企業ページ作成後にオファーが可能になります。</span></div>
+              <% else %>
+                <button type="button" class="btn btn-lg btn-info-o open" data-toggle="modal" data-target="#offer-modal">オファー</button>
+              <% end %>
+            </div>
+            <div class="modal fade" id="offer-modal" tabindex="-1">
+              <div class="modal-dialog dialog-offer-modal">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5><b><%= @student.nickname %>さん</b>にオファーしますか？</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-center">
+                      <%= simple_form_for(Offer.new, url: offer_mypage_company_search_student_path(@student)) do |f| %>
+                        <%= f.error_notification %>
+                        <div class="row">
+                          <div class=col-md-6>
+                            <%= f.input :offer_type, collection: Offer.names_with_offer_type, label: 'オファータイプ' %>
+                          </div>
+                          <div class=col-md-6>
+                            <%= f.input :closing_date, label: '承諾締切日' %>
+                          </div>
+                        </div>
+                        <%= f.input :description, as: :text, label: 'オファー内容', input_html: { rows: 10 }, hint: '上記テキストボックスの内容は学生に通知されます' %>
+                        <button type="button" class="btn btn-gray" data-dismiss="modal">キャンセル</button>
+                        <% if Project.find_by(company_id: current_user.company.id).nil? %>
+                          <%= f.button :submit, '企業ページ作成後オファーできます', class: 'btn btn-lightteal', disabled: true %>
+                        <% else %>
+                          <%= f.button :submit, 'オファー', class: 'btn btn-lightteal' %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-20">
+          <canvas id="canvasChart" width="300px" height="300px"></canvas>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card z-depth-1">
+      <div class="card-header">
+        <h3><span><i class="fa fa-info-circle" aria-hidden="true"></i> 追加情報</span></h3>
+      </div>
+      <div class="card-body card-padding">
+        <table class="table">
+          <tbody>
+          <tr>
+            <td><b>体育会</b></td>
+            <% if @student.club.blank? %>
+              <td>なし</td>
+            <% else %>
+              <td><%= @student.club %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td><b>研究室</b></td>
+            <% if @student.labo.blank? %>
+              <td>なし</td>
+            <% else %>
+              <td><%= @student.labo %></td>
+            <% end %>
+          </tr>
+          <% if @student.intern_is == true %>
+            <tr>
+              <td><b>インターン先企業</b></td>
+              <td><%= @student.intern_company %></td>
+            </tr>
+            <tr>
+              <td><b>インターン業務内容</b></td>
+              <td><%= @student.intern_detail %></td>
+            </tr>
+          <% else %>
+            <tr>
+              <td><b>インターン先企業</b></td>
+              <td>なし</td>
+            </tr>
+            <tr>
+              <td><b>インターン業務内容</b></td>
+              <td>なし</td>
+            </tr>
+          <% end %>
+          <tr>
+            <td><b>その他資格など</b></td>
+            <% if @student.qualifications.blank? %>
+              <td>なし</td>
+            <% else %>
+              <td><%= @student.qualifications %></td>
+            <% end %>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <% if @student.mypr.present? %>
+        <div class="card-header">
+          <h3><span><i class="fa fa-product-hunt" aria-hidden="true"></i> キャッチフレーズ</span></h3>
+        </div>
+        <div class="card-body card-padding">
+          <div class="row">
+            <%= @student.mypr %>
+          </div>
+        </div>
+      <% end %>
+      <div class="card-header">
+        <h3><span><i class="fa fa-tags" aria-hidden="true"></i> 志望業界</span></h3>
+      </div>
+      <div class="card-body card-padding">
+        <div class="row">
+          <div class="col-md-4">
+            第一志望
+          </div>
+          <div class="col-md-8">
+            <%= Student.names_with_industry.key(@student.industry_1) %>
+          </div>
+        </div>
+        <% if !@student.industry_2.nil? %>
+          <div class="row">
+            <div class="col-md-4">
+              第二志望
+            </div>
+            <div class="col-md-8">
+              <%= Student.names_with_industry.key(@student.industry_2) %>
+            </div>
+          </div>
+        <% end %>
+        <% if !@student.industry_3.nil? %>
+          <div class="row">
+            <div class="col-md-4">
+              第三志望
+            </div>
+            <div class="col-md-8">
+              <%= Student.names_with_industry.key(@student.industry_3) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="card-header">
+        <h3><span><i class="fa fa-tags" aria-hidden="true"></i> 志望職種</span></h3>
+      </div>
+      <div class="card-body card-padding">
+        <div class="row">
+          <div class="col-md-4">
+            第一志望
+          </div>
+          <div class="col-md-8">
+            <%= Student.names_with_occupation.key(@student.occupation_1) %>
+          </div>
+        </div>
+        <% if !@student.occupation_2.nil? %>
+          <div class="row">
+            <div class="col-md-4">
+              第二志望
+            </div>
+            <div class="col-md-8">
+              <%= Student.names_with_occupation.key(@student.occupation_2) %>
+            </div>
+          </div>
+        <% end %>
+        <% if !@student.occupation_3.nil? %>
+          <div class="row">
+            <div class="col-md-4">
+              第三志望
+            </div>
+            <div class="col-md-8">
+              <%= Student.names_with_occupation.key(@student.occupation_3) %>
+            </div>
+          </div>
+        <% end %>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card z-depth-1">
+      <div class="card-header">
+        <h3><span><i class="fa fa-file-text" aria-hidden="true"></i> エントリーシート</span></h3>
+      </div>
+      <div class="card-body card-padding">
+        <% if @reports.size > 0 %>
+          <% @reports.each do |r| %>
+            <div style="border-top: solid 1px #EEEEEE;padding: 10px;">
+              <div class="row">
+                <div class="col-md-5">
+                  <b>テーマ(強み)</b>
+                </div>
+                <div class="col-md-7">
+                  <% if r.report_type == 10 %>
+                    <%= r.report_type_name %>
+                  <% else %>
+                    <%= Report.names_with_type.key(r.report_type) %>
+                  <% end %>
+                </div>
+              </div>
+              <br>
+              <div class="row mb-20">
+                <div class="col-md-12">
+                  <%= r.sheet %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          エントリーシートの登録はありません
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card z-depth-1">
+      <div class="card-header">
+        <h3><span><i class="fa fa-file-text" aria-hidden="true"></i> RECMATCHからの紹介</span></h3>
+      </div>
+      <div class="card-body card-padding">
+        <div style="border-top: solid 1px #EEEEEE;padding: 10px;">
+          <div class="row">
+            <div class="col-md-7">
+              <% if @student.introduce.present? %>
+                <%= simple_format(@student.introduce) %>
+              <% else %>
+                登録がありません
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.companies.chart.DetailSearchChartView',
+    ability_1:(@student_ability.present? ? @student_ability.ability_1 : 0),
+    ability_2:(@student_ability.present? ? @student_ability.ability_2 : 0),
+    ability_3:(@student_ability.present? ? @student_ability.ability_3 : 0),
+    ability_4:(@student_ability.present? ? @student_ability.ability_4 : 0),
+    ability_5:(@student_ability.present? ? @student_ability.ability_5 : 0),
+    ability_6:(@student_ability.present? ? @student_ability.ability_6 : 0),
+    turbolinks: true
+  )
+%>

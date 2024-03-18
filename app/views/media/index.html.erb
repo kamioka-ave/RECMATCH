@@ -1,0 +1,25 @@
+<% content_for(:title) { 'メディア掲載実績' } %>
+
+<div class="card">
+  <div class="card-header">
+    <div class="clearfix">
+      <div class="pull-left">
+        <h1 class="headlines-title">メディア掲載実績</h1>
+      </div>
+      <div class="pull-right">
+        <small><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="listview lv-lg">
+      <div class="lv-body">
+        <% @media.each do |m| %>
+          <%= link_to m.url, class: 'lv-item' do %>
+            <%= render 'media', media: m %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

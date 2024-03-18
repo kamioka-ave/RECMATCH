@@ -1,0 +1,60 @@
+<% content_for(:page_classes) { 'mypage reports index' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header">
+    <h3><span><i class="fa fa-file-text-o" aria-hidden="true"></i> 登録済エントリーシート一覧</span></h3>
+  </div>
+  <% if @reports.size > 0 %>
+    <div class="card-body table-responsive">
+      <table class="table">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>主題</th>
+        <th>内容</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @reports.each.with_index(1) do |d, i| %>
+        <tr>
+          <td><%= i %></td>
+          <td>
+            <% if d.report_type == 10 %>
+              <%= d.report_type_name %>
+            <% else %>
+              <%= Report.names_with_type.key(d.report_type) %></td>
+            <% end %>
+          </td>
+          <td><%= link_to '表示', mypage_report_path(d), class: 'btn btn-xs btn-info-o open'%></td>
+          <td>
+            <%= link_to '編集', edit_mypage_report_path(d), class: 'btn btn-xs btn-warning' %>
+            <%= link_to '削除', mypage_report_path(d), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+  <% else %>
+    <div class="card-body card-padding">
+      エントリーシートの登録はありません。
+    </div>
+  <% end %>
+  <div class="card-footer pt-10">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-5"></div>
+          <div class="col-md-7">
+            <%= link_to 'エントリーシートを登録する', new_mypage_report_path, class: 'btn btn-primary btn-lg btn-success-o' %>
+          </div>
+        </div>
+     </div>
+   </div>
+  </div>
+  <br>
+</div>
+
+
+<%= jquery_view('views.mypage.reports.IndexView', turbolinks: true) %>

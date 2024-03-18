@@ -1,0 +1,2 @@
+class FileUploader < ApplicationUploader
+end

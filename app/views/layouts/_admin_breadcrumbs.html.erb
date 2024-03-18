@@ -1,0 +1,25 @@
+<% if elements.present? %>
+  <ul class="nav navbar-nav">
+    <% elements[0..-2].each do |element| %>
+      <li>
+        <% if element.path.present? %>
+          <a href="<%= element.path %>">
+            <% if element.path == "/admin" %>
+              <i class="fa fa-dashboard mr-5"></i>
+            <% end %>
+            <%= element.name %>
+          </a>
+        <% else %>
+          <a href="#">
+            <%= element.name %>
+          </a>
+        <% end %>
+      </li>
+    <% end %>
+    <li class="active">
+      <a href="#">
+        <%= elements.last.name %>
+      </a>
+    </li>
+  </ul>
+<% end %>

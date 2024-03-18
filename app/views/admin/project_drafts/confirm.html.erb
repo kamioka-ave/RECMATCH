@@ -1,0 +1,202 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">承認依頼中のプロジェクト</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.name') %></dt>
+            <dd><%= @draft.name %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.company') %></dt>
+            <dd><%= @draft.company.name %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.short_description') %></dt>
+            <dd><%= @draft.short_description %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">プロジェクト画像</h2>
+        </div>
+        <div class="box-body">
+            <dl>
+              <dt><%= t('activerecord.attributes.project_draft.image') %></dt>
+              <dd><%= image_tag @draft.image.thumb.url, width: '60%' %></dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+<section>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">基本情報</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.description') %></dt>
+            <dd><%= @draft.description %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.company_info') %></dt>
+            <dd><%= @draft.company_info %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.number_hired') %></dt>
+            <dd><%= @draft.number_hired %>人</dd>
+            <dt><%= t('activerecord.attributes.project_draft.start_at') %></dt>
+            <dd><%= l(@draft.start_at) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.end_at') %></dt>
+            <dd><%= l(@draft.end_at) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.salary') %></dt>
+            <dd><%= @draft.salary.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.process_selection') %></dt>
+            <dd><%= @draft.process_selection.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.selection_condition') %></dt>
+            <dd><%= @draft.selection_condition.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.entry_closed') %></dt>
+            <dd><%= l(@draft.entry_closed) %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.student_assumption') %></dt>
+            <dd><%= @draft.student_assumption.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.recruit_kind') %></dt>
+            <dd><%= @draft.recruit_kind.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.duty_station') %></dt>
+            <dd><%= @draft.duty_station.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.raise_salary') %></dt>
+            <dd><%= @draft.raise_salary.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.reward') %></dt>
+            <dd><%= @draft.reward.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.holiday') %></dt>
+            <dd><%= @draft.holiday.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.welfare_program') %></dt>
+            <dd><%= @draft.welfare_program.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.company_event') %></dt>
+            <dd><%= @draft.company_event.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.sex_ratio') %></dt>
+            <dd>女性比率<%= @draft.sex_ratio %>%</dd>
+            <dt><%= t('activerecord.attributes.project_draft.trial_period') %></dt>
+            <dd><%= @draft.trial_period.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.other_welfare') %></dt>
+            <dd><%= @draft.other_welfare.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.retired_ratio') %></dt>
+            <dd><%= @draft.retired_ratio %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.sex_ratio_hired') %></dt>
+            <dd><%= @draft.sex_ratio_hired %>%</dd>
+            <dt><%= t('activerecord.attributes.project_draft.continuous') %></dt>
+            <dd><%= @draft.continuous %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.old') %></dt>
+            <dd><%= @draft.old %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.training') %></dt>
+            <dd><%= @draft.training.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.vacation') %></dt>
+            <dd><%= @draft.vacation.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.childcare') %></dt>
+            <dd><%= @draft.childcare.html_safe %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.recruit_univ') %></dt>
+            <dd><%= @draft.recruit_univ %></dd>
+            <dt><%= t('activerecord.attributes.project_draft.univ_depart') %></dt>
+            <dd><%= @draft.univ_depart %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">状況</h2>
+        </div>
+        <div class="box-body no-padding">
+          <table class="table">
+            <tr>
+              <td>状態</td>
+              <td><%= ProjectDraft.names_with_status.key(@draft.status) %></td>
+            </tr>
+            <tr>
+              <td>作成者</td>
+              <td><%= @draft.company.name %></td>
+            </tr>
+            <tr>
+              <td>承認者</td>
+              <td><%= @draft.authorizer.name if @draft.authorizer.present? %></td>
+            </tr>
+            <tr>
+              <td>更新日</td>
+              <td><%= l(@draft.updated_at) %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="box-footer">
+          <% if @draft.status = ProjectDraft::S_JUDGE %>
+            <% if can?(:admit, ProjectDraft) %>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">承認する</button>
+            <% end %>
+            <% if can?(:deny, ProjectDraft) %>
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reject-modal">差戻す</button>
+            <% end %>
+            <%= link_to 'プレビュー', preview_admin_project_draft_path(@draft), class: 'btn btn-info', target: '_blank' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% if false %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">募集ページにおけるタブの内容</h2>
+        </div>
+        <div class="box-body">
+          <dl>
+            <dt><%= t('activerecord.attributes.project_draft.description') %></dt>
+            <dd><%= @draft.description.html_safe %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</section>
+
+<div class="modal fade" id="approve-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">承認する</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@draft, url: approve_admin_project_draft_path(@draft)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: ProjectDraft::S_ACTIVE %>
+          <%= f.hidden_field :proposal_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '承認', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reject-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">差戻す</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(@draft, url: reject_admin_project_draft_path(@draft)) do |f| %>
+          <%= f.error_notification %>
+          <%= f.hidden_field :status, value: ProjectDraft::S_BACK %>
+          <%= f.hidden_field :authorizer_id, value: current_admin.id %>
+          <%= f.input :comment, :as => :text, input_html: {rows: 10} %>
+          <%= f.button :submit, '差戻す', class: 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

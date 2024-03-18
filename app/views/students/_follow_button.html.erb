@@ -1,0 +1,23 @@
+<% if user_signed_in? %>
+  <% if current_user.student.present? %>
+    <% if current_user.student.following?(student) %>
+      <%= link_to 'フォロー中', mypage_student_follow_path(student), method: :delete,
+                  remote: :true, data: { confirm: 'フォローを解除しますか？' }, class: 'btn btn-block btn-sm btn-primary' %>
+    <% else %>
+      <%= simple_form_for(Follow.new, url: mypage_student_follows_path, remote: true) do |f| %>
+        <%= f.hidden_field :followable_id, value: student.id %>
+        <%= f.button :submit, 'フォローする', class: 'btn btn-block btn-sm btn-primary-o' %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <button type="button" class="btn btn-block btn-sm btn-primary-o" data-toggle="modal" data-target="#need_student_role_modal">
+      フォローする
+    </button>
+  <% end %>
+<% else %>
+  <% if defined?(@project) %>
+    <%= link_to 'フォローする', redirect_project_mypage_student_follow_path(@project.id), class: 'btn btn-block btn-sm btn-primary-o' %>
+  <% else %>
+    <%= link_to 'フォローする', new_user_session_path, class: 'btn btn-block btn-sm btn-primary-o' %>
+  <% end %>
+<% end %>

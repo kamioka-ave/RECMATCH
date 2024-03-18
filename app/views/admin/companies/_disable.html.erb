@@ -1,0 +1,39 @@
+<div class="row stock-company-form stock-company-form-disable">
+  <div>
+    <div class="col-md-6">
+      <div class="form-group date_time_picker required company_stock_histories_date">
+        <label class="control-label date_time_picker required" for="company_stock_histories_attributes_0_date">
+        <span title="required">*</span> 日付</label>
+        <div class="col-md-12 input-group date form_datetime">
+          <input class="form-control" type="text" value="" name="company[stock_histories_attributes][0][date]" id="company_stock_histories_attributes_0_date">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group float required company_stock_histories_price">
+        <label class="control-label float required" for="company_stock_histories_attributes_0_price">
+          <span title="required">*</span> 金額</label>
+          <input class="form-control numeric float required" min="0" type="number" step="any" value="" name="company[stock_histories_attributes][0][price]" id="company_stock_histories_attributes_0_price">
+        </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group float required company_stock_histories_partition_number">
+        <label class="control-label float required" for="company_stock_histories_attributes_0_partition_number">
+          <span title="required">*</span> 分割数
+        </label>
+        <input class="form-control numeric float required" min="0" type="number" step="any" value="" name="company[stock_histories_attributes][0][partition_number]" id="company_stock_histories_attributes_0_partition_number">
+      </div>
+    </div>
+    <input type="hidden" value="" name="company[stock_histories_attributes][0][id]" id="company_stock_histories_attributes_0_id">
+  </div>
+</div>
+
+<script>
+  $('.stock-company-form-disable :input').attr('disabled', true);
+  $(".form_datetime").datetimepicker({
+    locale: 'ja',
+    format: 'YYYY/MM/DD HH:mm',
+    sideBySide: true
+  });
+</script>

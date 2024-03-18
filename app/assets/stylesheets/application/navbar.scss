@@ -1,0 +1,206 @@
+@import "bootstrap/navbar";
+
+.navbar {
+  margin-bottom: 0;
+  //min-height: 42px;
+  min-height: 30px;
+  .profile img {
+    height:20px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    min-height: 46px;
+  }
+
+  &__overflow-inherit {
+    overflow-y: inherit !important;
+  }
+}
+
+.navbar-nav {
+  @media (min-width: $grid-float-breakpoint) {
+    float: right;
+    margin: 0;
+
+    > li {
+      float: left;
+      > a {
+        font-size: 13px;
+        margin-top:     3px;
+        margin-bottom:  3px;
+        //padding-top:    6px;
+        //padding-bottom: 4px;
+        padding-top:    3px;
+        padding-bottom: 3px;
+        padding-right: 15px;
+        padding-left: 14px;
+      }
+    }
+  }
+
+  .tmn-counts {
+    position: absolute;
+    font-style: normal;
+    background: $brand-danger;
+    padding: 1px 5px;
+    border-radius: 2px;
+    right: 0px;
+    top: -3px;
+    font-size: 10px;
+    line-height: 15px;
+  }
+}
+
+.navbar {
+  .nav {
+    &.navbar-nav {
+      > li {
+        > a {
+          padding-right: 8px;
+        }
+
+        &:last-child {
+          > a {
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar-header {
+  .title {
+    color: #fff;
+    float:left;
+    font-weight:normal;
+    font-size:12px;
+    margin: 0;
+    padding: 9px 0 0 0;
+  }
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    margin-left: -102px !important;  /* 50% of your width */
+    display: block;
+    padding-top: 12px;
+}
+
+.navbar-toggle-left {
+  position: relative;
+  float: left;
+  padding: 9px 10px;
+  background-color: transparent;
+  background-image: none;
+  z-index: 2;
+  border: none;
+  border-radius: 0;
+  color: $gray;
+  left: 0;
+  display: block;
+
+  i {
+    margin: 0;
+    padding: 0;
+    line-height: 100%;
+    color: #555;
+    font-size: 24px;
+  }
+}
+
+.navbar-header-inner {
+  list-style: none;
+  padding: 8px 0;
+  margin-bottom: 0;
+  position: relative;
+
+  & > li {
+    &:not(.pull-right) {
+      float: left;
+    }
+
+    &:not(:last-child) {
+      margin-right: -2px;
+    }
+  }
+
+  .top-menu {
+    list-style: none;
+    padding: 0;
+
+    & > li {
+      display: inline-block;
+      //margin: 0 1px;
+      vertical-align: top;
+      min-width: 40px;
+      position: static !important;
+
+      .dropdown-menu-lg {
+        padding: 0;
+
+        .lv-body {
+          min-height: 295px;
+          overflow-x: hidden;
+        }
+      }
+
+      & > a {
+        //color: #fff;
+        display: block;
+        text-align: center;
+        z-index: 1;
+        position: relative;
+
+        & > i {
+          font-size: 24px;
+          //line-height: 36px;
+        }
+
+        & > .tm-label {
+          //line-height: 35px;
+          white-space: nowrap;
+          //padding: 0 10px;
+          font-size: $font-size-base + 1;
+          text-transform: uppercase;
+        }
+
+        & > .tmn-counts {
+          position: absolute;
+          font-style: normal;
+          color: #fff;
+          background: $red;
+          padding: 1px 5px;
+          border-radius: 2px;
+          right: 7px;
+          top: -3px;
+          font-size: 10px;
+          line-height: 15px;
+        }
+      }
+    }
+
+    .dropdown-menu-lg {
+      width: calc(100% - 28px) !important;
+    }
+
+    .dropdown-menu {
+      right: 10px;
+      top: $navbar-height - 5px;
+    }
+  }
+}
+
+.navbar-default {
+  background-color: #fff;
+  min-height: 48px;
+}
+
+.navbar-inverse {
+  background-color: $black;
+}
+
+.navbar-toggle {
+  border: none;
+}

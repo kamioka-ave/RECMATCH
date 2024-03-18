@@ -1,0 +1,69 @@
+<% content_for(:page_classes) { 'questions index' } %>
+<% content_for(:title) { 'ヘルプ・ユーザーガイド' } %>
+<%= render 'header' %>
+
+<div class="row questions">
+  <div class="col-md-3">
+    <%= render 'menu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="mb-20">
+      <ul class="nav tab-nav">
+        <% QuestionCategory.names_with_type.each do |k, v| %>
+          <li class="<%= 'active' if v == 'CommonQuestionCategory' %>">
+            <a href="#<%= v.underscore %>" data-toggle="tab"><%= k %></a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="tab-content bg-white">
+        <% QuestionCategory.names_with_type.each do |k, v| %>
+          <div class="tab-pane p-10 <%= 'active' if v == 'CommonQuestionCategory' %>" id="<%= v.underscore %>">
+            <div class="row">
+              <% @categories.select {|c| c.type == v}.each do |c| %>
+                <div class="col-md-6">
+                  <div class="category-card">
+                    <div class="card-header small">
+                      <h3><%= c.name %></h3>
+                    </div>
+                    <div class="card-body">
+                      <ul class="nav nav-stacked">
+                        <% c.questions.limit(5).each do |q| %>
+                          <li><%= link_to q.name, q %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                    <div class="card-footer p-10 text-left">
+                      <% if c.questions.size > 4 %>
+                        <%= link_to category_question_path(c) do %>
+                          質問をすべて表示 >
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <div class="p-10">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="category-card">
+                <div class="card-header small">
+                  <h3>最新のFAQ</h3>
+                </div>
+                <div class="card-body">
+                  <ul class="nav nav-stacked">
+                    <% @latest_questions.each do |q| %>
+                      <li><%= link_to q.name, q %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

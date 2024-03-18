@@ -1,0 +1,15 @@
+<%= @resource.email %> 様
+
+このたびはRECMATCHにご登録をしていただき誠にありがとうございます。
+以下のリンクをクリックして、メールアドレスの認証を完了してください。
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+<% if @resource.has_role?(:student) %>
+メールアドレスの認証は、学生登録の際に必須となります。
+<% elsif @resource.has_role?(:company) %>
+メールアドレスの認証は、企業登録の際に必須となります。
+<% end %>
+
+※RECMATCHにご登録いただいたメールアドレス宛に自動送信しています。
+<%= render partial: 'layouts/mailer_sign' %>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>DM</title>
+  <%= stylesheet_link_tag 'dm', media: 'all' %>
+</head>
+<body class="A4">
+<section class="sheet">
+  <div class="address">
+    〒<%= @student.zip_code %><br>
+    <%= @student.prefecture.name %><%= @student.city %><%= @student.address1 %><br>
+    <%= @student.address2 %><br>
+    <div style="text-align: right">
+      <%= @student.last_name %> <%= @student.first_name %>様
+    </div>
+  </div>
+
+  <div class="mb-30" style="text-align: right">
+    <div class="mb-20">
+      <%= Date.today.to_era("%O%E年%m月%d日") %>
+    </div>
+    <div>
+      東京都品川区東五反田５－２５－１８<br>
+      ＥＮＺＯ五反田８Ｆ<br>
+      ＴＥＬ03-6721-6691<br>
+      株式会社UNCHAIN<br>
+      RECMATCH
+    </div>
+  </div>
+
+  <div class="row mb-40">
+    <div class="col-md-12">
+      <div class="text-center mb-20">
+        書類送付のご案内
+      </div>
+      <p>
+        拝啓　時下ますますご清栄のこととお慶び申し上げます。この度は「RECMATCHの学生登録申請」をいただき、誠にありがとうございました。<br>
+        <span style="padding-right: 1em;"></span>つきましては、以下の手順にて学生登録を完了いただきますようお願い申し上げます。
+      </p>
+      <div class="pull-right">
+        敬具
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="text-center mb-30">
+      記
+    </div>
+    <div class="mb-30">
+      1. 下記URLまたはQRコードからRECMATCHにアクセスする
+      <div class="clearfix" style="padding-left: 1.4em;">
+        <table style="border: none">
+          <tr>
+            <td style="font-size: 20px; border: none">
+              https://recmatch.com/users/sign_in
+            </td>
+            <td style="border: none">
+              <%= image_tag 'admin/students/qrcode.gif', width: 120 %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="mb-30">
+      <div class="mb-20">
+        <p>2. ログイン画面上でご登録済のメールアドレスとパスワードを入力してログインする</p>
+        <p>3. ログイン後の画面にある入力欄に以下のアクティベートコードを入力する</p>
+      </div>
+      <div class="text-center">
+        <table align="center" class="mb-20">
+          <tr>
+            <th>アクティベートコード</th>
+            <td><%= l(@student.approved_at + 90.days, format: :short) %>まで有効</td>
+            <td class="code"><%= @student.activation_code %></td>
+          </tr>
+        </table>
+      </div>
+      <div style="font-size: 12px">
+        <p>
+          ※半角英数でご入力ください。大文字・小文字は区別されますのでご注意ください
+        </p>
+        <p>
+          ※このアクティベートコードは登録時のみ必要です。
+        </p>
+        <p>
+          ※有効期間内にアクティベートコードをご入力ください。
+          期間内にご入力いただけない場合は、本コードが無効となりますのでご注意願います。お早目のご入力(学生登録の完了)をお願い申し上げます。
+          今後とも弊社をお引き立てのほど、よろしくお願い申し上げます。
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="pull-right">
+    以上
+  </div>
+</section>
+</body>
+</html>

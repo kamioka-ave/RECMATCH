@@ -1,0 +1,27 @@
+<table class="table">
+  <tr>
+    <th>状態</th>
+    <td><%= Company.names_with_status.key(@company.status) %></td>
+    <td>
+      <% if @company.status == Company::S_APPLIED %>
+        <%= link_to('承認する', activate_admin_company_path(@company), method: :put, class: 'btn btn-xs btn-info') %>
+      <% end %>
+      <% if @company.status != Company::S_REJECTED && @company.project.blank? %>
+        <%= link_to '却下する', admin_company_reject_path(@company), remote: true, class: 'btn btn-xs btn-danger pull-right' %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>登録者</th>
+    <td colspan="2"><%= @company.creator.present? ? @company.creator.name : '企業' %></td>
+  </tr>
+  <% if @company.status == Company::S_REJECTED %>
+    <tr>
+      <th>却下理由</th>
+      <td><%= simple_format(@company.reject_reason) if @company.reject_reason.present? %></td>
+      <td>
+        <%= link_to '編集', admin_company_reject_reason_path(@company), remote: true, class: 'btn btn-xs btn-warning' %>
+      </td>
+    </tr>
+  <% end %>
+</table>

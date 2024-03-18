@@ -1,0 +1,30 @@
+<% content_for(:page_classes) { 'mypage reports index' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header">
+    <h3><span><i class="fa fa-file-text-o" aria-hidden="true"></i> エントリーシート</span></h3>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <% if @report.report_type == 10 %>
+          <th>テーマ：<%= @report.report_type_name %></th>
+        <% else %>
+          <th>テーマ：<%= Report.names_with_type.key(@report.report_type) %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+        <tr width="100%">
+          <td><%= @report.sheet %></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center pt-10">
+      <%= link_to '戻る', mypage_reports_path, class: 'btn btn-lg btn-info-o mb-20' %>
+    </div>
+  </div>
+</div>
+
+<%= jquery_view('views.mypage.reports.IndexView', turbolinks: true) %>

@@ -1,0 +1,40 @@
+<% content_for(:page_classes) { 'mypage applicants show' } %>
+
+<div id="index_view" class="card z-depth-1">
+  <div class="card-header with-border text-center">
+    <h3><span><i class="fa fa-comments-o" aria-hidden="true"></i> チャット</span></h3>
+  </div>
+  <div class="card-body table-responsive pt-20">
+    <% if @can_send_companies.present? %>
+      <% @can_send_companies.each do |c| %>
+        <%= link_to mypage_company_chat_message_path(c.student.id) do %>
+          <div class="container-fluid mb-20">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="pull-left">
+                  <%= profile_image(c.student.user.profile, width: 30, class: 'img-rounded') %>
+                </div>
+                <div class="pull-left pt-5 pl-20">
+                  <%= c.student.name %>
+                </div>
+                <div class="pull-right">
+                  <span style="font-size:20px;"><i class="fa fa-comment-o" aria-hidden="true"></i>
+                    <% if ChatMessage.where('student_id = ? AND company_id = ? AND direct = ? AND kidoku = ?', c.student.id, current_user.company.id, true, false).size > 0 %>
+                      <span class="badge" style="background-color:red;"><%= ChatMessage.where('student_id = ? AND company_id = ? AND direct = ? AND kidoku = ?', c.student.id, current_user.company.id, true, false).size %></span>
+                    <% else %>
+                      <span>　</span>
+                    <% end %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+     <div class="container-fluid mb-20">
+        チャット可能な学生がいません。
+      </div>
+    <% end %>
+  </div>
+</div>

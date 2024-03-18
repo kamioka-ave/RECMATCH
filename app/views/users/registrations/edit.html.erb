@@ -1,0 +1,22 @@
+<% content_for(:page_classes) { 'mypage users edit' } %>
+
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h2><span><i class="fa fa-key" aria-hidden="true"></i> パスワードの変更</span></h2>
+  </div>
+  <div class="card-body card-padding">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :current_password, hint: false, required: true %>
+        <%= f.input :password, autocomplete: "off", hint: false, required: true %>
+        <%= f.input :password_confirmation, autocomplete: "off", required: false %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, '更新する', class: 'btn-info' %>
+      </div>
+    <% end %>
+  </div>
+</div>

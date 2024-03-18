@@ -1,0 +1,27 @@
+<tr>
+  <th width="200px">ロック状態</th>
+  <td>
+    <% if @student.status == Student::S_ACTIVATED %>
+      <%= @student.locked_at.present? ? 'ロック中' : '未ロック' %>
+    <% end %>
+  </td>
+  <% if can?(:show_details, Student) %>
+    <td class="text-right">
+      <% if @student.status == Student::S_ACTIVATED %>
+        <% if @student.locked_at.present? %>
+          <%= link_to 'ロックを解除する', edit_admin_student_unlock_path(@student), remote: true, class: 'btn btn-xs btn-warning' %>
+        <% else %>
+          <%= link_to 'ロックする', edit_admin_student_lock_path(@student), remote: true, class: 'btn btn-xs btn-danger' %>
+        <% end %>
+      <% end %>
+    </td>
+  <% end %>
+</tr>
+
+<% if @student.status == Student::S_ACTIVATED && @student.locked_at.present? %>
+  <tr>
+    <th>ロックしている理由</th>
+    <td><%= simple_format(@student.lock_reason) %></td>
+    <td><%= link_to '編集する', edit_admin_student_lock_reason_path(@student), remote: true, class: 'btn btn-xs btn-warning' %></td>
+  </tr>
+<% end %>

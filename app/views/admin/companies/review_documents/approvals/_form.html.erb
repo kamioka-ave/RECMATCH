@@ -1,0 +1,19 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">
+        承認状態の変更<br>
+        <small>却下する場合はコメント欄にその理由を入力してください</small>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(document, url: admin_company_review_document_approval_path(company, document), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :comment, as: 'text', label: false, input_html: { rows: 6 }, placeholder: 'コメント' %>
+        <%= f.button :submit, '却下する', name: 'reject', class: 'btn-warning' %>
+        <%= f.button :submit, '承認する', class: 'pull-right btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

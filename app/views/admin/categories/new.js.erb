@@ -1,0 +1,1 @@
+$("#category-modal").html("<%= escape_javascript(render(partial: 'form', locals: {title: "カテゴリを追加", category: @category })) %>").modal("show");

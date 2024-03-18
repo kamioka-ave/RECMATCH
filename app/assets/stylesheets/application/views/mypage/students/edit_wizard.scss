@@ -1,0 +1,89 @@
+.my.students.edit_wizard {
+  &.pages {
+    &.show {
+      .card {
+        .card-body {
+          p {
+            line-height: floor($font-size-p * $line-height-p * 1.1);
+          }
+        }
+      }
+    }
+  }
+  &.identifications {
+    &.show {
+      .preview {
+        width: 100%;
+      }
+    }
+  }
+  &.change_notifications {
+    &.show {
+      table {
+        width: 100%;
+
+        &.changes {
+          border: 1px solid $text-color;
+
+          > thead,
+          > tbody,
+          > tfoot {
+            > tr {
+              > th,
+              > td {
+                border: 1px solid $text-color;
+              }
+            }
+          }
+          > thead > tr {
+            > th,
+            > td {
+              border-bottom-width: 2px;
+            }
+          }
+
+          th,
+          td {
+            padding: 8px 8px;
+          }
+
+          th {
+            text-align: center;
+          }
+
+          @media (min-width: $screen-sm-min) {
+            th {
+              &.width-basis {
+                width: 180px;
+              }
+            }
+          }
+        }
+
+        &.sign {
+          th {
+            text-align: right;
+            font-weight: normal;
+            padding: 4px;
+          }
+          td {
+            text-align: left;
+            text-decoration: underline;
+            padding: 4px;
+          }
+        }
+      }
+
+      dl {
+        &.dl-horizontal {
+          dt {
+            font-weight: normal;
+          }
+          dd {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

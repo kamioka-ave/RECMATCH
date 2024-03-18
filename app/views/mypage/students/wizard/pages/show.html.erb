@@ -1,0 +1,147 @@
+<%if @user.confirmed_at.present? %>
+<div class="card">
+  <div class="card-header">
+    <h1 class="text-center mt-30 f-26">メールの認証が完了しました。</h1>
+  </div>
+  <div class="card-body card-padding">
+    <div class="row mb-40">
+      <div class="col-md-10 col-md-offset-1 text-center">
+        <p>RECMATCHのサービスをご利用いただくには<b>① 学生基本情報を入力する(※必須)</b>の登録が必須です。<br>
+        画面下部にある<b>学生基本情報入力</b>ボタンから、学生基本情報の登録を完了させてください。</p>
+        <ul class="asterisk text-muted">
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-center"><span class="order-head">ご登録の流れ</span></h2>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main-timeline4">
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP1</span>
+                <div class="inner-content">
+                  <h3 class="title">① 学生基本情報を入力する(※必須)</h3>
+                  <p class="description">
+                    利用規約に同意の上、学生基本情報を入力します。<br>
+                    こちらの情報を登録し次第、RECMATCHのサービスをご利用になれます。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP2</span>
+                <div class="inner-content">
+                  <h3 class="title">② エントリーシートを入力する(任意)</h3>
+                  <p class="description">
+                    エントリーシートを入力します。<br>
+                    RECMATCHで指定した強みをアピールしていただきます。<br>
+                    こちらは企業から学生みなさんへオファーをする際に参照します。<br>
+                    登録することで就職活動を有利に進めることができます。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP3</span>
+                <div class="inner-content">
+                  <h3 class="title">③ 面談の実施(任意)</h3>
+                  <p class="description">
+                    弊社社員と10分程度の面談を行なっていただきます。<br>
+                    こちらは弊社から企業へ学生のみなさんを推薦するため、参考となるデータを集めるためのものです。<br>
+                    実施していただくことでオファー獲得率が増加します。
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mb-40">
+      <%= link_to '学生基本情報入力', mypage_student_wizard_agreement_path, class: 'btn btn-lg btn-info' %>
+    </div>
+    <div class="text-center">
+      ご不明な点は<%= link_to 'RECMATCH事務局', contact_path, class: 'text-info' %>までお問い合わせください。
+    </div>
+  </div>
+</div>
+<% else %>
+<div class="card">
+  <div class="card-header">
+    <h1 class="text-center mt-30 f-26">認証メールを送信しました。</h1>
+  </div>
+  <div class="card-body card-padding">
+    <div class="row mb-40">
+      <div class="col-md-10 col-md-offset-1">
+        <p>RECMATCHユーザー登録はメールアドレスの認証が必要です。<b><%= @user.email %></b>
+        に認証URL記載のメールを送信しました。メールに記載されているURLをクリックして認証を完了させてください。</p>
+        <ul class="asterisk text-muted">
+          <li>メール受信までに30分前後の時間を要することがあります。</li>
+          <li>30分過ぎても認証メールが届かない場合は、お手数ですが<%= link_to 'RECMATCH相談窓口', contact_path, class: 'text-info' %>までお問い合わせください。</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-center"><span class="order-head">ご登録の流れ</span></h2>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main-timeline4">
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP1</span>
+                <div class="inner-content">
+                  <h3 class="title">① 学生基本情報を入力する(※必須)</h3>
+                  <p class="description">
+                    利用規約に同意の上、学生基本情報を入力します。<br>
+                    こちらの情報を登録し次第、RECMATCHのサービスをご利用になれます。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP2</span>
+                <div class="inner-content">
+                  <h3 class="title">② エントリーシートを入力する(任意)</h3>
+                  <p class="description">
+                    エントリーシートを入力します。<br>
+                    RECMATCHで指定した強みをアピールしていただきます。<br>
+                    こちらは企業から学生みなさんへオファーをする際に参照します。<br>
+                    登録することで就職活動を有利に進めることができます。
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="timeline">
+              <a href="#" class="timeline-content disabled">
+                <span class="year">STEP3</span>
+                <div class="inner-content">
+                  <h3 class="title">③ 面談の実施(任意)</h3>
+                  <p class="description">
+                    弊社社員と10分程度の面談を行なっていただきます。<br>
+                    こちらは弊社から企業へ学生のみなさんを推薦するため、参考となるデータを集めるためのものです。<br>
+                    実施していただくことでオファー獲得率が増加します。
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mb-40">
+    </div>
+    <div class="text-center">
+      ご不明な点は<%= link_to 'RECMATCH相談窓口', contact_path, class: 'text-info' %>までお問い合わせください。
+    </div>
+  </div>
+</div>
+<% end %>
+<style>
+  a.disabled{
+    pointer-events: none;
+  }
+</style>

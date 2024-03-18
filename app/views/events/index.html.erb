@@ -1,0 +1,241 @@
+<% content_for(:page_classes) { 'projects index' } %>
+<% content_for(:title) { 'イベントを探す' } %>
+
+<div class="content-wrapper events">
+  <div class="container">
+    <div class="clearfix mb-10">
+      <div class="pull-left">
+        <h1><span style="border-bottom: solid 3px #000080;"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> イベントを探す</span></h1>
+      </div>
+      <div class="pull-right ">
+        <small class="text-muted"><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small>
+      </div>
+    </div>
+
+    <% if !request.variant.include?(:mobile) %>
+      <% if @new_arrivals.present? && !@has_condition %>
+        <div class="mb-45 text-center">
+          <h4><i class="fa fa-link mr-5 mb-20"></i> 注目の新着イベント</h4>
+          <div class="row">
+            <% @new_arrivals.each do |new_arrival| %>
+              <div class="col-md-3">
+                <%= render 'events/thumb', event: new_arrival %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="mb-25"></div>
+      <% end %>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-3 menu">
+        <div class="mb-20 z-depth-1" style="border-radius: 5px 5px 5px 5px;">
+          <%= form_tag(events_path, method: :get, enforce_utf8: false) do %>
+            <div class="input-group">
+              <input type="text" class="form-control" style="height:40px;" name="keyword" maxlength="50" value="<%= @keyword if @keyword.present? %>" placeholder="キーワード">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" style="height:40px;">
+                  <span class="glyphicon glyphicon-search glyphicon-20"></span>
+                </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% if request.variant.include?(:mobile) %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <button type="button" data-toggle="collapse" data-target="#collapseEvent" aria-expanded="false" aria-controls="collapseEvent" id="collapseEvent-btn">
+            <h2><i class="fa fa-search mr-10"></i>イベントを探す
+              <i class="fa fa-angle-double-down fa-1x" aria-hidden="true"></i>
+            </h2>
+            </button>
+          </div>
+          <div class="card-body collapse" id="collapseEvent" aria-expanded="false">
+            <ul class="nav nav-pills nav-stacked">
+              <% if false %>
+                <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'in_progress' %>">
+                  <%= link_to events_path(order: 'in_progress') do %>
+                    開催予定のイベント <i class="fa fa-angle-right"></i>
+                  <% end %>
+                </li>
+              <% end %>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'limit' %>">
+                <%= link_to events_path(order: 'limit') do %>
+                  開催日が近いイベント <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'new' %>">
+                <%= link_to events_path(order: 'new') do %>
+                  新着イベント <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% else %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <h2><i class="fa fa-search mr-10"></i>イベントを探す</h2>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-pills nav-stacked">
+              <% if false %>
+                <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'in_progress' %>">
+                  <%= link_to events_path(order: 'in_progress') do %>
+                    開催予定のイベント <i class="fa fa-angle-right"></i>
+                  <% end %>
+                </li>
+              <% end %>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'limit' %>">
+                <%= link_to events_path(order: 'limit') do %>
+                  開催日が近いイベント <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('order') && params[:order] == 'new' %>">
+                <%= link_to events_path(order: 'new') do %>
+                  新着イベント <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% end %>
+
+        <% if request.variant.include?(:mobile) %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <button type="button" data-toggle="collapse" data-target="#collapseEventCategory" aria-expanded="false" aria-controls="collapseEventCategory" id="collapseEventCategory-btn">
+            <h2><i class="fa fa-tags mr-10"></i>カテゴリから探す
+              <i class="fa fa-angle-double-down fa-1x" aria-hidden="true"></i>
+            </h2>
+            </button>
+          </div>
+          <div class="card-body collapse" id="collapseEventCategory" aria-expanded="false">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == 0 %>">
+                <%= link_to events_path(category: 0) do %>
+                  会社説明会 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == 1 %>">
+                <%= link_to events_path(category: 1) do %>
+                  社員交流会 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == 2 %>">
+                <%= link_to events_path(category: 2) do %>
+                  インターン <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == 3 %>">
+                <%= link_to events_path(category: 3) do %>
+                  その他 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% else %>
+        <div class="card z-depth-1">
+          <div class="card-header small">
+            <h2><i class="fa fa-tags mr-10"></i>カテゴリから探す</h2>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == '0' %>">
+                <%= link_to events_path(category: 0) do %>
+                  会社説明会 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == '1' %>">
+                <%= link_to events_path(category: 1) do %>
+                  社員交流会 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == '2' %>">
+                <%= link_to events_path(category: 2) do %>
+                  インターン <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+              <li class="<%= 'active' if params.has_key?('category') && params[:category] == '3' %>">
+                <%= link_to events_path(category: 3) do %>
+                  その他 <i class="fa fa-angle-right"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <% if request.variant.include?(:mobile) %>
+        <% if @new_arrivals.present? && !@has_condition %>
+          <div class="pt-20 mb-45 text-center">
+            <h4><i class="fa fa-link mr-5 mb-20"></i> 注目の新着イベント</h4>
+            <div class="row">
+              <% @new_arrivals.each do |new_arrival| %>
+                <div class="col-md-3">
+                  <%= render 'events/thumb', event: new_arrival %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="mb-25"></div>
+        <% end %>
+      <% end %>
+      <div class="col-md-9 text-center">
+        <% if @keyword.present? %>
+          <h4>"<%= @keyword %>"の検索結果<br></h4>
+        <% elsif @keyword.nil? && @events.size > 0 %>
+          <h4>イベント一覧<br></h4>
+        <% end %>
+        <% if @keyword.present? && @events.blank? %>
+            <h4>0件</h4>
+        <% end %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <% @events.each.with_index(1) do |event, i| %>
+                <div class="col-md-4">
+                  <%= render 'events/thumb', event: event %>
+                </div>
+                <% if i%3 == 0 %>
+                  </div>
+                  <div class="row">
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <%= paginate(@events) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#collapseEvent-btn').on('click',function(){
+    var chack = $("#collapseEvent").attr("aria-expanded")
+    if( chack == "false" ){
+      $('button#collapseEvent-btn i.fa-angle-double-down').addClass('fa-angle-double-up');
+      $('button#collapseEvent-btn i.fa-angle-double-down').removeClass('fa-angle-double-down');
+    }else{
+      $('button#collapseEvent-btn i.fa-angle-double-up').addClass('fa-angle-double-down');
+      $('button#collapseEvent-btn i.fa-angle-double-up').removeClass('fa-angle-double-up');
+    }
+  });
+  $('#collapseEventCategory-btn').on('click',function(){
+    var chack = $("#collapseEventCategory").attr("aria-expanded")
+    if( chack == "false" ){
+      $('button#collapseEventCategory-btn i.fa-angle-double-down').addClass('fa-angle-double-up');
+      $('button#collapseEventCategory-btn i.fa-angle-double-down').removeClass('fa-angle-double-down');
+    }else{
+      $('button#collapseEventCategory-btn i.fa-angle-double-up').addClass('fa-angle-double-down');
+      $('button#collapseEventCategory-btn i.fa-angle-double-up').removeClass('fa-angle-double-up');
+    }
+  });
+</script>

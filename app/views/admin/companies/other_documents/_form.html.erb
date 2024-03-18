@@ -1,0 +1,18 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">資料を登録</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@document, url: admin_company_other_documents_path(@company), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :company_id, value: @document.company_id %>
+        <%= f.input :name %>
+        <%= f.input :file %>
+        <%= f.input :description, placeholder: 'コメント等がある場合はご記入ください', input_html: { rows: 6 } %>
+        <%= f.button :submit, '登録する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

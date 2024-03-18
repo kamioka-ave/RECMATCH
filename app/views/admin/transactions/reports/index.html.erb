@@ -1,0 +1,11 @@
+<section class="content-header">
+  <h1>取引日記帳</h1>
+</section>
+
+<section class="content">
+  <p>約定日ベース</p>
+  <%= simple_form_for(DailyReport.new, url: admin_transactions_reports_path) do |f| %>
+    <%= f.input :date, as: 'date', label: '日付' %>
+    <%= f.submit '表示', class: 'btn btn-info' %>
+  <% end %>
+</section>

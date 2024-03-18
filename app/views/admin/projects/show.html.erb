@@ -1,0 +1,142 @@
+<% content_for(:page_classes) { 'projects show' } %>
+<% content_for(:title) { @project.name } %>
+<% content_for(:description) { @project.short_description } %>
+<% content_for(:image) { @project.image.url } %>
+
+<div class="introduction mb-25">
+  <h1><%= @project.name %></h1>
+  <div class="row">
+    <div class="col-md-8">
+      <% if @project.interview_movie.present? %>
+        <div id="movie" class="embed-responsive embed-responsive-16by9">
+          <%= image_tag(@project.image.url, width: '100%', alt: @project.name, id: 'movie_image') %>
+          <span class="youtube-play">
+            <i class="fa fa-youtube-play fa-5x"></i>
+          </span>
+        </div>
+        <script>
+          $('#movie').click(function (){
+            $('.youtube-play').remove();
+            $('#movie_image').after('<iframe src="//www.youtube.com/embed/<%= @project.interview_movie %>?autoplay=1" width="100%" class="embed-responsive-item"></iframe>').remove();
+          });
+        </script>
+      <% else %>
+        <%= image_tag(@project.image.url, width: '100%', alt: @project.name) %>
+      <% end %>
+    </div>
+    <div class="col-md-4 details">
+      <% if !@project.status == Project::S_ACTIVE %>
+        <%= render 'mypage/companies/projects/details_failed' %>
+      <% elsif @project.status == Project::S_ACTIVE && @project.start_at <= Time.zone.now %>
+        <%= render 'mypage/companies/projects/details_succeeded' %>
+      <% else %>
+        <%= render 'mypage/companies/projects/details_failed' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="show" class="row mb-30">
+  <div class="social">
+    <% if false %>
+      <div class="social__item">
+        <div class="fb-like" data-href="<%= request.original_url %>" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+      </div>
+    <% end %>
+    <div class="social__item">
+      <a class="social__link social__link--facebook" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a class="social__link social__link--twitter" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+    <div class="social__item">
+      <a style="background-image: url(<%= asset_path 'social/line.png' %>)" class="social__link social__link--line" type="button" class="btn btn-primary" data-toggle="modal" data-target="#model__line">
+      </a>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <%= render 'mypage/companies/projects/content' %>
+  </div>
+
+  <% if @project.persisted? %>
+    <div class="modal fade" id="model__facebook" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @project.name, title_modal: 'ここから先はFacebookのサイトに遷移します。', social: 'facebook' %>
+    </div>
+    <div class="modal fade" id="model__twitter" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @project.name, title_modal: 'ここから先はTwitterのサイトに遷移します。', social: 'twitter' %>
+    </div>
+    <div class="modal fade" id="model__line" tabindex="-1" role="dialog" aria-hidden="true">
+      <%= render 'model_social', title: @project.name, title_modal: 'ここから先はLINEのサイトに遷移します。', social: 'line' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row mb-30 disclaimers">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="bg-info p-25">
+      <%= render 'mypage/companies/projects/disclaimers' %>
+    </div>
+  </div>
+</div>
+<%=
+  jquery_view(
+    'views.projects.ShowView',
+    turbolinks: true,
+    isMobile: request.variant.include?(:mobile)
+  )
+%>
+
+<script type="text/javascript">
+  <% if @project.present? && request.fullpath == '/projects/' + @project.id.to_s %>
+    var content_id1 = '<%= 'project' + @project.id.to_s %>';
+    var solicited = <%= @project.solicited %>;
+
+    <% if @project.start_at > Time.zone.now %>
+      var content_id2 = content_id1 + '_disclosure';
+    <% elsif @project.status == Project::S_IN_PROGRESS %>
+      <% if @project.solicited < @project.solicit %>
+        var content_id2 = content_id1 + '_start';
+      <% else %>
+        var content_id2 = content_id1 + '_goal';
+      <% end %>
+      <% elsif @project.is_succeeded_with_limit && @project.execution_at > Time.zone.now %>
+        var content_id2 = content_id1 + '_wait';
+      <% elsif @project.status == Project::S_SUCCEEDED || @project.status == Project::S_EXECUTED %>
+        var content_id2 = content_id1 + '_end';
+      <% else %>
+        exit;
+    <% end %>
+
+    fbq('track', "ViewContent", {
+      content_ids: [content_id1, content_id2],
+      content_type: 'product',
+      value: solicited,
+      currency: 'JPY'
+    });
+  <% end %>
+
+  <% if Rails.env.production? %>
+    window._pt_lt = new Date().getTime();
+    window._pt_sp_2 = [];
+    _pt_sp_2.push('setAccount,62a43b5c');
+    var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    (function () {
+      var atag = document.createElement('script');
+      atag.type = 'text/javascript';
+      atag.async = true;
+      atag.src = _protocol + 'js.ptengine.jp/pta.js';
+      var stag = document.createElement('script');
+      stag.type = 'text/javascript';
+      stag.async = true;
+      stag.src = _protocol + 'js.ptengine.jp/pts.js';
+      // var s = document.getElementsByTagName('script')[0];
+      var s = document.getElementsByTagName('footer')[0];
+      s.parentNode.insertBefore(atag, s);
+      s.parentNode.insertBefore(stag, s);
+    })();
+  <% end %>
+</script>
+

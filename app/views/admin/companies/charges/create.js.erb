@@ -1,0 +1,3 @@
+$("#charges").html("<%= escape_javascript(render('list', charges: @company.admin_companies)) %>");
+$("#charge-modal").modal('hide');
+notify('', '担当者を追加しました', 'top', 'center', '', 'success', '', '');

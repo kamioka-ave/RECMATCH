@@ -1,0 +1,19 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">本審査書類を登録</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@document, url: admin_company_review_documents_path(@company), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.hidden_field :company_id, value: @document.company_id %>
+        <%= f.hidden_field :status, value: Company::ReviewDocument::AS_APPROVED %>
+        <%= f.input :name %>
+        <%= f.input :document_type, collection: Company::ReviewDocument.names_with_document_type %>
+        <%= f.input :file %>
+        <%= f.button :submit, '登録する', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

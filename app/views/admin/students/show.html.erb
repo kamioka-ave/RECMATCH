@@ -1,0 +1,262 @@
+<section class="content-header">
+  <h1>学生詳細</h1>
+</section>
+
+<section class="content">
+  <% if @antisocialist %>
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= link_to '反社データ', admin_antisocialists_path %>における<strong>区分<%= @antisocialist.segment %>,番号<%= @antisocialist.code %></strong>の人物と一致する可能性があります
+    </div>
+  <% end %>
+
+  <% if @reapplication %>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      以前申請を行った<%= link_to '学生', admin_student_path(@reapplication) %>と同一の可能性があります。
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">詳細情報</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body no-padding">
+          <table class="table">
+            <tr>
+              <th width="200px">学生ID</th>
+              <td><%= @student.id %></td>
+            </tr>
+            <tr>
+              <th>氏名</th>
+              <td><%= @student.full_name %></td>
+            </tr>
+            <tr>
+              <th>氏名（カナ）</th>
+              <td><%= @student.full_name_kana %></td>
+            </tr>
+            <tr>
+              <th>Eメールアドレス</th>
+              <td><a href="mailto:<%= @student.user.email %>"><%= @student.user.email %></a></td>
+            </tr>
+            <tr>
+              <th>電子メールの受け取り</th>
+              <td><%= @student.profile.receive_notification ? '受け取る' : '受け取らない' %></td>
+            </tr>
+            <tr>
+              <th>ログインIPアドレス</th>
+              <td><%= @student.user.current_sign_in_ip if @student.user.current_sign_in_ip.present? %></td>
+            </tr>
+            <tr>
+              <th>メール送信対象フラグ</th>
+              <td>
+                <%= @student.is_mail_target ? 'ON' : 'OFF' %>
+              </td>
+              <td class="text-right">
+                <% if @student.is_mail_target %>
+                  <%= link_to 'OFFにする', change_mail_target_admin_student_path(@student), method: :put, class: 'btn btn-xs btn-warning' %>
+                <% else %>
+                  <%= link_to 'ONにする', change_mail_target_admin_student_path(@student), method: :put, class: 'btn btn-xs btn-success' %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+          <table id="lock_status" class="table">
+            <%= render 'lock_status' %>
+          </table>
+          <table class="table">
+            <tr>
+              <th width="200px">住所氏名の変更</th>
+              <td>
+                <% if @student.change_notifications.size > 0 %>
+                  <% if @student.change_notifications.last.status == Student::ChangeNotification::S_NOTIFIED %>
+                    <span class="text-danger">住所変更完了DM発送待ち</span>
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_SENT_DM %>
+                    住所変更完了DM発送済み
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_LOCKED %>
+                    ロック解除DM発送待ち
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_WAITING_CONFIRMATION %>
+                    ロック解除コード入力待ち
+                  <% else %>
+                    未処理の変更届はありません
+                  <% end %>
+                <% else %>
+                  未処理の変更届はありません
+                <% end %>
+              </td>
+              <td class="text-right">
+                <% if @student.change_notifications.size > 0 %>
+                  <% if @student.change_notifications.last.status == Student::ChangeNotification::S_NOTIFIED %>
+                    <%= link_to 'DMを表示', dm_admin_student_change_notification_path(@student, @student.change_notifications.last), class: 'btn btn-xs btn-info' %>
+                    <%= link_to 'DM発送済みにする', sent_dm_admin_student_change_notification_path(@student, @student.change_notifications.last), method: :put, class: 'btn btn-xs btn-success', data: { confirm: 'DM発送済みにしますか？' } %>
+                    <%= link_to '変更届', admin_student_change_notification_path(@student, @student.change_notifications.last, format: :pdf), target: '_blank', class: 'btn btn-xs btn-warning' %>
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_SENT_DM %>
+                    <%= link_to '申込みをロックする', lock_admin_student_change_notification_path(@student, @student.change_notifications.last), method: :put, class: 'btn btn-xs btn-danger', data: { confirm: '申込みをロックしますか？' } %>
+                    <%= link_to '変更届', admin_student_change_notification_path(@student, @student.change_notifications.last, format: :pdf), target: '_blank', class: 'btn btn-xs btn-warning' %>
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_LOCKED %>
+                    <%= link_to 'ロック解除DMを表示', dm_locked_admin_student_change_notification_path(@student, @student.change_notifications.last), class: 'btn btn-xs btn-info' %>
+                    <%= link_to 'ロック解除DM発送済みにする', sent_dm_locked_admin_student_change_notification_path(@student, @student.change_notifications.last), method: :put, class: 'btn btn-xs btn-success', data: { confirm: 'DM発送済みにしますか？' } %>
+                    <%= link_to '変更届', admin_student_change_notification_path(@student, @student.change_notifications.last, format: :pdf), target: '_blank', class: 'btn btn-xs btn-warning' %>
+                  <% elsif @student.change_notifications.last.status == Student::ChangeNotification::S_WAITING_CONFIRMATION %>
+                    <%= link_to 'ロックを解除する', confirm_admin_student_change_notification_path(@student, @student.change_notifications.last), method: :put, class: 'btn btn-xs btn-success', data: { confirm: 'ロックを解除しますか？' } %>
+                    <%= link_to '変更届', admin_student_change_notification_path(@student, @student.change_notifications.last, format: :pdf), target: '_blank', class: 'btn btn-xs btn-warning' %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="edit_lock_modal" class="modal fade" tabindex="-1"></div>
+      <div id="edit_unlock_modal" class="modal fade" tabindex="-1"></div>
+      <div id="edit_lock_reason_modal" class="modal fade" tabindex="-1"></div>
+
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">登録状況</h3>
+          <div class="box-tools pull-right">
+            <%= link_to admin_student_status_histories_path(@student), remote: true, class: 'btn btn-box-tool' do %>
+              <i class="fa fa-history"></i>
+            <% end %>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div id="status" class="box-body no-padding">
+          <%= render 'admin/students/statuses/list' %>
+        </div>
+      </div>
+      <div id="status_histories_modal" class="modal fade" tabindex="-1"></div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">学生能力</h2>
+        </div>
+        <div id="transaction-records">
+          <%= render 'admin/students/abilities/list' %>
+        </div>
+        <div class="box-footer">
+          <% if @student.student_ability.size > 0 %>
+            <%= link_to '編集する', edit_admin_student_ability_path(@student), remote: true, class: 'btn btn-sm btn-primary' %>
+          <% else %>
+            <%= link_to '登録する', new_admin_student_ability_path(@student), remote: true, class: 'btn btn-sm btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+      <div id="transaction-record-modal" class="modal" tabindex="-1"></div>
+
+            <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">自動メール</h2>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">アクティビティ</h2>
+        </div>
+        <% if @events.size > 0 %>
+          <div class="box-body no-padding">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>日時</th>
+                <th>アクション</th>
+                <th>ページ</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @events.each do |e| %>
+                <tr>
+                  <td><%= l(e.time) %></td>
+                  <td><%= e.name %></td>
+                  <td><%= link_to e.properties['page'], e.properties['page'] %></td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="box-body">
+            アクティビティはありません
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if can?(:show_details, Student) %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">申請内容</h3>
+            <div class="box-tools pull-right">
+              <%= link_to admin_student_histories_path(@student), class: 'btn btn-box-tool' do %>
+                <i class="fa fa-history"></i>
+              <% end %>
+              <%= link_to edit_admin_student_path(@student), class: 'btn btn-box-tool' do %>
+                <i class="fa fa-wrench"></i>
+              <% end %>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <%= render 'show', student: @student %>
+          </div>
+        </div>
+        <div id="edit_pep_modal" class="modal fade" tabindex="-1"></div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="box">
+    <div class="box-header with-border">
+      <h2 class="box-title">選考中企業</h2>
+    </div>
+    <div class="box-body no-padding">
+
+
+   <% if false %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>＃</th>
+          <th>企業名</th>
+          <th>採用ページ</th>
+          <th>状況</th>
+          <th>申込日時</th>
+          <th>キャンセル日時</th>
+        </tr>
+        <tbody>
+            <tr>
+              <td><%= o.id %></td>
+              <td>
+
+              	  キャンセル待ち
+
+              </td>
+              <td><%= o.project.name.truncate(30) %></td>
+              <td><%= NormalOrder.names_with_status.key(o.status) %></td>
+              <td><%= o.price %></td>
+              <td></td>
+              <td>
+
+              </td>
+            </tr>
+        </thead>
+      </table>
+
+
+      <% end %>
+    </div>
+  </div>
+</section>

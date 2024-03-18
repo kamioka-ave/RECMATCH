@@ -1,0 +1,3 @@
+$("#lock_status").html("<%= escape_javascript(render('admin/students/lock_status')) %>");
+$("#edit_unlock_modal").modal("hide");
+notify('', '学生のロックを解除しました', 'top', 'center', '', 'success', '', '');

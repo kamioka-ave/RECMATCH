@@ -1,0 +1,38 @@
+<%= simple_form_for([:admin, @question_draft]) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-9">
+      <%= f.association :question_category, label_method: lambda {|c| "#{c.name} | #{QuestionCategory.names_with_type.key(c.type)}" } %>
+      <%= f.input :name %>
+      <%= f.input :rank %>
+      <div class="form-group">
+        <label class="control-label">関連する質問</label>
+        <%= f.fields_for :question_draft_questions do |builder| %>
+          <%= render 'question_draft_question_fields', f: builder %>
+        <% end %>
+        <div class="mb-5"></div>
+        <%= link_to_add_fields '追加', f, :question_draft_questions, 'admin/question_drafts/' %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">メニュー</h2>
+        </div>
+        <div class="box-body">
+          <p>
+            <i class="fa fa-star-o pr-10"></i>状況
+            <span class="pull-right">
+              <%= @question_draft.persisted? ? QuestionDraft.names_with_status.key(@question_draft.status) : '新規' %>
+            </span>
+          </p>
+          <%= f.button :submit, '下書き保存', class: 'btn-block btn-default' %>
+          <%= f.button :submit, '公開する', name: 'submit', class: 'btn-block btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.input :asking %>
+  <%= f.input :answer %>
+<% end %>
+<%= jquery_view('views.admin.question_drafts.FormView') %>

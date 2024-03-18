@@ -1,0 +1,36 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title"><%= CompanyReview.names_with_review_type.key(@review_type) %>履歴</h4>
+    </div>
+    <div class="modal-body">
+      <% if @histories.size > 0 %>
+        <table class="table">
+          <tr>
+            <th>日時</th>
+            <th>操作</th>
+            <th>状態</th>
+            <th>提出者</th>
+            <th>承認者</th>
+            <th>コメント</th>
+            <th></th>
+          </tr>
+          <% @histories.each do |h| %>
+            <tr>
+              <td><%= l(h.created_at) %></td>
+              <td><%= CompanyReviewHistory.names_with_operation.key(h.operation) %></td>
+              <td><%= CompanyReview.names_with_status.key(h.status) %></td>
+              <td><%= h.admin.present? ? h.admin.name : h.company.name %></td>
+              <td><%= h.authorizer.name if h.authorizer.present? && h.status != CompanyReview::AS_SUBMITTED %></td>
+              <td><%= simple_format(h.comment) if h.comment.present? %></td>
+              <td><%= link_to '表示', h.file.url, target: '_blank', class: 'btn btn-xs btn-info' %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        履歴はありません
+      <% end %>
+    </div>
+  </div>
+</div>

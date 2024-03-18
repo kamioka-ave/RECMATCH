@@ -1,0 +1,22 @@
+<div class="row projects media">
+  <div class="col-md-7">
+    <% if event.status == Event::E_END %>
+      <div class="ribbon executed">
+        <div class="title">終了</div>
+      </div>
+    <% end %>
+    <%= link_to event do %>
+      <%= image_tag(event.image.thumb16by9.url, class: 'swmain', width: '100%', alt: event.name) %>
+    <% end %>
+  </div>
+  <div class="col-md-5">
+    <div class="details-wrapper">
+      <div class="mb-20">
+        <%= render 'events/details', event: event, title: true, succeeded: false %>
+      </div>
+      <div class="mb-20">
+        <%= link_to 'もっとみる', event_path(event), class: 'btn btn-block btn-lg btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

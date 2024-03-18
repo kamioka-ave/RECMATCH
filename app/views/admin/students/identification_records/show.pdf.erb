@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>本人確認記録簿（個人）</title>
+  <%= wicked_pdf_stylesheet_link_tag 'ledger' %>
+</head>
+<body class="identification-record">
+  <h2 class="text-center">本人確認記録簿（個人）</h2>
+
+  <table border="1" width="100%" class="text-center mb-20">
+    <tr>
+      <th rowspan="2">本人確認実施日</th>
+      <td rowspan="2"><%= l(@record.identified_on) %></td>
+      <th>本人確認実施者名</th>
+      <td><%= @record.identifier.name %></td>
+    </tr>
+    <tr>
+      <th>確認者記録作成者名</th>
+      <td>
+        <div class="f-6 text-muted text-left">本人確認実施者名と同一の場合は記載不要</div>
+        <%= @record.recorder.name if @record.recorder.present? %>
+      </td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="text-center mb-20">
+    <tr>
+      <th>お客様氏名</th>
+      <td><%= @record.name %></td>
+      <th>学生ID</th>
+      <td colspan="2"><%= @record.student_id %></td>
+    </tr>
+    <tr>
+      <th>住所</th>
+      <td colspan="2" class="text-left">
+        <div class="f-6 pb-5">〒<%= @record.zip_code %></div>
+        <%= @record.address %>
+      </td>
+      <th>生年月日</th>
+      <td><%= l(@record.birth_on) %></td>
+    </tr>
+    <tr>
+      <th>本人確認事由</th>
+      <td colspan="4" class="text-left">
+        <% StudentIdentificationRecord.names_with_reason.each do |k, v| %>
+          <span class="mr-10">
+            <i class="fa <%= @record.reason == v ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= k %>
+            <% if @record.reason == StudentIdentificationRecord::R_OTHERS %>
+              （<%= @record.reason_note %>）
+            <% end %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="text-center">
+    <tr>
+      <th colspan="2">
+        <div class="pb-5">個人番号確認書類</div>
+        （新規口座開設、氏名、住所変更の場合のみ、それ以外は受入不可（下段「本人確認書類」のみチェック。））
+      </th>
+    </tr>
+    <% IdentificationNumber.all.each do |n| %>
+      <tr class="text-left">
+        <td>
+          <i class="fa <%= @record.identification_numbers.pluck(:id).include?(n.id) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>
+          <%= n.name %>
+        </td>
+        <td><%= n.description %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table border="1" width="100%" class="text-center" style="border-top: none">
+    <tr>
+      <th colspan="4">
+        <div class="pb-5">本人確認書類</div>
+        （　［ＱＩ対象外］……ＱＩ制度対象外書類　［特定対象外……特定口座対象外］　　）　
+      </th>
+    </tr>
+
+    <tr class="text-left">
+      <td rowspan="4">A</td>
+      <td><i class="fa <%= @document_ids.include?(1) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['1'] %></td>
+      <td><i class="fa <%= @document_ids.include?(2) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['2'] %></td>
+      <td><i class="fa <%= @document_ids.include?(3) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['3'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(4) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['4'] %></td>
+      <td><i class="fa <%= @document_ids.include?(5) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['5'] %></td>
+      <td><i class="fa <%= @document_ids.include?(6) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['6'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(7) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['7'] %></td>
+      <td colspan="2"><i class="fa <%= @document_ids.include?(8) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['8'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(9) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['9'] %></td>
+      <td colspan="2"><i class="fa <%= @document_ids.include?(10) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['10'] %></td>
+    </tr>
+
+    <tr class="text-left">
+      <td rowspan="6">B</td>
+      <td><i class="fa <%= @document_ids.include?(11) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['11'] %></td>
+      <td><i class="fa <%= @document_ids.include?(12) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['12'] %></td>
+      <td><i class="fa <%= @document_ids.include?(13) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['13'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(14) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['14'] %></td>
+      <td><i class="fa <%= @document_ids.include?(15) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['15'] %></td>
+      <td><i class="fa <%= @document_ids.include?(16) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['16'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(17) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['17'] %></td>
+      <td><i class="fa <%= @document_ids.include?(18) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['18'] %></td>
+      <td><i class="fa <%= @document_ids.include?(19) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['19'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(20) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['20'] %></td>
+      <td colspan="2"><i class="fa <%= @document_ids.include?(21) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['21'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td><i class="fa <%= @document_ids.include?(22) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['22'] %></td>
+      <td colspan="2"><i class="fa <%= @document_ids.include?(23) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['23'] %></td>
+    </tr>
+    <tr class="text-left">
+      <td colspan="3">
+        <i class="fa <%= @document_ids.include?(24) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['24'] %>
+        <%= "(#{@record.document_b_others_note})" if @document_ids.include?(24) && @record.document_b_others_note.present? %>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td rowspan="2">C</td>
+      <td><i class="fa <%= @document_ids.include?(25) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['25'] %>※</td>
+      <td colspan="2">
+        <i class="fa <%= @document_ids.include?(26) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['26'] %>※
+        <span class="pull-right">［ＱＩ対象外］［特定口座対象外］</span>
+      </td>
+    </tr>
+    <tr class="text-left">
+      <td colspan="3">
+        <i class="fa <%= @document_ids.include?(27) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['27'] %>
+        <%= "(#{@record.document_c_others_note})" if @document_ids.include?(27) && @record.document_c_others_note.present? %>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td rowspan="2">D</td>
+      <td><i class="fa <%= @document_ids.include?(28) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['28'] %>※</td>
+      <td colspan="2">
+        <i class="fa <%= @document_ids.include?(29) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= @document_names['29'] %>※
+        <span class="pull-right">【D内の複数選択は不可】</span>
+      </td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="text-center" style="border-top: none">
+    <tr>
+      <th colspan="2">補完書類</th>
+    </tr>
+    <% IdentificationComplementDocument.all.each do |d| %>
+      <tr class="text-left">
+        <td>
+          <i class="fa <%= @record.identification_complement_documents.pluck(:id).include?(d.id) ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>
+          <%= d.name %>
+          <%= "(#{@record.complement_document_others_note})" if @record.identification_complement_documents.include?(2) && @record.complement_document_others_note.present? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table border="1" width="100%" class="text-center mb-20" style="border-top: none">
+    <tr>
+      <th colspan="5">本人確認書類補記</th>
+    </tr>
+    <tr>
+      <td>
+        記番号等（写しの受入時は記載不要）
+        <div class="f-6 pt-5">※個人番号・年金番号は記載不可。</div>
+      </td>
+      <td width="100px"><%= @record.supplement1_number %></td>
+      <td><i class="fa <%= @record.supplement1_has_number ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>記番号等なし</td>
+      <td width="100px"><%= @record.supplement2_number %></td>
+      <td><i class="fa <%= @record.supplement2_has_number ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>記番号等なし</td>
+    </tr>
+    <tr>
+      <td>発行日</td>
+      <td colspan="2"><%= l(@record.supplement1_issued_on) if @record.supplement1_issued_on.present? %></td>
+      <td colspan="2"><%= l(@record.supplement2_issued_on) if @record.supplement2_issued_on.present? %></td>
+    </tr>
+    <tr>
+      <td>有効期限</td>
+      <td colspan="2"><%= l(@record.supplement1_limit_on) if @record.supplement1_limit_on.present? %></td>
+      <td colspan="2"><%= l(@record.supplement2_limit_on) if @record.supplement2_limit_on.present? %></td>
+    </tr>
+    <tr>
+      <td>確認方法</td>
+      <td colspan="4" class="text-left">
+        <% StudentIdentificationRecord.names_with_supplement_confirm_way.each do |k, v| %>
+          <span class="mr-10">
+            <i class="fa <%= @record.supplement_confirm_way == v ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i><%= k %>
+            <% if @record.supplement_confirm_way == StudentIdentificationRecord::W_OTHERS && v == StudentIdentificationRecord::W_OTHERS && @record.supplement_confirm_way_note.present? %>
+              （<%= @record.supplement_confirm_way_note %>）
+            <% end %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  <table border="1" width="100%" class="text-center mb-20">
+    <tr>
+      <th colspan="3">補完手続の実施欄</th>
+    </tr>
+    <tr>
+      <td>補完手続実施日</td>
+      <td>＜補完方法＞</td>
+      <td rowspan="2" class="text-left">
+        <ul>
+          <li>氏名、住所変更等の場合は取引停止を入力のこと。</li>
+          <li>確認方法が「郵送」⇒　常に『補完要』</li>
+          <li>確認方法<br>
+            ⇒「A、１種類」または、「Ｂを絡めたＢ～Ｄ２種類」の受入の場合も『補完要』<br>
+            ⇒「Ｃ・Ｄ２種類」受入の場合も『補完要』</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><%= l(@record.completed_on) if @record.completed_on.present? %></td>
+      <td class="text-left">
+        <div class="mb-5">
+          <i class="fa <%= @record.is_completion_by_mail ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>本人限定受取郵便
+          <div class="f-6">(又は書留等を転送不要郵便で郵送)</div>
+        </div>
+        <div>
+          <i class="fa <%= @record.is_completion_by_others ? 'fa-check-square-o' : 'fa-square-o' %> mr-5"></i>その他
+          <% @record.is_completion_by_others && if @record.completion_by_others_note.present? %>
+            <div class="f-6">(<%= @record.completion_by_others_note %>)</div>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div>
+    <div class="pull-left">
+      <div>（注意事項）</div>
+      <ul>
+        <li>「※」の番号確認書類・本人確認書類は、６か月以内に作成されたものに限る。</li>
+        <li>本人確認書類の機微情報、国民年金手帳に記載の年金番号については黒塗りする。<br>
+          国民年金手帳の年金番号は原本提示の場合においても「記番号等」へ記録は行わない。</li>
+        <li>本人確認書類は、複数ある場合Ａ⇒Ｂ⇒Ｃ⇒Ｄの順のしシステムに登録に留意。</li>
+      </ul>
+    </div>
+    <div class="pull-right">
+      <table border="1" class="text-center mb-10" width="300px">
+        <tr>
+          <td width="150px">本人確認実施部署</td>
+          <td width="150px">管理部</td>
+        </tr>
+      </table>
+      <table border="1" class="text-center mb-10" width="300px">
+        <tr>
+          <th width="80px">確認者</th>
+          <th width="80px">記録作成者</th>
+          <th width="80px">受付者</th>
+        </tr>
+        <tr>
+          <td><%= @record.confirmer.name %></td>
+          <td><%= @record.creator.name %></td>
+          <td><%= @record.receptor.name %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+$('#fares').html("<%= escape_javascript(render('list', company: @company, fares: @company.fares)) %>");
+$('#fare_modal').modal('hide');
+notify('', 'システム利用料請求を登録しました', 'top', 'center', '', 'success', '', '');

@@ -1,0 +1,201 @@
+<% content_for(:page_classes) { 'mypage students wizard confirms show' } %>
+
+<div class="my-students-wizard row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'mypage/students/wizard/progress', step: 3 %>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@student, url: mypage_student_wizard_confirm_path) do |f| %>
+          <%= f.error_notification %>
+
+          <% if @student.errors.empty? %>
+            <div class="bg-info p-20 mb-30">
+              以下の内容でユーザ登録を行います。<br>
+              内容に誤りがなければ、「完了」ボタンを押して、学生基本情報の登録を完了させてください。
+            </div>
+          <% end %>
+
+          <div class="mb-50">
+            <h3>基本情報</h3>
+            <table class="table">
+              <tr>
+                <th width="260px">RECMATCH表示名</th>
+                <td><%= @student.nickname %></td>
+              </tr>
+              <tr>
+                <th width="260px">氏名</th>
+                <td><%= @student.full_name %></td>
+              </tr>
+              <tr>
+                <th>氏名（カナ）</th>
+                <td><%= @student.full_name_kana %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.gender') %></th>
+                <td><%= Student.names_with_gender.key(@student.gender) %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.birth_on') %></th>
+                <td><%= l(@student.birth_on) %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.zip_code') %></th>
+                <td><%= @student.zip_code %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.prefecture_id') %></th>
+                <td><%= @student.prefecture.name %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.city') %></th>
+                <td><%= @student.city %></td>
+              </tr>
+              <tr>
+                <th><%= t('activerecord.attributes.student.address1') %></th>
+                <td><%= @student.address1 %></td>
+              </tr>
+              <% if @student.address2.present? %>
+                <tr>
+                  <th><%= t('activerecord.attributes.student.address2') %></th>
+                  <td><%= @student.address2 %></td>
+                </tr>
+              <% end %>
+              <% if @student.phone.present? %>
+                <tr>
+                  <th><%= t('activerecord.attributes.student.phone') %></th>
+                  <td><%= @student.phone %></td>
+                </tr>
+              <% end %>
+              <% if @student.phone_mobile.present? %>
+                <tr>
+                  <th><%= t('activerecord.attributes.student.phone_mobile') %></th>
+                  <td><%= @student.phone_mobile %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <div class="mb-50">
+            <h3>学校情報</h3>
+            <table class="table">
+              <tr>
+                <th width="260px">大学名</th>
+                <td><%= University.names_with_univ.key(@student.university) %></td>
+              </tr>
+              <tr>
+                <th>学部名</th>
+                <td><%= @student.depart %></td>
+              </tr>
+              <tr>
+                <th>ゼミ・研究室</th>
+                <td><%= @student.labo %></td>
+              </tr>
+              <tr>
+                <th>サークル・愛好会</th>
+                <td><%= @student.circle %></td>
+              </tr>
+              <% if @student.club.present? %>
+                <tr>
+                  <th>体育会</th>
+                  <td><%= @student.club %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <div class="mb-50">
+            <h3>就活情報・自己PR</h3>
+            <table class="table">
+              <tr>
+                <th>第一志望 業界/職種</th>
+                <td><%= Student.names_with_industry.key(@student.industry_1) %> / <%= Student.names_with_occupation.key(@student.occupation_1) %></td>
+              </tr>
+              <% if @student.industry_2.present? %>
+                <tr>
+                  <th>第二志望 業界/職種</th>
+                  <td><%= Student.names_with_industry.key(@student.industry_2) %> / <%= Student.names_with_occupation.key(@student.occupation_2) if @student.occupation_2.present? %></td>
+                </tr>
+              <% end %>
+              <% if @student.industry_3.present? %>
+                <tr>
+                  <th>第三志望 業界/職種</th>
+                  <td><%= Student.names_with_industry.key(@student.industry_3) %> / <%= Student.names_with_occupation.key(@student.occupation_3) if @student.occupation_3.present? %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <th>就活軸</th>
+                <td><%= Student.names_with_jobhuntingaxis.key(@student.jobhuntingaxis) %></td>
+              </tr>
+              <% if @student.jobhuntingaxis == 15 %>
+                <tr>
+                  <th>就活軸詳細</th>
+                  <td><%= @student.jobhuntingaxis_text %></td>
+                </tr>
+              <% end %>
+              <% if @student.intern_is %>
+                <tr>
+                  <th width="260px">インターン歴</th>
+                  <td>あり</td>
+                </tr>
+                <tr>
+                  <th>インターン先企業</th>
+                  <td><%= @student.intern_company %></td>
+                </tr>
+                <tr>
+                  <th>インターン業務内容</th>
+                  <td><%= @student.intern_detail %></td>
+                </tr>
+              <% else %>
+                <tr>
+                  <th>インターン歴</th>
+                  <td>なし</td>
+                </tr>
+              <% end %>
+              <tr>
+                <th>TOEICスコア</th>
+                <td><%= @student.toeic_score %></td>
+              </tr>
+              <% if @student.mypr.present? %>
+                <tr>
+                  <th>キャッチコピー</th>
+                  <td><%= @student.mypr %></td>
+                </tr>
+              <% end %>
+              <% if @student.qualifications.present? %>
+                <tr>
+                  <th>その他資格など</th>
+                  <td><%= @student.qualifications %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <% if @student.status == Student::S_REJECTED %>
+            <div class="mb-40">
+              <%= f.input :reapply_confirmation, as: :boolean, label: '新たに入力した内容に間違いがないことを確認しました' %>
+            </div>
+          <% end %>
+
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '前へ', mypage_student_wizard_student_path, class: 'btn btn-lg btn-info-o' %>
+            </div>
+            <div class="pull-right">
+              <%= f.button :submit, '完了', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=
+  jquery_view(
+    'views.mypage.students.wizard.confirms.ShowView',
+    turbolinks: true,
+    displayConfirmationAlert: request.referer == mypage_student_wizard_confirm_url && current_user.confirmed_at.nil?
+  )
+%>

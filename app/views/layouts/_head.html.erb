@@ -1,0 +1,55 @@
+<head>
+  <%= favicon_link_tag('favicon.ico') %>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <% unless Rails.env.production? %>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+  <% end %>
+  <title><%= content_for?(:title) ? '【'+Settings.application_name+'】' + yield(:title) : Settings.application_name %></title>
+  <meta name="title" content="<%= content_for?(:title) ? 'RECMATCH(リクマッチ)|' + yield(:title) : 'RECMATCH(リクマッチ)|' %>">
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : '有名・優良企業からオファーがくる。学生と企業が直接出会える。RECMATCHは従来の採用手順にはない「学生と企業が気軽に会話できる」場所を提供します。' %>" />
+  <meta name="keywords" content="<%= content_for?(:keyword) ? yield(:keyword) : '学生,企業,人材,マッチング,新卒採用' %>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <% if request.variant.include? :mobile %>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  <% end %>
+
+  <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : '[RECMATCH]' %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= request.fullpath.include?('/projects/') ? request.url : request.base_url %>" />
+  <meta property="og:image" content="<%= content_for?(:image) ? image_url(yield(:image)) : image_url('top/recmatch_banner.png') %>" />
+  <meta property="og:site_name" content="RECMATCH" />
+  <meta property="og:description" content="<%= content_for?(:description) ? yield(:description) : '有名・優良企業からオファーがくる。学生と企業が直接出会える。' %>" />
+  <meta property="fb:app_id" content="884484718317598" />
+
+  <link rel="alternate" type="application/rss+xml" href="<%= feed_projects_url(format: 'rss') %>" title="新着のプロジェクト" />
+  <link rel="alternate" type="application/rss+xml" href="<%= feed_headlines_url(format: 'rss') %>" title="RECMATCHからのお知らせ" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <%= stylesheet_link_tag 'application', media: 'all', data: { 'turbolinks-track' => 'reload' } %>
+  <%= javascript_include_tag 'application', data: { 'turbolinks-track' => 'reload' } %>
+  <%= yield(:additional_js) if content_for?(:additional_js) %>
+  <%= csrf_meta_tags %>
+
+  <% if Rails.env.production? %>
+    <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NW66B55');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135734748-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135734748-1');
+      </script>
+    <!-- End Global site tag (gtag.js) - Google Analytics -->
+
+    <!-- Facebook Pixel Code -->
+    <!-- Twitter universal website tag code -->
+
+  <% elsif Rails.env.development? %>
+  <% end %>
+</head>

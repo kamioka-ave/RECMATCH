@@ -1,0 +1,21 @@
+<% content_for(:title) {'登録確認メールを再度受信する' } %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="card">
+      <div class="card-header">
+        <h2>登録確認メールを再度受信する</h2>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+          <%= f.full_error :confirmation_token %>
+          <div class="mb-30">
+            <%= f.input :email, required: true, autofocus: true %>
+          </div>
+          <%= f.button :submit, '再度受信する', class: 'btn-lg btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

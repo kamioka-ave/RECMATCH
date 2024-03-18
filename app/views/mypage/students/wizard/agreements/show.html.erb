@@ -1,0 +1,61 @@
+<% content_for(:page_classes) { 'mypage students wizard agreements show' } %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'mypage/students/wizard/progress', { step: 1 } %>
+      </div>
+      <div class="card-body card-padding">
+        <%= simple_form_for(@agreement, url: mypage_student_wizard_agreement_path) do |f| %>
+          <% if @agreement.errors.any? %>
+            <div class="alert alert-danger">
+              <% @agreement.errors.full_messages.each do |msg| %>
+                <p><%= msg %></p>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-danger">※下記の書面の内容をご確認ください</p>
+          <% end %>
+
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :pdf1, value: true  %>
+          <%= f.hidden_field :pdf2, value: true  %>
+
+          <div class="table-responsive mb-20">
+            <table class="table">
+              <tr id="1">
+                <td><%= link_to '1. 利用規約（学生）', kiyaku_pages_path, class: 'pdf', target: '_blank' %></td>
+                <td id="confirm_pdf1"><%= @agreement.pdf1 ? '' : '' %></td>
+              </tr>
+              <tr id=2">
+                <td><%= link_to '2. プライバシーポリシー', privacy_policy_pages_path, class: 'pdf', target: '_blank' %></td>
+                <td id="confirm_pdf2"><%= @agreement.pdf2 ? '' : '' %></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="checkbox mb-50">
+            <%= f.input :agreement, as: :boolean, checked_value: true, unchecked_value: false %>
+          </div>
+
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '前へ', mypage_student_wizard_page_path, class: 'btn btn-lg btn-info-o' %>
+            </div>
+            <div class="pull-right">
+              <%= f.button :submit, '同意して次の画面へ', class: 'btn-lg btn-info' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(".pdf").on('click', function(event) {
+    var id = $(this).closest('tr').attr('id');
+    $("#confirm_pdf" + id).text("確認済");
+  });
+</script>

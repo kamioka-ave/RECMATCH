@@ -1,0 +1,82 @@
+<% content_for :detail do %>
+<div class="card">
+  <div class="card-body card-padding">
+    <h2>サマリー</h2>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= f.input :start_at, required: true %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.input :end_at, required: true %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.input :entry_closed, required: true %>
+      </div>
+    </div>
+    <%= f.input :salary, required: true %>
+    <%= f.input :process_selection, required: true %>
+    <%= f.input :selection_condition, required: true %>
+  </div>
+  <div class="card-body card-padding">
+    <h2>募集要項</h2>
+    <%= f.input :student_assumption, required: true %>
+    <%= f.input :recruit_kind, required: true %>
+    <%= f.input :duty_station, required: true %>
+  </div>
+  <div class="card-body card-padding">
+    <h2>給与・福利厚生</h2>
+    <%= f.input :new_salary, required: true %>
+    <%= f.input :allowance, required: true %>
+    <%= f.input :raise_salary, required: true %>
+    <%= f.input :reward, required: true %>
+    <%= f.input :holiday, required: true %>
+    <%= f.input :insurance, required: true %>
+    <%= f.input :welfare_program, required: true %>
+    <%= f.input :company_event, required: true %>
+    <%= f.input :trial_period, required: true %>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= f.input :sex_ratio, required: true, placeholder: '例)45', hint: '全社員に対する女性の割合(%)を記入してください。' %>
+      </div>
+      <div class="col-sm-8">
+        <%= f.input :other_welfare, required: true %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body card-padding">
+    <h2>職場情報</h2>
+    <div class="row">
+      <div class="col-sm-5">
+        <%= f.input :retired_ratio, required: true, placeholder: '例)20', hint: '全社員数に対する離職者の割合(%)を記入してください。' %>
+        <%= f.input :continuous, required: true, placeholder: '例)13', hint: '平均勤続年数を記入してください。' %>
+      </div>
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-5">
+        <%= f.input :sex_ratio_hired, required: true, placeholder: '例)45', hint: '3年間で採用した学生の女性割合(%)を記入してください。' %>
+        <%= f.input :old, required: true, placeholder: '例)37', hint: '平均年齢を記入してください。' %>
+      </div>
+      <div class="col-sm-1">
+      </div>
+    </div>
+    <%= f.input :training, required: true %>
+    <%= f.input :vacation, required: true %>
+    <%= f.input :childcare, required: true %>
+  </div>
+  <div class="card-body card-padding">
+    <h2>採用実績</h2>
+    <%= f.input :recruit_univ, required: true, as: :text, :input_html => {:rows => 8}, placeholder: '◯◯◯大学,△△△大学,×××大学' %>
+    <%= f.input :univ_depart, required: true, as: :text, :input_html => {:rows => 8}, placeholder: '経済学部,商学部,理工学部' %>
+  </div>
+</div>
+<% end %>
+
+<%=
+  jquery_view(
+    'views.mypage.companies.projects.FormView',
+    image: @draft.image.present? ? @draft.image.url : '',
+    presidentImage: @draft.president_image.present? ? @draft.president_image.url : '',
+    movie: @draft.interview_movie.present? ? @draft.interview_movie : '',
+    stamp: @draft.stamp.present? ? @draft.stamp.url : '',
+  )
+%>

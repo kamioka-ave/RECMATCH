@@ -1,0 +1,41 @@
+<% if fares.size > 0 %>
+  <div class="box-body no-padding">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>優先順位</th>
+        <th>開始日</th>
+        <th>終了日</th>
+        <th>金額</th>
+        <th>担当者</th>
+        <th>理由等</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% fares.each do |d| %>
+        <tr>
+          <td><%= d.priority_no %></td>
+          <td><%= l(d.start_at) %></td>
+          <td><%= l(d.end_at) if d.end_at.present? %></td>
+          <td><%= number_to_currency(d.price) %></td>
+          <td><%= d.uploader.present? ? d.uploader.name : '企業' %></td>
+          <% if d.subject == 3 %>
+            <td><%= d.subject_note %></td>
+          <% else %>
+            <td><%= Company::Fare.names_with_subject.key(d.subject) %></td>
+          <% end %>
+          <td>
+            <%= link_to '編集', edit_admin_company_fare_path(@company, d), remote: true, class: 'btn btn-xs btn-warning' %>
+            <%= link_to '削除', admin_company_fare_path(@company, d), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="box-body">
+    システム利用料は登録されていません
+  </div>
+<% end %>

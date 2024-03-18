@@ -1,0 +1,14 @@
+<tr>
+  <td><%= staff.full_name %></td>
+  <td><%= staff.email %></td>
+  <td class="text-center">
+    <%= link_to '詳細', admin_company_staff_group_chat_categories_path(company_id: company.id, staff_id: staff.id), class: 'btn btn-xs btn-info' %>
+  </td>
+  <td class="text-center">
+    <% if staff.rejected_at.present? %>
+      <%= link_to '参加させる', restore_admin_company_staff_path(company_id: company.id, id: staff), method: :patch, class: 'btn btn-xs btn-success' %>
+    <% else %>
+      <%= link_to '退席させる', admin_company_staff_path(company_id: company.id, id: staff), method: :delete, class: 'btn btn-xs btn-danger' %>
+    <% end %>
+  </td>
+</tr>

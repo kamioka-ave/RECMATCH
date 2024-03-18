@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>管理画面 - <%= Settings.application_name %></title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <%= stylesheet_link_tag 'admin', media: 'all' %>
+  <%= javascript_include_tag 'admin' %>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-black sidebar-mini <%= yield(:page_classes) %>">
+<div class="wrapper">
+  <header class="main-header">
+    <%= link_to admin_root_path, class: 'logo' do %>
+      <span class="logo-mini"><b>R</b>MATCH</span>
+      <span class="logo-lg"><b>REC</b>MATCH</span>
+    <% end %>
+
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+        <%= render_breadcrumbs separator: ' > ', builder: ::AdminBreadcrumbsBuilder %>
+      </div>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class=""><%= current_admin.name %></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-footer">
+                <div class="pull-left">
+                  <%= link_to 'パスワードの変更', edit_admin_registration_path, class: 'btn btn-default btn-flat' %>
+                </div>
+                <div class="pull-right">
+                  <%= link_to 'ログアウト', destroy_admin_session_path, class: 'btn btn-default btn-flat' %>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="header">メニュー</li>
+        <li class="<%= 'active' if controller.controller_name == 'pages' %>">
+          <%= link_to admin_root_path do %>
+            <i class="fa fa-dashboard"></i> ダッシュボード
+          <% end %>
+        </li>
+
+        <% if can?(:create, Slider) %>
+          <li class="<%= 'active' if controller.controller_path.include?('admin/sliders') %>">
+            <%= link_to admin_sliders_path do %>
+              <i class="fa fa-file-image-o"></i> トップスライダー
+            <% end %>
+          </li>
+        <% end %>
+
+        <% if can?(:read, Project) %>
+          <li class="<%= 'active' if %w(admin/projects admin/project_drafts admin/categories admin/pickup_projects admin/breaking_projects admin/executed_projects).include?(controller.controller_path) %>">
+            <a href="#">
+              <i class="fa fa-plane"></i> <span>採用募集ページ</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <%= link_to admin_projects_path do %>
+                  一覧
+                  <small class="label pull-right bg-yellow"><%= @project_review_count %></small>
+                <% end %>
+              </li>
+              <% if can?(:create, Project) %>
+                <li><%= link_to '作成', new_admin_project_draft_path %></li>
+                <li><%= link_to 'カテゴリ', admin_categories_path %></li>
+                <li><%= link_to 'ピックアッププロジェクト', admin_pickup_projects_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:read, Event) %>
+          <li class="<%= 'active' if controller.controller_name == 'events' %>">
+            <a href="#">
+              <i class="fa fa-plane"></i> <span>イベントページ</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <%= link_to admin_events_path do %>
+                  一覧
+                  <small class="label pull-right bg-yellow"><%= @event_review_count %></small>
+                <% end %>
+              </li>
+              <% if can?(:create, Event) %>
+                <li><%= link_to '作成', new_admin_event_path %></li>
+                <li><%= link_to 'カテゴリ', admin_categories_path %></li>
+                <% if false %>
+                  <li><%= link_to 'ピックアップイベント', admin_pickup_projects_path %></li>
+                <% end %>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:create, User) %>
+          <li class="treeview <%= 'active' if controller.controller_name == 'users' %>">
+            <a href="#"><i class="fa fa-user"></i> <span>ユーザー</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><%= link_to '一覧', admin_users_path %></li>
+              <li><%= link_to '退会したユーザー', quits_admin_users_path %></li>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:read, Company) && !current_admin.has_role?(:ir_checker) %>
+          <li class="treeview <%= 'active' if controller.controller_path == 'admin/companies' || controller.controller_path == 'admin/companies/balance_sheets' || controller.controller_path == 'admin/companies/graphs' || controller.controller_path == 'admin/companies/followers' || controller.controller_path == 'admin/companies/staffs' || controller.controller_path == 'admin/companies/irs/students' %>">
+            <a href="#"><i class="fa fa-building"></i> <span>企業</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li>
+                <%= link_to admin_companies_path do %>
+                  一覧
+                  <small class="label pull-right bg-yellow"><%= @company_tasks_count %></small>
+                <% end %>
+              </li>
+              <% if can?(:create, Company) %>
+                <li><%= link_to '登録', new_admin_company_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:create, Student) %>
+          <li class="treeview <%= 'active' if controller.controller_path.include?('admin/students') || controller.controller_path.include?('admin/student_lists')%>">
+            <a href="#"><i class="fa fa-user"></i> <span>学生</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li>
+                <%= link_to admin_students_path do %>
+                  一覧
+
+                    <small class="label pull-right bg-yellow">aaa</small>
+
+                <% end %>
+              </li>
+              <li>
+                <%= link_to 'リスト', admin_student_lists_path %>
+              </li>
+              <% if false %>
+                <li><%= link_to '集計', counting_admin_students_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if false && can?(:read, Company) %>
+          <li class="<%= 'active' if controller.controller_name == 'proposals' %>">
+            <%= link_to admin_proposals_path do %>
+              <i class="fa fa-jpy"></i> <span>資金調達の申込み</span>
+            <% end %>
+          </li>
+        <% end %>
+
+        <% if can?(:create, Headline) %>
+          <li class="treeview <%= 'active' if controller.controller_name == 'headlines' %>">
+            <a href="#"><i class="fa fa-newspaper-o"></i> <span>NEWS</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><%= link_to '一覧', admin_headlines_path %></li>
+              <li><%= link_to '作成', new_admin_headline_path %></li>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:read, Question) %>
+          <li class="<%= 'active' if controller.controller_name == 'question_drafts' || controller.controller_name == 'question_categories' %>">
+            <a href="#"><i class="fa fa-question"></i> <span>よくある質問</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><%= link_to '一覧', admin_question_drafts_path %></li>
+              <% if can?(:create, Question) %>
+                <li><%= link_to '登録', new_admin_question_draft_path %></li>
+                <li><%= link_to 'カテゴリ', admin_question_categories_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
+        <% if can?(:create, Admin) %>
+          <li class="<%= 'active' if controller.controller_name == 'admins' %>">
+            <li class="treeview <%= 'active' if controller.controller_name == 'admins' %>">
+              <a href="#"><i class="fa fa-user"></i> <span>管理者</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><%= link_to '一覧', admin_admins_path %></li>
+                <li><%= link_to '追加', new_admin_admin_path %></li>
+              </ul>
+            </li>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  </aside>
+
+  <div class="content-wrapper">
+    <%= yield %>
+  </div>
+
+  <footer class="main-footer">
+    <div class="pull-right ">
+      学生と企業のマッチングサイト
+    </div>
+    <strong>Copyright &copy; <%= Time.now.year %> <a href="/"><%= Settings.application_name %></a>.</strong> All rights reserved.
+  </footer>
+
+  <%= growl_flash %>
+</div>
+</body>
+</html>

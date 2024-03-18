@@ -1,0 +1,6 @@
+<% if @liked_flg %>
+  notify('', '既にいいね！しています', 'top', 'center', '', 'success', '', '');
+<% else %>
+  $("#comments").html("<%= escape_javascript(render(partial: 'list', locals: {project: @project, comments: @project.comments })) %>");
+  notify('', 'いいね！しました', 'top', 'center', '', 'success', '', '');
+<% end %>

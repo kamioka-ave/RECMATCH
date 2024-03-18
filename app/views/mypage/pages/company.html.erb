@@ -1,0 +1,165 @@
+<% content_for(:page_classes) { 'mypage pages company' } %>
+
+<div class="documents mb-30">
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h2>NOTIFICATION</h2>
+    </div>
+    <% if @project_meet_nobooks.size > 0 %>
+      <div class="card-body pb-10">
+        <ul class="nav nav-pills nav-stacked">
+          <li>
+            <%= link_to mypage_company_applicants_path do %>
+              <span style="color:#7a7a7a">面談日未設定の学生が</span><%= @project_meet_nobooks.size %>人<span style="color:#7a7a7a">います。</span>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+    <% if @project_meet_rebooks.size > 0 %>
+      <div class="card-body pb-10">
+        <ul class="nav nav-pills nav-stacked">
+          <li>
+            <%= link_to mypage_company_applicants_path do %>
+              <span style="color:#7a7a7a">面談日程の再調整依頼が</span><%= @project_meet_rebooks.size %>件<span style="color:#7a7a7a">あります。</span>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @project_drafts.blank? %>
+    <div class="card z-depth-1">
+      <div class="card-header small">
+        <h2>企業ページ作成希望の方へ</h2>
+      </div>
+      <div class="card-body pl-15 pr-15 pb-20">
+        <p>採用情報を入力し、企業ページを作成することで学生とのコンタクトが可能になります。</p>
+        <div class="row">
+          <div class="col-md-4">
+            <%= link_to '詳しく見る', mypage_company_project_drafts_path, class: 'btn btn-lg btn-block btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% elsif @project_drafts.present? || @project.present? %>
+    <div class="card z-depth-1">
+      <div class="card-header small">
+        <h2>採用募集ページ</h2>
+      </div>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>ページ名</th>
+          <th>状況</th>
+          <th>アクション</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% if @project_drafts.status.in?([0,1,2,3]) && @project.blank? %>
+            <td><%= @project_drafts.name %></td>
+            <td><%= ProjectDraft.names_with_status.key(@project_drafts.status) %></td>
+            <td>
+              <%= link_to '編集', mypage_company_project_drafts_path, class: 'btn btn-xs btn-warning' %>
+              <%= link_to '削除', mypage_company_project_drafts_path, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+            </td>
+          <% elsif @project.present? %>
+            <td><%= @project.name %></td>
+            <td><%= Project.names_with_status.key(@project_drafts.status) %></td>
+            <td>
+              <%= link_to '表示', project_path(@project), class: 'btn btn-xs btn-info-o open' %>
+              <%= link_to '再編集', mypage_company_project_drafts_path, class: 'btn btn-xs btn-warning' %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+  <% end %>
+  <% if !@events.present? %>
+    <div class="card z-depth-1">
+      <div class="card-header small">
+        <h2>イベント募集ページ作成希望の方へ</h2>
+      </div>
+      <div class="card-body pl-15 pr-15 pb-20">
+        <p>RECMATCHではイベントページを作成し、企業説明会などのイベントに募集をかけることが可能です。</p>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <%= link_to 'イベントページを作成', new_mypage_company_event_draft_path, class: 'btn btn-lg btn-block btn-info' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% elsif @events.size > 0 && 7 > @events.count %>
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h2>イベントページ</h2>
+    </div>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>イベントタイトル</th>
+        <th>状況</th>
+        <th>アクション</th>
+      </tr>
+    </thead>
+    <% @events.each do |e| %>
+      <tbody>
+        <tr>
+          <% if e.status.in?([0,1,2,3]) %>
+            <td><%= e.title %></td>
+            <td><%= Event.names_with_status.key(e.status) %></td>
+            <td>
+              <%= link_to '編集', edit_mypage_company_event_draft_path(e), class: 'btn btn-xs btn-warning' %>
+              <%= link_to '削除', mypage_company_event_draft_path(e), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-xs btn-danger' %>
+            </td>
+          <% elsif e.status == 4 %>
+            <td><%= e.title %></td>
+            <td><%= Event.names_with_status.key(e.status) %></td>
+            <td>
+              <%= link_to '表示', event_path(e), class: 'btn btn-xs btn-info-o open' %>
+              <%= link_to '編集', edit_mypage_company_event_draft_path(e), class: 'btn btn-xs btn-warning', data: { confirm: 'イベントページは一時的に非公開になりますが編集を続けますか？' } %>
+            </td>
+          <% elsif e.status.in?([5,6]) %>
+            <td><%= e.title %></td>
+            <td><%= Event.names_with_status.key(e.status) %></td>
+            <td>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    <% end %>
+    </table>
+    <div class="row pt-20 pb-20">
+      <div class="text-center col-md-offset-2 col-md-8">
+        <%= link_to 'イベントページ新規作成', new_mypage_company_event_draft_path, class: 'btn btn-lg btn-block btn-info-o', width: '50px' %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="card z-depth-1">
+    <div class="card-header small">
+      <h2>NEW</h2>
+    </div>
+    <% if @headlines.size > 0 %>
+      <div class="card-body pb-10">
+        <ul class="nav nav-pills nav-stacked">
+          <% @headlines.each do |headline| %>
+            <li>
+              <%= link_to headline do %>
+              <%= headline.title %><br>
+                <small class="text-muted pr-10"><%= l(headline.created_at, format: :short_with_0) %></small>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <div class="card-body p-15">
+        重要なお知らせはありません
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>イベント参加の応募が完了しました。</h1>
+      </div>
+      <div class="card-body card-padding">
+        <p class="text-center mb-35">
+          引き続きRECMATCHのサービスをご利用ください。<br>
+          尚、参加の可否は<%= link_to 'マイページ', mypage_student_path, class: 'text-info' %>から確認できます。</a><br>
+          また、応募した企業からイベントに関するご連絡がありますので<br>
+          メールまたはマイページのチャットを確認するようお願い致します。<br>
+          <br>
+          <%= link_to 'イベントページに戻る', event_path(@applicant.event_id), class: 'text-info' %>
+        </p>
+        <ul class="asterisk text-muted">
+          <li>参加確定後、音信不通になるなどの行為はお控えください。</li>
+          <li>もし不適切な行為が発覚した場合、今後はリクマッチのサービスをご利用いただけなくなる可能性があります。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

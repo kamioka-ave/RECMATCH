@@ -1,0 +1,32 @@
+@import "bootstrap/media";
+
+.media {
+  @include clearfix();
+
+  & > .pull-left {
+    padding-right: 15px;
+
+    img {
+      @media screen and (max-width: $screen-xs) {
+      	width:50px;
+        height: auto;
+      }
+    }
+  }
+
+  & > .pull-right {
+    padding-left: 15px;
+  }
+
+  overflow: visible;
+}
+
+.media-body {
+  zoom: 1;
+  display: block;
+  width: auto;
+}
+
+.media-object {
+  border-radius: 2px;
+}

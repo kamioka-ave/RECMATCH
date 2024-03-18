@@ -1,0 +1,42 @@
+<div class="card <%= request.variant.include?(:mobile) ? '': 'z-depth-1' %>">
+  <div class="card-header">
+    <h5 class="card-title text-center">
+      <span style="border-bottom: solid 3px #000080;padding:10px;font-size:20px;">【配信停止のお手続き】</span>
+    </h5>
+  </div>
+  <div class="card-body pb-20">
+    <h5 class="text-center">配信停止をご希望される方は、以下の□欄にチェックをし、更新してください。</h5>
+    <%= simple_form_for(@user, url: delivery_stop_path, method: 'patch') do |f| %>
+      <%= f.error_notification %>
+      <div class="row pt-40 mb-20">
+        <div class="col-md-9 col-md-offset-3">
+          <%= f.input :email_stop, label: 'RECMATCHからのお知らせ電子メールを停止する。', required: true %>
+          <b>(お知らせメール：ピックアップ企業やイベント開催等のご案内)</b><br>
+          <small>
+            ※なお、お知らせメールの停止をご希望されても重要情報は配信されますのでご了承ください。<br>
+          </small>
+          <% if current_user.student.present? || current_user.company.present? %>
+            <p class="pt-30">RECMATCHを解約し、全ての電子メールを停止したい場合は<%= link_to 'こちら', quit_path %></p>
+          <% else %>
+            <p class="pt-30">
+              ※お客様は現在RECMATCHサービス(登録)を解約することができません。<br>
+              全ての電子メールを停止したい場合は、お手数ですが<%= link_to 'こちら', contact_path %>よりお問合せください。
+            </p>
+          <% end %>
+        </div>
+      </div>
+      <div class="text-center mb-20">
+        注)　当該手続き後、数日の間配信されることがありますので予めご了承ください。
+      </div>
+      <div class="text-center">
+        <%= f.button :submit, '更新する', class: 'btn-lg btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .form-group{
+    margin-bottom: 0;
+  }
+</style>

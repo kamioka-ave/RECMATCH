@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title"><%= @title %></h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for(@datum, url: @datum.persisted? ? admin_company_graph_datum_path(@company, @graph, @datum) : admin_company_graph_data_path(@company, @graph), remote: true) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :label %>
+        <%= f.input :data %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+self.addEventListener('install', onInstall);
+self.addEventListener('activate', onActivate);
+self.addEventListener('fetch', onFetch);
+self.addEventListener('notificationclick', onNotificationClick);
+
+importScripts("https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/5.5.2/firebase-messaging.js");
+
+const config = {
+  messagingSenderId: "<%= ENV['FCM_MESSAGING_SENDER_ID'] %>",
+};
+
+firebase.initializeApp(config);
+var redirectUrl = "https://recmatch.com";
+const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler(payload => {
+  const notification = JSON.parse(payload.data.notification)
+  const options = {
+    body: notification.body,
+    icon: notification.icon,
+  }
+  redirectUrl = notification.redirect_url;
+  return self.registration.showNotification("", options);
+});
+
+function onNotificationClick(event) {
+  const clickedNotification = event.notification;
+  clickedNotification.close();
+  const promiseChain = clients
+    .matchAll({
+      type: "window",
+      includeUncontrolled: true
+    })
+    .then(windowClients => {
+      let matchingClient = null;
+      for (let i = 0; i < windowClients.length; i++) {
+        const windowClient = windowClients[i];
+        if (windowClient.url === redirectUrl) {
+          matchingClient = windowClient;
+          break;
+        }
+      }
+      if (matchingClient) {
+        return matchingClient.focus();
+      } else {
+        return clients.openWindow(redirectUrl);
+      }
+    });
+  event.waitUntil(promiseChain);
+}
+
+var CACHE_VERSION = 'v1';
+var CACHE_NAME = CACHE_VERSION + ':sw-cache-';
+
+function onInstall(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function prefill(cache) {
+      return cache.addAll([
+        '<%= asset_path "application.js" %>',
+        '<%= asset_path "application.css" %>',
+        '/offline.html',
+      ]);
+    })
+  );
+}
+
+function onActivate(event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function (cacheName) {
+          return cacheName.indexOf(CACHE_VERSION) !== 0;
+        }).map(function (cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
+}
+
+function onFetch(event) {
+  event.respondWith(
+    fetch(event.request).catch(function () {
+      return caches.match(event.request).then(function (response) {
+        if (response) {
+          return response;
+        }
+        if (event.request.mode === 'navigate' ||
+          (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
+          return caches.match('/offline.html');
+        }
+      })
+    })
+  );
+}

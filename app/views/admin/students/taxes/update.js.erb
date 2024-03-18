@@ -1,0 +1,3 @@
+$("#tax_payment_receipt").html("<%= escape_javascript(render(partial: 'show')) %>");
+$("#edit-tax-modal").modal("hide");
+notify('', '納税書を更新しました', 'top', 'center', '', 'success', '', '');

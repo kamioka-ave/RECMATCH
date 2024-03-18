@@ -1,0 +1,58 @@
+<div class="pmb-block">
+  <div class="pmbb-body">
+    <p><%= simple_format(@profile.description) %></p>
+  </div>
+</div>
+
+<% if @profile.user.has_role? :company %>
+  <div class="pmb-block">
+    <div class="pmbb-header">
+      <h2>実行中のプロジェクト</h2>
+    </div>
+    <div class="pmbb-body">
+      <% if @projects.present? && @projects.size > 0 %>
+        <div class="row">
+          <% @projects.each do |project| %>
+            <div class="col-md-4 projects">
+              <%= render partial: "projects/thumb", locals: {project: project } %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p>実行中のプロジェクトはありません</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if false #@profile.user.has_role? :student %>
+  <div class="pmb-block">
+    <div class="pmbb-header">
+      <h2>投資したプロジェクト</h2>
+    </div>
+    <div class="pmbb-body">
+      <% if @invested_projects.size > 0 %>
+        <div class="row">
+          <% @invested_projects.each do |project| %>
+            <div class="col-md-4 projects">
+              <%= render partial: "projects/thumb", locals: {project: project} %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p>投資したプロジェクトはありません</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if @profile.user.has_role? :supporter %>
+  <div class="pmb-block">
+    <div class="pmbb-header">
+      <h2>参加中のプロジェクト</h2>
+    </div>
+    <div class="pmb-body">
+      TODO
+    </div>
+  </div>
+<% end %>

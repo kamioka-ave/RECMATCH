@@ -1,0 +1,3 @@
+$("#reviews").html("<%= escape_javascript(render(partial: 'admin/companies/reviews/list', locals: {company: @company, reviews: @company.reviews})) %>");
+$("#review-modal").modal("hide");
+notify('', '承認状態を更新しました', 'top', 'center', '', 'success', '', '');

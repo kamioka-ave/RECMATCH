@@ -1,0 +1,8 @@
+<%= @student.nickname %> 様
+
+<%= @applicant.event.company.name %>の<%= @applicant.event.title %>への参加が承諾されました。
+以下URLよりご確認ください。
+
+https://recmatch.co.jp/mypage/booking
+
+<%= render partial: 'layouts/mailer_sign' %>

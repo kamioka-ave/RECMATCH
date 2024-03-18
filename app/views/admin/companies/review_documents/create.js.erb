@@ -1,0 +1,3 @@
+$('#review_documents').html("<%= escape_javascript(render('list', company: @company, documents: @company.review_documents)) %>");
+$('#review_document_modal').modal('hide');
+notify('', '<%= @document.name %>を登録しました', 'top', 'center', '', 'success', '', '');

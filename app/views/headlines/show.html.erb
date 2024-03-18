@@ -1,0 +1,37 @@
+<% content_for(:page_classes) { 'headlines show' } %>
+<% content_for(:title) { @headline.title } %>
+<p><small><%= render_breadcrumbs separator: ' > ', builder: ::CustomBreadcrumbsBuilder %></small></p>
+
+<div class="card z-depth-1">
+  <div class="card-header">
+    <h1 class="mb-5"><%= @headline.title %></h1>
+    <small class="text-muted pr-10"><%= l(@headline.published_at, format: :short) %></small>
+    <span class="label <%= label_by_headline_type(@headline.headline_type) %>"><%= Headline.names_with_headline_type.key(@headline.headline_type) %></span>
+  </div>
+  <div class="card-body card-padding">
+    <%= @headline.body.html_safe %>
+  </div>
+</div>
+
+<% if Rails.env.production? %>
+  <script type="text/javascript">
+    window._pt_lt = new Date().getTime();
+    window._pt_sp_2 = [];
+    _pt_sp_2.push('setAccount,62a43b5c');
+    var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    (function () {
+      var atag = document.createElement('script');
+      atag.type = 'text/javascript';
+      atag.async = true;
+      atag.src = _protocol + 'js.ptengine.jp/pta.js';
+      var stag = document.createElement('script');
+      stag.type = 'text/javascript';
+      stag.async = true;
+      stag.src = _protocol + 'js.ptengine.jp/pts.js';
+      // var s = document.getElementsByTagName('script')[0];
+      var s = document.getElementsByTagName('footer')[0];
+      s.parentNode.insertBefore(atag, s);
+      s.parentNode.insertBefore(stag, s);
+    })();
+  </script>
+<% end %>

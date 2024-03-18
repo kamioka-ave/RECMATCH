@@ -1,0 +1,221 @@
+<div class="my-students-wizard row">
+  <div class="col-md-offset-1 col-md-10">
+    <%= render 'mypage/students/reconfirm/progress', {step: 4} %>
+    <div class="card">
+      <div class="card-header">
+        <h1 class="text-center">STEP4 更新内容の確認</h1>
+      </div>
+      <div class="card-body card-padding">
+        <div class="bg-info p-20 mb-30">
+          以下の内容で更新を行います。<br>
+          内容に誤りがなければ、「完了」ボタンを押して、学生申請内容の更新を完了させてください。
+        </div>
+        <div class="mb-50">
+          <h3>学生適合性確認</h3>
+          <table class="table">
+            <tr class="bg-warning">
+              <th colspan="2">収入・資産状況</th>
+            </tr>
+            <tr>
+              <th width="260px"><%= t('activerecord.attributes.student_interview.income_resource') %></th>
+              <td><%= StudentInterview.names_with_income_resource.key(@interview.income_resource) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.income') %></th>
+              <td><%= StudentInterview.names_with_income.key(@interview.income) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.assets') %></th>
+              <td><%= StudentInterview.names_with_assets.key(@interview.assets) %></td>
+            </tr>
+          </table>
+
+          <table class="table">
+            <tr class="bg-warning">
+              <th colspan="2">投資経験</th>
+            </tr>
+            <tr>
+              <th width="260px"><%= t('activerecord.attributes.student_interview.exp_stock') %></th>
+              <td><%= @interview.exp_stock %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_bond') %></th>
+              <td><%= @interview.exp_bond %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_trust_fund') %></th>
+              <td><%= @interview.exp_trust_fund %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_commodity_futures') %></th>
+              <td><%= @interview.exp_commodity_futures %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_foreign_currency_saving') %></th>
+              <td><%= @interview.exp_foreign_currency_saving %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_foreign_exchange') %></th>
+              <td><%= @interview.exp_foreign_exchange %>年</td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.exp_account') %></th>
+              <td><%= @interview.exp_account %>年</td>
+            </tr>
+          </table>
+
+          <table class="table">
+            <tr class="bg-warning">
+              <th colspan="2">投資に関して</th>
+            </tr>
+            <tr>
+              <th width="260px"><%= t('activerecord.attributes.student_interview.capital_character') %></th>
+              <td><%= StudentInterview.names_with_capital_character.key(@interview.capital_character) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.purpose') %></th>
+              <td><%= StudentInterview.names_with_purpose.key(@interview.purpose) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.purpose_note') %></th>
+              <td><%= simple_format(@interview.purpose_note) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.student_interests') %></th>
+              <td>
+                <% @interview.student_interests.each do |i|  %>
+                  <span class="label label-default"><%= i.name %></span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_interview.how_to_know') %></th>
+              <td><%= StudentInterview.names_with_how_to_know.key(@interview.how_to_know) %></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mb-50">
+          <h3>学生申請書</h3>
+          <table class="table">
+            <tr>
+              <th width="260px">氏名</th>
+              <td><%= @student.last_name %><%= @student.first_name %></td>
+            </tr>
+            <tr>
+              <th>氏名（カナ）</th>
+              <td><%= @student.last_name_kana %><%= @student.first_name_kana %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.gender') %></th>
+              <td><%= Student.names_with_gender.key(@student.gender) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.birth_on') %></th>
+              <td><%= l(@student.birth_on) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.zip_code') %></th>
+              <td><%= @student.zip_code %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.prefecture_id') %></th>
+              <td><%= @student.prefecture.name %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.city') %></th>
+              <td><%= @student.city %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.address1') %></th>
+              <td><%= @student.address1 %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.address2') %></th>
+              <td><%= @student.address2 %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.phone') %></th>
+              <td><%= @student.phone %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.phone_mobile') %></th>
+              <td><%= @student.phone_mobile %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.job') %></th>
+              <td><%= Student.names_with_job.key(@student.job) %></td>
+            </tr>
+            <% if @student.job == Student::J_OTHERS %>
+              <tr>
+                <th><%= t('activerecord.attributes.student.job_details') %></th>
+                <td><%= @student.job_details %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <th><%= t('activerecord.attributes.student.business') %></th>
+              <td><%= Student.names_with_business.key(@student.business) %></td>
+            </tr>
+            <% if @student.business == Student::B_OTHERS %>
+              <tr>
+                <th><%= t('activerecord.attributes.student.business_details') %></th>
+                <td><%= @student.business_details %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <th><%= t('activerecord.attributes.student.company') %></th>
+              <td><%= @student.company %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.phone_company') %></th>
+              <td><%= @student.phone_company %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student.email_company') %></th>
+              <td><%= @student.email_company %></td>
+            </tr>
+            <tr>
+              <th>振込口座</th>
+              <td>
+                <% if @student.bank.present? && @student.bank_branch.present? %>
+                  <%= @student.bank.name_with_bank %> <%= @student.bank_branch.name_with_branch %><br>
+                  <%= Student.names_with_bank_account_type.key(@student.bank_account_type) %> <%= @student.bank_account_number %><br>
+                  <%= @student.bank_account_name %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mb-50">
+          <h3>特定取引を行う者の届出/外国PEPsに関する届出</h3>
+          <table class="table">
+            <tr>
+              <th width="260px"><%= t('activerecord.attributes.student_pep.country') %></th>
+              <td><%= StudentPep.names_with_country.key(@pep.country) %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_pep.peps') %></th>
+              <td><%= @pep.peps ? '該当する' : '該当しない' %></td>
+            </tr>
+            <tr>
+              <th><%= t('activerecord.attributes.student_pep.fatca') %></th>
+              <td><%= @pep.fatca ? '該当する' : '該当しない' %></td>
+            </tr>
+          </table>
+        </div>
+
+        <%= form_tag(mypage_student_reconfirm_confirm_path, method: 'put') do %>
+          <div class="clearfix">
+            <div class="pull-left">
+              <%= link_to '前へ', mypage_student_reconfirm_pep_path, class: 'btn btn-lg btn-default' %>
+            </div>
+            <div class="pull-right">
+              <button id="realSubmit" type="submit" class="btn btn-lg btn-info">完了</button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

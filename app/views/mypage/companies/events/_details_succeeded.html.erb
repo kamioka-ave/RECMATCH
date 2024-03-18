@@ -1,0 +1,51 @@
+<div class="details-container">
+  <div class="mb-10">
+    <div class="mb-10 f-16 f-600">
+        <div class="mb-9">
+          <%= @company.name %>
+        </div>
+    </div>
+    <div class="clearfix">
+      <i class="fa fa-flag"></i> 所在地
+      <div class="pull-right">
+        <%= @company.prefecture.name %><%= @company.city %>
+      </div>
+    </div>
+    <div class="clearfix">
+      <i class="fa fa-address-card"></i> 代表取締役
+      <div class="pull-right">
+        <%= @company.president_last_name %> <%= @company.president_first_name %>
+      </div>
+    </div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-default" style="width: 100%">
+      <i class="fa fa-industry"></i> 業種<span class="pull-right"><%= @company.business_type.name %></span>
+    </div>
+  </div>
+  <div class="mb-10">
+    <div class="clearfix">
+      <i class="fa fa-clock-o"></i> イベント参加応募締切
+      <div class="pull-right">
+        <%= @event.end.year %>/<%= @event.end.month %>/<%= @event.end.day-1 %>(23時59分迄)
+      </div>
+    </div>
+  </div>
+  <div id="applicant" class="mt-10"></div>
+  <div class="mt-10">
+    <% if !user_signed_in? %>
+      <%= link_to new_user_registration_path, class:"btn btn-lg btn-block btn-primary" do %>
+        会員登録して応募する
+      <% end %>
+    <% elsif user_signed_in? && current_user.has_role?(:company) %>
+      <%= link_to 'イベント参加の応募', '#', class: 'btn btn-lg btn-block btn-primary', disabled:true %>
+    <% elsif user_signed_in? && current_user.has_role?(:student) && EventApplicant.where('event_id = ? AND student_id = ?', @event.id, current_user.student.id).present? %>
+      <%= link_to '参加応募済み', '#', class: 'btn btn-lg btn-block btn-gray', disabled:true %>
+    <% else %>
+      <%= link_to 'イベント参加の応募', submit_event_applicant_path(@event), class: 'btn btn-lg btn-block btn-primary', method: "post", data: {confirm: '応募しますか？'} %>
+    <% end %>
+  </div>
+</div>
+
+<div id="order_wait_modal" class="modal fade" tabindex="-1"></div>
+<div id="applicant_modal" class="modal fade" tabindex="-1"></div>
